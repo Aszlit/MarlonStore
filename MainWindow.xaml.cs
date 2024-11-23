@@ -21,30 +21,17 @@ namespace Inventory
             InitializeComponent();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void forgotpage(object sender, MouseButtonEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            // Create the new window
+            Window1 forgotWindow = new Window1();
+            forgotWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
 
-            // Only clear text if it's the placeholder text
-            if (textBox.Text == "Enter text here...")
-            {
-                textBox.Clear(); // Clears the text
-            }
-        }
+            // Show the new window
+            forgotWindow.Show();
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {       
-        
-        }
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
-        {
-
+            // Close the current window
+            this.Close();
         }
     }
 }

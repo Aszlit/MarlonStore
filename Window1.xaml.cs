@@ -23,5 +23,20 @@ namespace Inventory
         {
             InitializeComponent();
         }
+
+
+        private void returnpage(object sender, MouseButtonEventArgs e)
+        {
+            // Create the new window
+            MainWindow secondWindow = new MainWindow();
+            secondWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
+
+            // Show the new window
+            secondWindow.Show();
+
+            // Close the current window
+            this.Close();
+        }
+
     }
 }
