@@ -6,8 +6,14 @@
         xmlns:local="clr-namespace:Inventory"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Height="50" Margin="220,104,0,0" TextWrapping="Wrap" Text="HOTDOG NI EDISON" VerticalAlignment="Top" Width="145" TextChanged="TextBox_TextChanged"/>
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <TextBox HorizontalAlignment="Center" Height="30" TextWrapping="Wrap" Text="Enter text here..." VerticalAlignment="Top" Width="162" TextChanged="TextBox_TextChanged_1" Margin="0,160,0,0"/>
+        <TextBox HorizontalAlignment="Center" Height="30" Margin="0,244,0,0" TextWrapping="Wrap" Text="Enter Password" VerticalAlignment="Top" Width="162" TextChanged="TextBox_TextChanged_2"/>
+        <Label Content="Password" HorizontalAlignment="Left" Height="24" Margin="319,215,0,0" VerticalAlignment="Top" Width="107"/>
+        <Label Content="Username" HorizontalAlignment="Left" Height="24" Margin="319,132,0,0" VerticalAlignment="Top" Width="107"/>
+        <Label Content="LOGIN PAGE" HorizontalAlignment="Center" Height="37" Margin="0,60,0,0" VerticalAlignment="Top" Width="124" FontSize="20"/>
+        <Label Content="Forgot Password" HorizontalAlignment="Left" Height="29" Margin="300,341,0,0" VerticalAlignment="Top" Width="111"/>
+        <Button Content="Login" HorizontalAlignment="Center" Margin="0,297,0,0" VerticalAlignment="Top" Height="32" Width="124"/>
 
     </Grid>
 </Window>
