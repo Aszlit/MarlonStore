@@ -10,9 +10,11 @@
         <Label Content="Password" HorizontalAlignment="Left" Height="24" Margin="319,215,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Content="Username" HorizontalAlignment="Left" Height="24" Margin="319,132,0,0" VerticalAlignment="Top" Width="107"/>
         <Label Content="LOGIN PAGE" HorizontalAlignment="Center" Height="37" Margin="0,60,0,0" VerticalAlignment="Top" Width="124" FontSize="20"/>
-  
+
         <Button Content="Login" HorizontalAlignment="Center" Margin="0,297,0,0" VerticalAlignment="Top" Height="32" Width="124"/>
         <Label Content="Forgot Password" HorizontalAlignment="Left" Margin="338,363,0,0" VerticalAlignment="Top" MouseLeftButtonDown="forgotpage"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="319,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="143"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="319,244,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="143"/>
 
     </Grid>
 </Window>

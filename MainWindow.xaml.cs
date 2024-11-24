@@ -33,5 +33,6 @@ namespace Inventory
             // Close the current window
             this.Close();
         }
+
     }
 }

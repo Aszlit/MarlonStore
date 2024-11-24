@@ -22,6 +22,9 @@ namespace Inventory
         public Window2()
         {
             InitializeComponent();
-        }
+            this.WindowState = WindowState.Maximized;
+            this.ResizeMode = ResizeMode.NoResize;
+            WindowStartupLocation = WindowStartupLocation;
     }
+}
 }

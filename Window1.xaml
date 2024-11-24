@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Inventory"
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
-    <Grid>
+    <Grid Background="#FFE8E8E8">
         <Label Content="Security Questions" HorizontalAlignment="Center" Margin="0,99,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
         <Label Content="What is the name of the Store?" HorizontalAlignment="Left" Margin="286,144,0,0" VerticalAlignment="Top" Width="178"/>
        

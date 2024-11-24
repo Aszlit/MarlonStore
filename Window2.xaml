@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inventory"
         mc:Ignorable="d"
-        Title="Window2" Height="450" Width="800">
+        Title="Window2" Height="768" Width="1366">
     <Grid>
-        
+        <DockPanel HorizontalAlignment="Left" Height="752" LastChildFill="False" VerticalAlignment="Center" Width="270" Background="#FFD43232"/>
+        <Label Content="HOME" HorizontalAlignment="Left" Height="112" Margin="80,630,0,0" VerticalAlignment="Top" Width="232" FontWeight="Bold" FontSize="36" Foreground="White"/>
     </Grid>
+
 </Window>
