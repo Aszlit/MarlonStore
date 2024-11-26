@@ -8,7 +8,14 @@
         Title="Window2" Height="768" Width="1366">
     <Grid>
         <DockPanel HorizontalAlignment="Left" Height="752" LastChildFill="False" VerticalAlignment="Center" Width="270" Background="#FFD43232"/>
-        <Label Content="HOME" HorizontalAlignment="Left" Height="112" Margin="80,630,0,0" VerticalAlignment="Top" Width="232" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label Content="HOME" HorizontalAlignment="Left" Height="51" Margin="48,318,0,0" VerticalAlignment="Top" Width="137" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Image Source="C:\Users\marlo\Downloads\462552446_1327900431717010_3758333981525795097_n.jpg" HorizontalAlignment="Left" Height="264" Margin="10,38,0,0" VerticalAlignment="Top" Width="232"/>
+        <Label Content="INVENTORY" HorizontalAlignment="Left" Height="51" Margin="47,374,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label Content="PURCHASES" HorizontalAlignment="Left" Height="51" Margin="47,425,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label Content="SALES" HorizontalAlignment="Left" Height="51" Margin="47,471,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label Content="SUPPLIERS" HorizontalAlignment="Left" Height="51" Margin="47,516,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label Content="ABOUT" HorizontalAlignment="Left" Height="51" Margin="47,561,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label Content="LOG OUT" HorizontalAlignment="Left" Height="51" Margin="47,649,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="logoutbutt"/>
     </Grid>
 
 </Window>

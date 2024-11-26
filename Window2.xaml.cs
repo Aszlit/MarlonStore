@@ -26,5 +26,17 @@ namespace Inventory
             this.ResizeMode = ResizeMode.NoResize;
             WindowStartupLocation = WindowStartupLocation;
     }
-}
+
+        private void logoutbutt(object sender, MouseButtonEventArgs e)
+        {
+            // Create the new window
+            MainWindow logout = new();
+
+            // Show the new window
+            logout.Show();
+
+            // Close the current window
+            this.Close();
+        }
+    }
 }

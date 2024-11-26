@@ -20,6 +20,7 @@ namespace Inventory
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void forgotpage(object sender, MouseButtonEventArgs e)
@@ -40,7 +41,7 @@ namespace Inventory
         private void login(object sender, RoutedEventArgs e)
         {
             string username = input1.Text;  // Get username from input1
-            string password = input2.Text;  // Get password from input2
+            string password = input2.Password;  // Get password from input2
 
             if (IsLoginValid(username, password))
             {

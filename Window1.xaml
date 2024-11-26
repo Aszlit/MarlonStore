@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inventory"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="Window1" Height="400" Width="400">
     <Grid Background="#FFE8E8E8">
-        <Label Content="Security Questions" HorizontalAlignment="Center" Margin="0,99,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
-        <Label Content="What is the name of the Store?" HorizontalAlignment="Left" Margin="286,144,0,0" VerticalAlignment="Top" Width="178"/>
-       
-        <Label Content="Recovered Password Here......" HorizontalAlignment="Left" Margin="298,321,0,0" VerticalAlignment="Top" Width="190"/>
-        <Label x:Name="returnlabel" Content="Return" HorizontalAlignment="Left" Margin="19,20,0,0" VerticalAlignment="Top" FontSize="22" MouseLeftButtonDown="returnpage"/>
+        <Label Content="Security Question" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
+        <Label Content="What is the name of the Store?" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Width="178"/>
+
+        <Label x:Name="passrecoverlabel" Content="Recovered Password Here......" HorizontalAlignment="Center" Margin="0,309,0,0" VerticalAlignment="Top" Width="216"/>
+        <Label x:Name="returnlabel" Content="Return" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18" MouseLeftButtonDown="returnpage"/>
+        <TextBox x:Name="securitybox" HorizontalAlignment="Left" Margin="96,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="25"/>
+        <Button Content="Recover" HorizontalAlignment="Left" Margin="146,259,0,0" VerticalAlignment="Top" Height="22" Width="78" Click="recover"/>
+        <Label Content="Username" HorizontalAlignment="Left" Margin="96,108,0,0" VerticalAlignment="Top" Width="178"/>
+        <TextBox x:Name="usernamebox" HorizontalAlignment="Left" Margin="96,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="25"/>
 
     </Grid>
 </Window>
