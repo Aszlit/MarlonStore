@@ -38,5 +38,17 @@ namespace Inventory
             // Close the current window
             this.Close();
         }
+
+        private void inventory(object sender, MouseButtonEventArgs e)
+        {
+            HomepageGrid.Visibility = Visibility.Collapsed;
+            InventoryGrid.Visibility = Visibility.Visible;
+        }
+
+        private void home(object sender, MouseButtonEventArgs e)
+        {
+            HomepageGrid.Visibility = Visibility.Visible;
+            InventoryGrid.Visibility = Visibility.Collapsed;
+        }
     }
 }

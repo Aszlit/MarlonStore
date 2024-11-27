@@ -47,7 +47,9 @@ namespace Inventory
             string username = usernamebox.Text;
             string securityAnswer = securitybox.Text;
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             string recoveredPassword = RecoverPassword(username, securityAnswer);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             if (recoveredPassword != null)
             {
@@ -59,7 +61,7 @@ namespace Inventory
             }
         }
 
-        private string RecoverPassword(string username, string securityAnswer)
+        private string? RecoverPassword(string username, string securityAnswer)
         {
             string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\Aszlit\\MarlonStore\\database\\maindatabase.db;Version=3;";
 

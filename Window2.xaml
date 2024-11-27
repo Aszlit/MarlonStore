@@ -4,18 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inventory"
+        xmlns:UserControls="clr-namespace:Inventory.UserControls"
         mc:Ignorable="d"
         Title="Window2" Height="768" Width="1366">
     <Grid>
         <DockPanel HorizontalAlignment="Left" Height="752" LastChildFill="False" VerticalAlignment="Center" Width="270" Background="#FFD43232"/>
-        <Label Content="HOME" HorizontalAlignment="Left" Height="51" Margin="48,318,0,0" VerticalAlignment="Top" Width="137" FontWeight="Bold" FontSize="36" Foreground="White"/>
-        <Image Source="C:\Users\marlo\Downloads\462552446_1327900431717010_3758333981525795097_n.jpg" HorizontalAlignment="Left" Height="264" Margin="10,38,0,0" VerticalAlignment="Top" Width="232"/>
-        <Label Content="INVENTORY" HorizontalAlignment="Left" Height="51" Margin="47,374,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label Content="HOME" HorizontalAlignment="Left" Height="51" Margin="48,318,0,0" VerticalAlignment="Top" Width="137" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="home"/>
+        <Image Source="C:\Users\marlo\Downloads\462552446_1327900431717010_3758333981525795097_n.jpg" HorizontalAlignment="Left" Height="264" Margin="18,38,0,0" VerticalAlignment="Top" Width="232"/>
+        <Label Content="INVENTORY" HorizontalAlignment="Left" Height="51" Margin="47,374,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="inventory"/>
         <Label Content="PURCHASES" HorizontalAlignment="Left" Height="51" Margin="47,425,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
         <Label Content="SALES" HorizontalAlignment="Left" Height="51" Margin="47,471,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
         <Label Content="SUPPLIERS" HorizontalAlignment="Left" Height="51" Margin="47,516,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
         <Label Content="ABOUT" HorizontalAlignment="Left" Height="51" Margin="47,561,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
         <Label Content="LOG OUT" HorizontalAlignment="Left" Height="51" Margin="47,649,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="logoutbutt"/>
-    </Grid>
 
+        <!-- Homepage User Control -->
+        <Grid x:Name="HomepageGrid" Visibility="Visible" Margin="269,0,0,-16">
+            <UserControls:Homepage Width="1096" Height="768" />
+        </Grid>
+
+        <!-- Inventory User Control -->
+        <Grid x:Name="InventoryGrid" Visibility="Collapsed" Margin="269,0,0,-16">
+            <UserControls:Inventory Width="1096" Height="768" />
+        </Grid>
+    </Grid>
 </Window>

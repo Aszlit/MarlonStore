@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Inventory.UserControls.Homepage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Inventory.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1096">
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="244" Stroke="Black" VerticalAlignment="Top" Width="628" Fill="Red" Margin="272,214,0,0"/>
+    </Grid>
+</UserControl>
