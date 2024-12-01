@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+using System.Data.SQLite;
 
 namespace Inventory.UserControls
 {
@@ -20,10 +22,102 @@ namespace Inventory.UserControls
     /// </summary>
     public partial class Inventory : UserControl
     {
+        // ObservableCollection that binds to the DataGrid
+        public ObservableCollection<Item> Items { get; set; }
+
         public Inventory()
         {
             InitializeComponent();
-
+            Items = new ObservableCollection<Item>();
+            this.DataContext = this; // Set DataContext for binding
+            LoadInventory(); // Load inventory items from database
         }
+
+        // Method to load data from SQLite database
+        public void LoadInventory()
+        {
+            try
+            {
+                Items.Clear(); // Clear existing data before loading new data
+
+                using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+                {
+                    connection.Open();
+                    var command = new SQLiteCommand("SELECT * FROM Inventory", connection);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Items.Add(new Item
+                            {
+                                ItemName = reader["ItemName"].ToString(),
+                                Quantity = Convert.ToInt32(reader["Quantity"]),
+                                Price = Convert.ToDouble(reader["Price"]),
+                                Value = Convert.ToDouble(reader["Value"])
+                            });
+                        }
+                    }
+                }
+
+                MessageBox.Show("Inventory loaded.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading inventory: {ex.Message}");
+            }
+        }
+
+
+
+        // Event handler for the "Add New Item" button click
+        private void addbutton(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Create the new window
+                AddNewItemWindow addgoodswindow = new AddNewItemWindow();
+
+                // Set the owner of the new window to the current Inventory window
+                addgoodswindow.Owner = Window.GetWindow(this);  // This sets the owner to the Inventory window
+
+                // Show the new window and wait until it's closed
+                addgoodswindow.ShowDialog();
+
+                // Refresh the inventory after the new item is added
+                LoadInventory(); // Refresh inventory after adding a new item
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+
+
+
+
+
+        // Item model class
+        public class Item
+        {
+            public string ItemName { get; set; }
+            public int Quantity { get; set; }
+            public double Price { get; set; }
+            public double Value { get; set; }
+        }
+
+
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                // Your closing logic here
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during closing: {ex.Message}");
+            }
+        }
+
     }
 }

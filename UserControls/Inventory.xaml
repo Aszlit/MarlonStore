@@ -7,7 +7,47 @@
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1096">
     <Grid>
-        <Rectangle HorizontalAlignment="Left" Height="408" Margin="64,76,0,0" Stroke="Black" VerticalAlignment="Top" Width="349" Fill="#FF7DFF00"/>
+        <DataGrid x:Name="InventoryDataGrid" 
+                  CanUserAddRows="False" 
+                  CanUserResizeColumns="False"
+                  HeadersVisibility="Column" 
+                  GridLinesVisibility="None"
+                  Margin="10,79,10,10"
+                  RowHeight="40"
+                  ColumnHeaderHeight="50"
+                  BorderThickness="1"
+                  BorderBrush="#DDDDDD" 
+                  Background="#F7F7F7"
+                  AutoGenerateColumns="False" 
+                  ItemsSource="{Binding Items}">
+            <!-- Define Columns -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="*"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="100"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="120"/>
+            </DataGrid.Columns>
 
+            <!-- Style Definitions -->
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Background" Value="#2A2E37"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Padding" Value="10"/>
+                    <Setter Property="BorderBrush" Value="#EAEAEA"/>
+                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                </Style>
+            </DataGrid.CellStyle>
+        </DataGrid>
+
+        <!-- Button to add new items -->
+        <Button Content="Add New Item" HorizontalAlignment="Left" Margin="798,16,0,0" VerticalAlignment="Top" Height="41" Width="258" FontSize="18" Click="addbutton"/>
     </Grid>
 </UserControl>

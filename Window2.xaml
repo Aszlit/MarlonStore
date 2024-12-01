@@ -12,8 +12,8 @@
         <Label Content="HOME" HorizontalAlignment="Left" Height="51" Margin="48,318,0,0" VerticalAlignment="Top" Width="137" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="home"/>
         <Image Source="C:\Users\marlo\Downloads\462552446_1327900431717010_3758333981525795097_n.jpg" HorizontalAlignment="Left" Height="264" Margin="18,38,0,0" VerticalAlignment="Top" Width="232"/>
         <Label Content="INVENTORY" HorizontalAlignment="Left" Height="51" Margin="47,374,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="inventory"/>
-        <Label Content="PURCHASES" HorizontalAlignment="Left" Height="51" Margin="47,425,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
-        <Label Content="SALES" HorizontalAlignment="Left" Height="51" Margin="47,471,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
+        <Label Content="PURCHASES" HorizontalAlignment="Left" Height="51" Margin="47,425,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="purchases"/>
+        <Label Content="SALES" HorizontalAlignment="Left" Height="51" Margin="47,471,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="sales"/>
         <Label Content="SUPPLIERS" HorizontalAlignment="Left" Height="51" Margin="47,516,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
         <Label Content="ABOUT" HorizontalAlignment="Left" Height="51" Margin="47,561,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White"/>
         <Label Content="LOG OUT" HorizontalAlignment="Left" Height="51" Margin="47,649,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="logoutbutt"/>
@@ -27,5 +27,21 @@
         <Grid x:Name="InventoryGrid" Visibility="Collapsed" Margin="269,0,0,-16">
             <UserControls:Inventory Width="1096" Height="768" />
         </Grid>
+
+
+
+        <!-- Inventory User Control -->
+        <Grid x:Name="PurchasesGrid" Visibility="Collapsed" Margin="269,0,0,-16">
+            <UserControls:Purchases Width="1096" Height="768" />
+        </Grid>
+
+
+        <!-- Inventory User Control -->
+        <Grid x:Name="SalesGrid" Visibility="Collapsed" Margin="269,0,0,-16">
+            <UserControls:Sales Width="1096" Height="768" />
+        </Grid>
+        
+        
+        
     </Grid>
 </Window>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Inventory.UserControls.Homepage"
+﻿<UserControl x:Class="Inventory.UserControls.Purchases"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1096">
     <Grid>
-        <Rectangle HorizontalAlignment="Left" Height="244" Stroke="Black" VerticalAlignment="Top" Width="628" Fill="Red" Margin="53,10,0,0"/>
+        <Rectangle HorizontalAlignment="Left" Height="177" Margin="325,514,0,0" Stroke="#FF0000C7" VerticalAlignment="Top" Width="461" Fill="#FF000064"/>
+
     </Grid>
 </UserControl>
