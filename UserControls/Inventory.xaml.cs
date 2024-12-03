@@ -36,36 +36,44 @@ namespace Inventory.UserControls
         // Method to load data from SQLite database
         public void LoadInventory()
         {
-            try
-            {
-                Items.Clear(); // Clear existing data before loading new data
+            Items.Clear();
 
-                using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+            using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+            {
+                connection.Open();
+                var command = new SQLiteCommand("SELECT * FROM Inventory", connection);
+                using (var reader = command.ExecuteReader())
                 {
-                    connection.Open();
-                    var command = new SQLiteCommand("SELECT * FROM Inventory", connection);
-                    using (var reader = command.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        byte[] imageBytes = reader["Image"] as byte[]; // Retrieve image data as byte array
+                        BitmapImage image = null;
+
+                        if (imageBytes != null)
                         {
-                            Items.Add(new Item
+                            using (var stream = new System.IO.MemoryStream(imageBytes))
                             {
-                                ItemName = reader["ItemName"].ToString(),
-                                Quantity = Convert.ToInt32(reader["Quantity"]),
-                                Price = Convert.ToDouble(reader["Price"]),
-                                Value = Convert.ToDouble(reader["Value"])
-                            });
+                                image = new BitmapImage();
+                                image.BeginInit();
+                                image.StreamSource = stream;
+                                image.CacheOption = BitmapCacheOption.OnLoad;
+                                image.EndInit();
+                            }
                         }
+
+                        Items.Add(new Item
+                        {
+                            ItemName = reader["ItemName"].ToString(),
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Price = Convert.ToDouble(reader["Price"]),
+                            Value = Convert.ToDouble(reader["Value"]),
+                            ProductImage = image // Assign the image to the property
+                        });
                     }
                 }
-
-                MessageBox.Show("Inventory loaded.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading inventory: {ex.Message}");
             }
         }
+
 
 
 
@@ -103,6 +111,7 @@ namespace Inventory.UserControls
             public int Quantity { get; set; }
             public double Price { get; set; }
             public double Value { get; set; }
+            public BitmapImage ProductImage { get; set; } // For displaying the image
         }
 
 

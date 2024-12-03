@@ -9,9 +9,9 @@ namespace Inventory
     /// <summary>
     /// Interaction logic for Window2.xaml
     /// </summary>
-    public partial class Window2 : Window
+    public partial class MainPage : Window
     {
-        public Window2()
+        public MainPage()
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
@@ -26,7 +26,7 @@ namespace Inventory
         private void logoutbutt(object sender, MouseButtonEventArgs e)
         {
             // Create the new window (MainWindow)
-            MainWindow logout = new MainWindow();
+            LoginPage logout = new LoginPage();
 
             // Show the new window
             logout.Show();
@@ -42,6 +42,8 @@ namespace Inventory
             InventoryGrid.Visibility = Visibility.Visible;
             PurchasesGrid.Visibility = Visibility.Collapsed;
             SalesGrid.Visibility = Visibility.Collapsed;
+            SuppliersGrid.Visibility = Visibility.Collapsed;
+            AboutGrid.Visibility = Visibility.Collapsed;
         }
 
         // Navigate to Home
@@ -51,6 +53,8 @@ namespace Inventory
             InventoryGrid.Visibility = Visibility.Collapsed;
             PurchasesGrid.Visibility = Visibility.Collapsed;
             SalesGrid.Visibility = Visibility.Collapsed;
+            SuppliersGrid.Visibility = Visibility.Collapsed;
+            AboutGrid.Visibility = Visibility.Collapsed;
         }
 
         // Navigate to Purchases
@@ -60,6 +64,8 @@ namespace Inventory
             InventoryGrid.Visibility = Visibility.Collapsed;
             PurchasesGrid.Visibility = Visibility.Visible;
             SalesGrid.Visibility = Visibility.Collapsed;
+            SuppliersGrid.Visibility = Visibility.Collapsed;
+            AboutGrid.Visibility = Visibility.Collapsed;
         }
 
         // Navigate to Sales
@@ -69,7 +75,34 @@ namespace Inventory
             InventoryGrid.Visibility = Visibility.Collapsed;
             PurchasesGrid.Visibility = Visibility.Collapsed;
             SalesGrid.Visibility = Visibility.Visible;
+            SuppliersGrid.Visibility = Visibility.Collapsed;
+            AboutGrid.Visibility = Visibility.Collapsed;
         }
+
+        private void suppliers(object sender, MouseButtonEventArgs e)
+        {
+            HomepageGrid.Visibility = Visibility.Collapsed;
+            InventoryGrid.Visibility = Visibility.Collapsed;
+            PurchasesGrid.Visibility = Visibility.Collapsed;
+            SalesGrid.Visibility = Visibility.Collapsed;
+            SuppliersGrid.Visibility = Visibility.Visible;
+            AboutGrid.Visibility = Visibility.Collapsed;
+        }
+
+
+        private void about(object sender, MouseButtonEventArgs e)
+        {
+
+            HomepageGrid.Visibility = Visibility.Collapsed;
+            InventoryGrid.Visibility = Visibility.Collapsed;
+            PurchasesGrid.Visibility = Visibility.Collapsed;
+            SalesGrid.Visibility = Visibility.Collapsed;
+            SuppliersGrid.Visibility = Visibility.Collapsed;
+            AboutGrid.Visibility = Visibility.Visible;
+        }
+
+
+
 
         // Method to initialize the database connection (without creating the table)
         public static void InitializeDatabase()

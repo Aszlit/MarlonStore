@@ -6,26 +6,54 @@
              xmlns:local="clr-namespace:Inventory.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1096">
+    <UserControl.Resources>
+        <!-- Centered text style -->
+        <Style x:Key="CenteredTextStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <DataGrid x:Name="InventoryDataGrid" 
                   CanUserAddRows="False" 
                   CanUserResizeColumns="False"
                   HeadersVisibility="Column" 
                   GridLinesVisibility="None"
-                  Margin="10,79,10,10"
-                  RowHeight="40"
+                  Margin="10,79,10,0"
+                  RowHeight="50"
                   ColumnHeaderHeight="50"
                   BorderThickness="1"
                   BorderBrush="#DDDDDD" 
                   Background="#F7F7F7"
                   AutoGenerateColumns="False" 
-                  ItemsSource="{Binding Items}">
+                  ItemsSource="{Binding Items}" Height="648" VerticalAlignment="Top">
             <!-- Define Columns -->
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="*"/>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="100"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="120"/>
+                <!-- Image Column -->
+                <DataGridTemplateColumn Header="Image" Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding ProductImage}" Width="50" Height="50" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Item Name Column -->
+                <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="*" 
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
+
+                <!-- Quantity Column -->
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100" 
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
+
+                <!-- Price Column -->
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="100" 
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
+
+                <!-- Value Column -->
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="100" 
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
             </DataGrid.Columns>
 
             <!-- Style Definitions -->
@@ -40,7 +68,9 @@
 
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
-                    <Setter Property="Padding" Value="10"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="5"/>
                     <Setter Property="BorderBrush" Value="#EAEAEA"/>
                     <Setter Property="BorderThickness" Value="0 0 0 1"/>
                 </Style>
@@ -48,6 +78,6 @@
         </DataGrid>
 
         <!-- Button to add new items -->
-        <Button Content="Add New Item" HorizontalAlignment="Left" Margin="798,16,0,0" VerticalAlignment="Top" Height="41" Width="258" FontSize="18" Click="addbutton"/>
+        <Button Content="Add New Item" HorizontalAlignment="Right" Margin="10,16,10,0" VerticalAlignment="Top" Height="41" Width="150" FontSize="18" Click="addbutton"/>
     </Grid>
 </UserControl>

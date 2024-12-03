@@ -15,9 +15,9 @@ namespace Inventory
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginPage : Window
     {
-        public MainWindow()
+        public LoginPage()
         {
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -26,7 +26,7 @@ namespace Inventory
         private void forgotpage(object sender, MouseButtonEventArgs e)
         {
             // Create the new window
-            Window1 forgotWindow = new Window1();
+            RecoveryPage forgotWindow = new RecoveryPage();
             forgotWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
 
             // Show the new window
@@ -47,7 +47,7 @@ namespace Inventory
             {
                 MessageBox.Show("Login successful!");
                 // Redirect to homepage
-                Window2 homepage = new Window2(); // Replace with your actual homepage
+                MainPage homepage = new MainPage(); // Replace with your actual homepage
                 homepage.Show();
                 this.Close();
             }

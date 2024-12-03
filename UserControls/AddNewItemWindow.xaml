@@ -20,6 +20,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+
         <!-- Item Name -->
         <TextBlock Text="Item Name:" VerticalAlignment="Center" Margin="5"/>
         <TextBox x:Name="ItemNameTextBox" Grid.Column="1" Margin="5" Width="200"/>
@@ -45,8 +46,16 @@
         <Button Content="Save" Grid.Row="5" HorizontalAlignment="Right" Margin="5"
                 Width="100" Click="SaveButton_Click"/>
         <!-- Cancel Button -->
-        <Button Content="Cancel" Grid.Row="5" HorizontalAlignment="Left" Margin="125,5,0,5"
+        <Button Content="Cancel" Grid.Row="5" HorizontalAlignment="Left" Margin="20,5,0,5"
                 Width="100" Click="CancelButton_Click" Grid.Column="1"/>
+
+        <!-- Image Preview -->
+        <Image x:Name="PreviewImage" Width="100" Height="100" Grid.Row="5" Grid.Column="1" Margin="136,73,14,29"/>
+
+        <!-- Select Image Button -->
+        <Button Content="Select Image" Grid.Row="5" Margin="133,10,25,147"
+        Click="SelectImage_Click" Grid.Column="1"/>
+
 
     </Grid>
 </Window>

@@ -39,6 +39,21 @@ namespace Inventory.UserControls
             }
         }
 
+        
+
+
+
+        // Convert image to byte array
+        private byte[] ConvertImageToByteArray(string imagePath)
+        {
+            if (string.IsNullOrEmpty(imagePath))
+                return null;
+
+            return System.IO.File.ReadAllBytes(imagePath);
+        }
+
+
+
         // Save Button Click
         public void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -59,44 +74,49 @@ namespace Inventory.UserControls
 
             try
             {
-                // Convert inputs to the correct types
                 int quantity = int.Parse(quantityText);
                 double price = double.Parse(priceText);
                 double value = double.Parse(valueText);
 
-                // Save to SQLite Database
+                byte[] imageBytes = ConvertImageToByteArray(SelectedImagePath); // Convert selected image to byte array
+
                 using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
                 {
                     connection.Open();
-                    var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value) VALUES (@ItemName, @Quantity, @Price, @Value)", connection);
+                    var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Image) VALUES (@ItemName, @Quantity, @Price, @Value, @Image)", connection);
                     command.Parameters.AddWithValue("@ItemName", itemName);
                     command.Parameters.AddWithValue("@Quantity", quantity);
                     command.Parameters.AddWithValue("@Price", price);
                     command.Parameters.AddWithValue("@Value", value);
+                    command.Parameters.Add("@Image", System.Data.DbType.Binary).Value = imageBytes;
                     command.ExecuteNonQuery();
                 }
 
                 MessageBox.Show("Item added successfully!");
-
-                // Notify the parent window to refresh the inventory
-                var parentWindow = this.Owner as MainWindow; // Assuming MainWindow is the parent
-                if (parentWindow != null)
-                {
-                    var inventoryControl = parentWindow.FindName("InventoryUserControl") as Inventory; // Assuming InventoryUserControl is the name of your Inventory control
-                    inventoryControl?.LoadInventory(); // Call the LoadInventory method to refresh the data
-                }
-
-                this.Close(); // Close the AddNewItemWindow after saving
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Invalid format. Please enter valid numbers for Quantity, Price, and Value.");
+                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+
+
+        private void SelectImage_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                PreviewImage.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+                SelectedImagePath = openFileDialog.FileName; // Save the selected image path
+            }
+        }   
+
+        private string SelectedImagePath { get; set; }
 
 
 

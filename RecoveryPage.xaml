@@ -1,11 +1,11 @@
-﻿<Window x:Class="Inventory.Window1"
+﻿<Window x:Class="Inventory.RecoveryPage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inventory"
         mc:Ignorable="d"
-        Title="Window1" Height="400" Width="400">
+        Title="Recovery" Height="400" Width="400">
     <Grid Background="#FFE8E8E8">
         <Label Content="Security Question" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" Width="148" FontSize="16"/>
         <Label Content="What is the name of the Store?" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Width="178"/>

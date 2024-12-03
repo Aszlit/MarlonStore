@@ -18,9 +18,9 @@ namespace Inventory
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class RecoveryPage : Window
     {
-        public Window1()
+        public RecoveryPage()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
@@ -30,7 +30,7 @@ namespace Inventory
         private void returnpage(object sender, MouseButtonEventArgs e)
         {
             // Create the new window
-            MainWindow secondWindow = new();
+            LoginPage secondWindow = new();
 
             // Show the new window
             secondWindow.Show();
