@@ -20,14 +20,14 @@
                   CanUserResizeColumns="False"
                   HeadersVisibility="Column" 
                   GridLinesVisibility="None"
-                  Margin="10,79,10,0"
+                  Margin="10,79,10,41"
                   RowHeight="50"
                   ColumnHeaderHeight="50"
                   BorderThickness="1"
                   BorderBrush="#DDDDDD" 
                   Background="#F7F7F7"
                   AutoGenerateColumns="False" 
-                  ItemsSource="{Binding Items}" Height="648" VerticalAlignment="Top">
+                  ItemsSource="{Binding Items}">
             <!-- Define Columns -->
             <DataGrid.Columns>
                 <!-- Image Column -->

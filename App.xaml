@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Inventory"
              StartupUri="LoginPage.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>
