@@ -1,59 +1,73 @@
 ﻿using System.Data.SQLite;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Inventory
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class LoginPage : Window
     {
         public LoginPage()
         {
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.ResizeMode = ResizeMode.NoResize; // Disable resizing
+        }
+
+        // Close button event handler
+        private void CloseApp(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        // Minimize button event handler
+        private void MinimizeApp(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
 
         private void forgotpage(object sender, MouseButtonEventArgs e)
         {
-            // Create the new window
-            RecoveryPage forgotWindow = new RecoveryPage();
-            forgotWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
-
-            // Show the new window
+            RecoveryPage forgotWindow = new RecoveryPage
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
             forgotWindow.Show();
-
-            // Close the current window
             this.Close();
         }
 
-
-
         private void login(object sender, RoutedEventArgs e)
         {
-            string username = input1.Text;  // Get username from input1
-            string password = input2.Password;  // Get password from input2
+            ResetFieldStyles();
+
+            string username = input1.Text;
+            string password = input2.Password;
+
+            if (string.IsNullOrEmpty(username))
+            {
+                HighlightField(input1);
+                input1.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                HighlightField(input2);
+                input2.Focus();
+                return;
+            }
 
             if (IsLoginValid(username, password))
             {
-                MessageBox.Show("Login successful!");
-                // Redirect to homepage
-                MainPage homepage = new MainPage(); // Replace with your actual homepage
+                MainPage homepage = new MainPage();
                 homepage.Show();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Invalid username or password. Please try again.");
+                HighlightField(input1);
+                HighlightField(input2);
             }
         }
 
@@ -77,12 +91,25 @@ namespace Inventory
                         return result == 1;
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    MessageBox.Show($"Database error: {ex.Message}");
                     return false;
                 }
             }
+        }
+
+        private void HighlightField(Control field)
+        {
+            field.BorderBrush = Brushes.Red;
+            field.BorderThickness = new Thickness(2);
+        }
+
+        private void ResetFieldStyles()
+        {
+            input1.BorderBrush = Brushes.Gray;
+            input1.BorderThickness = new Thickness(1);
+            input2.BorderBrush = Brushes.Gray;
+            input2.BorderThickness = new Thickness(1);
         }
     }
 }

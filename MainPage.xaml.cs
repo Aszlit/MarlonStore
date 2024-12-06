@@ -40,7 +40,7 @@ namespace Inventory
         {
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Visible;
-            PurchasesGrid.Visibility = Visibility.Collapsed;
+            RecordsGrid.Visibility = Visibility.Collapsed;
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
@@ -51,18 +51,18 @@ namespace Inventory
         {
             HomepageGrid.Visibility = Visibility.Visible;
             InventoryGrid.Visibility = Visibility.Collapsed;
-            PurchasesGrid.Visibility = Visibility.Collapsed;
+            RecordsGrid.Visibility = Visibility.Collapsed;
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
         }
 
         // Navigate to Purchases
-        private void purchases(object sender, MouseButtonEventArgs e)
+        private void Records(object sender, MouseButtonEventArgs e)
         {
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
-            PurchasesGrid.Visibility = Visibility.Visible;
+            RecordsGrid.Visibility = Visibility.Visible;
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
@@ -73,7 +73,7 @@ namespace Inventory
         {
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
-            PurchasesGrid.Visibility = Visibility.Collapsed;
+            RecordsGrid.Visibility = Visibility.Collapsed;
             SalesGrid.Visibility = Visibility.Visible;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
@@ -83,7 +83,7 @@ namespace Inventory
         {
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
-            PurchasesGrid.Visibility = Visibility.Collapsed;
+            RecordsGrid.Visibility = Visibility.Collapsed;
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Visible;
             AboutGrid.Visibility = Visibility.Collapsed;
@@ -95,7 +95,7 @@ namespace Inventory
 
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
-            PurchasesGrid.Visibility = Visibility.Collapsed;
+            RecordsGrid.Visibility = Visibility.Collapsed;
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Visible;

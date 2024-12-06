@@ -19,11 +19,12 @@ namespace Inventory.UserControls
     /// <summary>
     /// Interaction logic for Purchases.xaml
     /// </summary>
-    public partial class Purchases : UserControl
+    public partial class Records : UserControl
     {
-        public Purchases()
+        public Records()
         {
             InitializeComponent();
+            LoadPurchases(); // Load inventory items from database
         }
 
 

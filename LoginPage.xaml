@@ -3,24 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Inventory"
         mc:Ignorable="d"
-        Title="Login" Height="400" Width="400">
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black"/>
-                <GradientStop Color="#FF9A0000" Offset="0.44"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <Label Content="Password" HorizontalAlignment="Left" Height="24" Margin="130,184,0,0" VerticalAlignment="Top" Width="108" Foreground="White"/>
-        <Label Content="Username" HorizontalAlignment="Left" Height="24" Margin="130,102,0,0" VerticalAlignment="Top" Width="108" Foreground="White"/>
-        <Label Content="LOGIN PAGE" HorizontalAlignment="Center" Height="37" Margin="0,34,0,0" VerticalAlignment="Top" Width="124" FontSize="20" Foreground="White" FontFamily="Bahnschrift SemiBold"/>
+        Title="Login" Height="400" Width="400"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
 
-        <Button Content="Login" HorizontalAlignment="Center" Margin="0,271,0,0" VerticalAlignment="Top" Height="32" Width="124" Click="login"/>
-        <Label Content="Forgot Password" HorizontalAlignment="Left" Margin="138,320,0,0" VerticalAlignment="Top" MouseLeftButtonDown="forgotpage" Foreground="White"/>
-        <TextBox x:Name="input1" HorizontalAlignment="Center" Height="24" Margin="0,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
-        <PasswordBox x:Name="input2" HorizontalAlignment="Center" Height="23" Margin="0,213,0,0" VerticalAlignment="Top" Width="144"/>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
 
-    </Grid>
+    <Border Background="#FF3C3C3C" CornerRadius="10">
+        <Grid>
+            <!-- Custom Title Bar -->
+            <DockPanel Background="Transparent" Height="40" VerticalAlignment="Top" Margin="0">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                    <!-- Minimize Button -->
+                    <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
+                            Click="MinimizeApp" ToolTip="Minimize">
+                        <Path Data="M0,1 L10,1" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <!-- Close Button -->
+                    <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
+                            Click="CloseApp" ToolTip="Close">
+                        <Path Data="M0,0 L10,10 M10,0 L0,10" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+
+            <!-- Main Content -->
+            <Grid Background="#FF3C3C3C" Margin="0,40,0,0">
+                <Label Content="Password" HorizontalAlignment="Left" Height="24" Margin="130,184,0,0" VerticalAlignment="Top" Width="108" Foreground="White"/>
+                <Label Content="Username" HorizontalAlignment="Left" Height="24" Margin="130,102,0,0" VerticalAlignment="Top" Width="108" Foreground="White"/>
+                <Label Content="LOGIN PAGE" HorizontalAlignment="Center" Height="37" Margin="0,34,0,0" VerticalAlignment="Top" Width="124" FontSize="20" Foreground="White" FontFamily="Bahnschrift SemiBold"/>
+                <Button Content="Login" HorizontalAlignment="Center" Margin="0,271,0,0" VerticalAlignment="Top" Height="32" Width="124" Click="login"/>
+                <Label Content="Forgot Password" HorizontalAlignment="Left" Margin="138,320,0,0" VerticalAlignment="Top" MouseLeftButtonDown="forgotpage" Foreground="White"/>
+                <TextBox x:Name="input1" HorizontalAlignment="Center" Height="24" Margin="0,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144"/>
+                <PasswordBox x:Name="input2" HorizontalAlignment="Center" Height="23" Margin="0,213,0,0" VerticalAlignment="Top" Width="144"/>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>

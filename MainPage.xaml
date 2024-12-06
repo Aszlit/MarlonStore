@@ -8,19 +8,30 @@
         mc:Ignorable="d"
         Title="MainPage" Height="768" Width="1366">
     <Grid>
-        <DockPanel HorizontalAlignment="Left" Height="752" LastChildFill="False" VerticalAlignment="Center" Width="270" Background="#FFD43232"/>
+        <DockPanel HorizontalAlignment="Left" Height="752" LastChildFill="False" VerticalAlignment="Center" Width="270" Background="#FF464646">
+            <DockPanel.OpacityMask>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FF6102C4" Offset="1"/>
+                </LinearGradientBrush>
+            </DockPanel.OpacityMask>
+        </DockPanel>
         <Label Content="HOME" HorizontalAlignment="Left" Height="51" Margin="48,318,0,0" VerticalAlignment="Top" Width="137" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="home"/>
         <Image Source="Images/logo.png" HorizontalAlignment="Left" Height="264" Margin="18,38,0,0" VerticalAlignment="Top" Width="232"/>
         <Label Content="INVENTORY" HorizontalAlignment="Left" Height="51" Margin="47,374,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="inventory"/>
-        <Label Content="PURCHASES" HorizontalAlignment="Left" Height="51" Margin="47,425,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="purchases"/>
+        <Label Content="RECORDS" HorizontalAlignment="Left" Height="51" Margin="47,425,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="Records"/>
         <Label Content="SALES" HorizontalAlignment="Left" Height="51" Margin="47,471,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="sales"/>
         <Label Content="SUPPLIERS" HorizontalAlignment="Left" Height="51" Margin="47,516,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="suppliers"/>
         <Label Content="ABOUT" HorizontalAlignment="Left" Height="51" Margin="47,561,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="about"/>
         <Label Content="LOG OUT" HorizontalAlignment="Left" Height="51" Margin="47,649,0,0" VerticalAlignment="Top" Width="236" FontWeight="Bold" FontSize="36" Foreground="White" MouseLeftButtonDown="logoutbutt"/>
 
+        <Rectangle HorizontalAlignment="Left" Height="38" Margin="269,714,0,0" Stroke="Black" VerticalAlignment="Top" Width="1097" Fill="#FF05D9FF" Panel.ZIndex="1"/>
+        <Rectangle HorizontalAlignment="Left" Height="38" Stroke="Black" VerticalAlignment="Top" Width="1096" Fill="#FF05D9FF" Panel.ZIndex="1" Margin="270,0,0,0"/>
+
+
         <!-- Homepage User Control -->
-        <Grid x:Name="HomepageGrid" Visibility="Visible" Margin="269,0,0,-16">
-            <UserControls:Homepage Width="1096" Height="768" />
+        <Grid x:Name="HomepageGrid" Visibility="Visible" Margin="269,0,0,0">
+            <UserControls:Homepage Width="1096" Margin="0,0,1,0" Background="#FF5B5B5B" Height="752" VerticalAlignment="Top" />
         </Grid>
 
         <!-- Inventory User Control -->
@@ -31,8 +42,8 @@
 
 
         <!-- Inventory User Control -->
-        <Grid x:Name="PurchasesGrid" Visibility="Collapsed" Margin="269,0,0,-16">
-            <UserControls:Purchases Width="1096" Height="768" />
+        <Grid x:Name="RecordsGrid" Visibility="Collapsed" Margin="269,0,0,-16">
+            <UserControls:Records Width="1096" Height="768" />
         </Grid>
 
 
