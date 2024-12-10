@@ -3,6 +3,7 @@ using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Inventory
 {
@@ -101,6 +102,34 @@ namespace Inventory
             AboutGrid.Visibility = Visibility.Visible;
         }
 
+
+
+
+        // MouseEnter Event Handler
+        private void Label_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Label label = sender as Label;
+
+            if (label != null)
+            {
+                // Change background color to a lighter shade when hovered
+                label.Background = new SolidColorBrush(Color.FromRgb(91, 91, 91)); // Lighter shade
+            }
+        }
+
+        // MouseLeave Event Handler
+        private void Label_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Label label = sender as Label;
+
+            if (label != null)
+            {
+                // Revert back to the original background color
+                label.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
+            }
+        }
+
+    
 
 
 

@@ -12,6 +12,47 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+
+        <!-- Oval Button Style -->
+        <Style x:Key="OvalButtonStyle" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#FF6102C4" />
+            <Setter Property="Height" Value="41" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0,64,10,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF7B23D3" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF5102A3" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FFCCCCCC" />
+                                <Setter Property="Foreground" Value="#FF888888" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -20,7 +61,7 @@
                   CanUserResizeColumns="False"
                   HeadersVisibility="Column" 
                   GridLinesVisibility="None"
-                  Margin="10,79,10,41"
+                  Margin="10,115,10,65"
                   RowHeight="50"
                   ColumnHeaderHeight="50"
                   BorderThickness="1"
@@ -78,6 +119,8 @@
         </DataGrid>
 
         <!-- Button to add new items -->
-        <Button Content="Add New Item" HorizontalAlignment="Right" Margin="10,16,10,0" VerticalAlignment="Top" Height="41" Width="150" FontSize="18" Click="addbutton"/>
+        <Button Content="Add New Item" 
+                Click="addbutton"
+                Style="{StaticResource OvalButtonStyle}" />
     </Grid>
 </UserControl>

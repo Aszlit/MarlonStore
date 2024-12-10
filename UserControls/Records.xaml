@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <!-- Input section -->
-        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="0">
+        <StackPanel Orientation="Horizontal" Margin="10,41,10,703" Grid.Row="0" Grid.RowSpan="2">
             <TextBox x:Name="ProductNameTextBox" Width="150" Text="Product Name" Foreground="Gray"
                      GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
             <TextBox x:Name="SKUTextBox" Width="100" Text="SKU" Foreground="Gray"
@@ -34,21 +34,26 @@
             <Button Content="Add Purchase" Click="AddPurchase_Click" />
         </StackPanel>
 
-        <!-- Purchases DataGrid -->
-        <DataGrid x:Name="PurchasesDataGrid" 
-                  CanUserAddRows="False" 
-                  CanUserResizeColumns="False"
-                  HeadersVisibility="Column" 
-                  GridLinesVisibility="None"
-                  Margin="10,10,10,41"
-                  RowHeight="50"
-                  ColumnHeaderHeight="50"
-                  BorderThickness="1"
-                  BorderBrush="#DDDDDD" 
-                  Background="#F7F7F7"
-                  AutoGenerateColumns="False" 
-                  ItemsSource="{Binding Purchases}" 
-                  Grid.Row="1">
+            <!-- Purchases DataGrid -->
+              <DataGrid x:Name="PurchasesDataGrid" 
+              CanUserAddRows="False" 
+              CanUserResizeColumns="False"
+              IsReadOnly="True"
+              HeadersVisibility="Column" 
+              GridLinesVisibility="None"
+              Margin="10,76,10,89"
+              RowHeight="50"
+              ColumnHeaderHeight="50"
+              BorderThickness="1"
+              BorderBrush="#DDDDDD" 
+              Background="#F7F7F7"
+              AutoGenerateColumns="False" 
+              ItemsSource="{Binding Purchases}" 
+              Grid.Row="1"
+              SelectionMode="Single" 
+              SelectionUnit="FullRow"
+              Focusable="False"
+              IsHitTestVisible="False">
             <!-- Define Columns -->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="*" 

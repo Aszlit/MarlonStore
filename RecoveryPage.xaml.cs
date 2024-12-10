@@ -91,5 +91,15 @@ namespace Inventory
                 }
             }
         }
+
+        private void MinimizeApp(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void CloseApp(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

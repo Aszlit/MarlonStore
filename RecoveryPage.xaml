@@ -3,19 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Inventory"
         mc:Ignorable="d"
-        Title="Recovery" Height="400" Width="400">
-    <Grid Background="#FF460079">
-        <Label Content="Security Question" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" Width="148" FontSize="16" Foreground="White"/>
-        <Label Content="What is the name of the Store?" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Width="178" Foreground="White"/>
 
-        <Label x:Name="passrecoverlabel" Content="Recovered Password Here......" HorizontalAlignment="Center" Margin="0,309,0,0" VerticalAlignment="Top" Width="216" Foreground="White"/>
-        <Label x:Name="returnlabel" Content="Return" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18" MouseLeftButtonDown="returnpage" Foreground="White"/>
-        <TextBox x:Name="securitybox" HorizontalAlignment="Left" Margin="96,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="25"/>
-        <Button Content="Recover" HorizontalAlignment="Left" Margin="146,259,0,0" VerticalAlignment="Top" Height="22" Width="78" Click="recover" BorderBrush="#FFFFFEFE" Background="#FFD2D2D2" Foreground="Black"/>
-        <Label Content="Username" HorizontalAlignment="Left" Margin="96,108,0,0" VerticalAlignment="Top" Width="178" Foreground="White"/>
-        <TextBox x:Name="usernamebox" HorizontalAlignment="Left" Margin="96,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="25"/>
+        Title="Recovery" Height="400" Width="400"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
 
-    </Grid>
+
+    <Border Background="#FF460079" CornerRadius="10">
+        <Grid>
+            <!-- Custom Title Bar -->
+            <DockPanel Background="Transparent" Height="40" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                    <!-- Minimize Button -->
+                    <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
+                        Click="MinimizeApp" ToolTip="Minimize">
+                        <Path Data="M0,1 L10,1" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <!-- Close Button -->
+                    <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
+                        Click="CloseApp" ToolTip="Close">
+                        <Path Data="M0,0 L10,10 M10,0 L0,10" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+
+            <!-- Original Content -->
+            <Grid Margin="0,40,0,0" Background="#FF460079">
+                <Label Content="Security Question" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" Width="148" FontSize="16" Foreground="White"/>
+                <Label Content="What is the name of the Store?" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Width="178" Foreground="White"/>
+                <Label x:Name="passrecoverlabel" Content="Recovered Password Here......" HorizontalAlignment="Center" Margin="0,309,0,0" VerticalAlignment="Top" Width="216" Foreground="White"/>
+                <Label x:Name="returnlabel" Content="Return" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18" MouseLeftButtonDown="returnpage" Foreground="White"/>
+                <TextBox x:Name="securitybox" HorizontalAlignment="Left" Margin="96,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="25"/>
+                <Button Content="Recover" HorizontalAlignment="Left" Margin="146,259,0,0" VerticalAlignment="Top" Height="22" Width="78" Click="recover" BorderBrush="#FFFFFEFE" Background="#FFD2D2D2" Foreground="Black"/>
+                <Label Content="Username" HorizontalAlignment="Left" Margin="96,108,0,0" VerticalAlignment="Top" Width="178" Foreground="White"/>
+                <TextBox x:Name="usernamebox" HorizontalAlignment="Left" Margin="96,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="25"/>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>

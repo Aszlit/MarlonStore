@@ -68,20 +68,45 @@ namespace Inventory.UserControls
 
         private void AddPurchase_Click(object sender, RoutedEventArgs e)
         {
-            using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+            // Validate inputs
+            if (string.IsNullOrWhiteSpace(ProductNameTextBox.Text) ||
+                string.IsNullOrWhiteSpace(SKUTextBox.Text) ||
+                string.IsNullOrWhiteSpace(InboundStockTextBox.Text) ||
+                !int.TryParse(InboundStockTextBox.Text, out int inboundStock) ||
+                DateOrderedPicker.SelectedDate == null ||
+                DateExpectedPicker.SelectedDate == null ||
+                string.IsNullOrWhiteSpace(PurchaseOrderTextBox.Text))
             {
-                connection.Open();
-                var command = new SQLiteCommand("INSERT INTO Purchases (ProductName, SKU, InboundStock, DateOrdered, DateExpected, PurchaseOrder) VALUES (@ProductName, @SKU, @InboundStock, @DateOrdered, @DateExpected, @PurchaseOrder)", connection);
-                command.Parameters.AddWithValue("@ProductName", ProductNameTextBox.Text);
-                command.Parameters.AddWithValue("@SKU", SKUTextBox.Text);
-                command.Parameters.AddWithValue("@InboundStock", int.Parse(InboundStockTextBox.Text));
-                command.Parameters.AddWithValue("@DateOrdered", DateOrderedPicker.SelectedDate?.ToString("yyyy-MM-dd"));
-                command.Parameters.AddWithValue("@DateExpected", DateExpectedPicker.SelectedDate?.ToString("yyyy-MM-dd"));
-                command.Parameters.AddWithValue("@PurchaseOrder", PurchaseOrderTextBox.Text);
-                command.ExecuteNonQuery();
+                MessageBox.Show("Please fill in all fields correctly.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-            LoadPurchases();
+
+            try
+            {
+                using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+                {
+                    connection.Open();
+                    var command = new SQLiteCommand("INSERT INTO Purchases (ProductName, SKU, InboundStock, DateOrdered, DateExpected, PurchaseOrder) " +
+                                                    "VALUES (@ProductName, @SKU, @InboundStock, @DateOrdered, @DateExpected, @PurchaseOrder)", connection);
+
+                    command.Parameters.AddWithValue("@ProductName", ProductNameTextBox.Text);
+                    command.Parameters.AddWithValue("@SKU", SKUTextBox.Text);
+                    command.Parameters.AddWithValue("@InboundStock", inboundStock);
+                    command.Parameters.AddWithValue("@DateOrdered", DateOrderedPicker.SelectedDate.Value.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@DateExpected", DateExpectedPicker.SelectedDate.Value.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@PurchaseOrder", PurchaseOrderTextBox.Text);
+
+                    command.ExecuteNonQuery();
+                }
+                MessageBox.Show("Purchase added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                LoadPurchases(); // Refresh the DataGrid
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -111,7 +136,5 @@ namespace Inventory.UserControls
                 }
             }
         }
-
-
     }
 }
