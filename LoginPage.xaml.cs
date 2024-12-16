@@ -13,6 +13,8 @@ namespace Inventory
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize; // Disable resizing
+            userinputlabel1.Visibility = Visibility.Hidden;
+            userinputlabel2.Visibility = Visibility.Hidden;
         }
 
         // Close button event handler
@@ -43,20 +45,23 @@ namespace Inventory
 
             string username = input1.Text;
             string password = input2.Password;
+            bool hasError = false;
 
             if (string.IsNullOrEmpty(username))
             {
-                HighlightField(input1);
+                HighlightField(input1, userinputlabel1);
                 input1.Focus();
-                return;
+                hasError = true;
             }
 
             if (string.IsNullOrEmpty(password))
             {
-                HighlightField(input2);
-                input2.Focus();
-                return;
+                HighlightField(input2, userinputlabel2);
+                if (!hasError) input2.Focus();
+                hasError = true;
             }
+
+            if (hasError) return;
 
             if (IsLoginValid(username, password))
             {
@@ -66,10 +71,11 @@ namespace Inventory
             }
             else
             {
-                HighlightField(input1);
-                HighlightField(input2);
+                HighlightField(input1, userinputlabel1);
+                HighlightField(input2, userinputlabel2);
             }
         }
+
 
         private bool IsLoginValid(string username, string password)
         {
@@ -98,11 +104,13 @@ namespace Inventory
             }
         }
 
-        private void HighlightField(Control field)
+        private void HighlightField(Control field, Label label)
         {
             field.BorderBrush = Brushes.Red;
             field.BorderThickness = new Thickness(2);
+            label.Visibility = Visibility.Visible;
         }
+
 
         private void ResetFieldStyles()
         {
@@ -110,6 +118,8 @@ namespace Inventory
             input1.BorderThickness = new Thickness(1);
             input2.BorderBrush = Brushes.Gray;
             input2.BorderThickness = new Thickness(1);
+            userinputlabel1.Visibility = Visibility.Hidden;
+            userinputlabel2.Visibility = Visibility.Hidden;
         }
     }
 }

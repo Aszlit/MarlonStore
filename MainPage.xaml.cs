@@ -26,14 +26,21 @@ namespace Inventory
         // Logout Button
         private void logoutbutt(object sender, MouseButtonEventArgs e)
         {
-            // Create the new window (MainWindow)
-            LoginPage logout = new LoginPage();
+            // Show a confirmation dialog
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to log out?", "Logout Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            // Show the new window
-            logout.Show();
+            // Check if the user clicked "Yes"
+            if (result == MessageBoxResult.Yes)
+            {
+                // Create the new window (LoginPage)
+                LoginPage logout = new LoginPage();
 
-            // Close the current window
-            this.Close();
+                // Show the new window
+                logout.Show();
+
+                // Close the current window
+                this.Close();
+            }
         }
 
         // Navigate to Inventory
