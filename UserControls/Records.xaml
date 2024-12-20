@@ -19,54 +19,52 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Input section -->
-        <StackPanel Orientation="Horizontal" Margin="10,41,10,703" Grid.Row="0" Grid.RowSpan="2">
-            <TextBox x:Name="ProductNameTextBox" Width="150" Text="Product Name" Foreground="Gray"
-                     GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
-            <TextBox x:Name="SKUTextBox" Width="100" Text="SKU" Foreground="Gray"
-                     GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
-            <TextBox x:Name="InboundStockTextBox" Width="100" Text="Inbound Stock" Foreground="Gray"
-                     GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
-            <DatePicker x:Name="DateOrderedPicker" />
-            <DatePicker x:Name="DateExpectedPicker" />
-            <TextBox x:Name="PurchaseOrderTextBox" Width="100" Text="P.O." Foreground="Gray"
-                     GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" />
-            <Button Content="Add Purchase" Click="AddPurchase_Click" />
+        <!-- Buttons to select data view -->
+        <StackPanel Orientation="Horizontal" Margin="10,40,10,698" Grid.Row="0" Grid.RowSpan="2">
+            <Button Content="Inventory" Click="InventoryButton_Click" Margin="5"/>
+            <Button Content="Purchases" Click="PurchasesButton_Click" Margin="5"/>
         </StackPanel>
 
-            <!-- Purchases DataGrid -->
-              <DataGrid x:Name="PurchasesDataGrid" 
-              CanUserAddRows="False" 
-              CanUserResizeColumns="False"
-              IsReadOnly="True"
-              HeadersVisibility="Column" 
-              GridLinesVisibility="None"
-              Margin="10,76,10,89"
-              RowHeight="50"
-              ColumnHeaderHeight="50"
-              BorderThickness="1"
-              BorderBrush="#DDDDDD" 
-              Background="#F7F7F7"
-              AutoGenerateColumns="False" 
-              ItemsSource="{Binding Purchases}" 
-              Grid.Row="1"
-              SelectionMode="Single" 
-              SelectionUnit="FullRow"
-              Focusable="False"
-              IsHitTestVisible="False">
+        <!-- DataGrid to display records -->
+        <DataGrid x:Name="RecordsDataGrid" 
+                  CanUserAddRows="False" 
+                  CanUserResizeColumns="False"
+                  IsReadOnly="True"
+                  HeadersVisibility="Column" 
+                  GridLinesVisibility="None"
+                  Margin="10,84,10,76"
+                  RowHeight="50"
+                  ColumnHeaderHeight="50"
+                  BorderThickness="1"
+                  BorderBrush="#DDDDDD" 
+                  Background="#F7F7F7"
+                  AutoGenerateColumns="False" 
+                  Grid.Row="1">
             <!-- Define Columns -->
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="*" 
+                <!-- Image Column -->
+                <DataGridTemplateColumn Header="Image" Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding ProductImage}" Width="50" Height="50" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Item Name Column -->
+                <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="*" 
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>
-                <DataGridTextColumn Header="SKU" Binding="{Binding SKU}" Width="100" 
+
+                <!-- Quantity Column -->
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100" 
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>
-                <DataGridTextColumn Header="Inbound Stock" Binding="{Binding InboundStock}" Width="100" 
+
+                <!-- Price Column -->
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="100" 
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>
-                <DataGridTextColumn Header="Date Ordered" Binding="{Binding DateOrdered}" Width="150" 
-                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
-                <DataGridTextColumn Header="Date Expected" Binding="{Binding DateExpected}" Width="150" 
-                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
-                <DataGridTextColumn Header="P.O." Binding="{Binding PurchaseOrder}" Width="100" 
+
+                <!-- Value Column -->
+                <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="100" 
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>
             </DataGrid.Columns>
 
