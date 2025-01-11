@@ -40,7 +40,7 @@ namespace Inventory.UserControls
         {
             var items = new List<Inventory.Item>();
 
-            using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+            using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\MarlonStore\database\maindatabase.db"))
             {
                 connection.Open();
                 var command = new SQLiteCommand("SELECT * FROM Inventory", connection);

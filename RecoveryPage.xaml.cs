@@ -63,7 +63,7 @@ namespace Inventory
 
         private string? RecoverPassword(string username, string securityAnswer)
         {
-            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\Aszlit\\MarlonStore\\database\\maindatabase.db;Version=3;";
+            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\MarlonStore\\database\\maindatabase.db;Version=3;";
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {

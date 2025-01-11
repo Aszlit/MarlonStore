@@ -79,7 +79,7 @@ namespace Inventory
 
         private bool IsLoginValid(string username, string password)
         {
-            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\Aszlit\\MarlonStore\\database\\maindatabase.db;Version=3;";
+            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\MarlonStore\\database\\maindatabase.db;Version=3;";
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -97,8 +97,9 @@ namespace Inventory
                         return result == 1;
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    MessageBox.Show($"Error: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
             }

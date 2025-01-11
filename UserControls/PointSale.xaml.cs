@@ -9,6 +9,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
+using System.IO;
+
+
 
 
 namespace Inventory.UserControls
@@ -33,7 +36,10 @@ namespace Inventory.UserControls
         {
             Products.Clear();
 
-            using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+            // Get the relative path to the database
+            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\MarlonStore\\database\\maindatabase.db;Version=3;";
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
                 var command = new SQLiteCommand("SELECT * FROM Inventory", connection);
@@ -46,7 +52,7 @@ namespace Inventory.UserControls
 
                         if (imageBytes != null)
                         {
-                            using (var stream = new System.IO.MemoryStream(imageBytes))
+                            using (var stream = new MemoryStream(imageBytes))
                             {
                                 image = new BitmapImage();
                                 image.BeginInit();

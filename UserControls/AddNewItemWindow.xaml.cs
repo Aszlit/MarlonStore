@@ -80,7 +80,7 @@ namespace Inventory.UserControls
 
                 byte[] imageBytes = ConvertImageToByteArray(SelectedImagePath); // Convert selected image to byte array
 
-                using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+                using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\MarlonStore\database\maindatabase.db"))
                 {
                     connection.Open();
                     var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Image) VALUES (@ItemName, @Quantity, @Price, @Value, @Image)", connection);
