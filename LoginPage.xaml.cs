@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.IO;
 
 namespace Inventory
 {
@@ -79,7 +80,15 @@ namespace Inventory
 
         private bool IsLoginValid(string username, string password)
         {
-            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\MarlonStore\\database\\maindatabase.db;Version=3;";
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+
+            if (!File.Exists(databasePath))
+            {
+                MessageBox.Show($"Database file not found: {databasePath}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            string connectionString = $"Data Source={databasePath};Version=3;";
 
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -96,6 +105,11 @@ namespace Inventory
                         int result = Convert.ToInt32(command.ExecuteScalar());
                         return result == 1;
                     }
+                }
+                catch (SQLiteException ex)
+                {
+                    MessageBox.Show($"SQLite Error: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
                 }
                 catch (Exception ex)
                 {

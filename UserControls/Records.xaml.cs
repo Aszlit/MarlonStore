@@ -40,7 +40,10 @@ namespace Inventory.UserControls
         {
             var items = new List<Inventory.Item>();
 
-            using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\MarlonStore\database\maindatabase.db"))
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
                 var command = new SQLiteCommand("SELECT * FROM Inventory", connection);

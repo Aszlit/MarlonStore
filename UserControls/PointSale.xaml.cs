@@ -37,9 +37,10 @@ namespace Inventory.UserControls
             Products.Clear();
 
             // Get the relative path to the database
-            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\MarlonStore\\database\\maindatabase.db;Version=3;";
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
 
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
                 var command = new SQLiteCommand("SELECT * FROM Inventory", connection);

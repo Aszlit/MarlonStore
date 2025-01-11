@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace Inventory.UserControls
 {
@@ -80,7 +81,10 @@ namespace Inventory.UserControls
 
                 byte[] imageBytes = ConvertImageToByteArray(SelectedImagePath); // Convert selected image to byte array
 
-                using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\MarlonStore\database\maindatabase.db"))
+                string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+                string connectionString = $"Data Source={databasePath};Version=3;";
+
+                using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
                     var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Image) VALUES (@ItemName, @Quantity, @Price, @Value, @Image)", connection);

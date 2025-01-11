@@ -157,7 +157,8 @@ namespace Inventory
         public static void InitializeDatabase()
         {
             // Path to SQLite database file
-            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\MarlonStore\\database\\maindatabase.db;Version=3;";
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
 
             using (var connection = new SQLiteConnection(connectionString))
             {
