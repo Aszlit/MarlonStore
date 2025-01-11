@@ -6,7 +6,29 @@
              xmlns:local="clr-namespace:Inventory.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1096">
+    <UserControl.Resources>
+        <DropShadowEffect x:Key="DropShadowEffect" Color="Black" Direction="320" ShadowDepth="5" Opacity="0.5" BlurRadius="10"/>
+    </UserControl.Resources>
     <Grid>
-            
+        <ScrollViewer>
+            <ItemsControl x:Name="ProductsPanel" Height="550">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" CornerRadius="10" Margin="10" Padding="10" Effect="{StaticResource DropShadowEffect}" MouseLeftButtonUp="Card_MouseLeftButtonUp">
+                            <StackPanel Width="150">
+                                <Image Source="{Binding ProductImage}" Height="100" Width="100" Stretch="UniformToFill" />
+                                <TextBlock Text="{Binding ItemName}" HorizontalAlignment="Center" Margin="5,10,5,0" FontWeight="Bold" FontSize="14" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
+
