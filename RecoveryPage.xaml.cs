@@ -18,9 +18,9 @@ namespace Inventory
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class RecoveryPage : Window
     {
-        public Window1()
+        public RecoveryPage()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
@@ -30,7 +30,7 @@ namespace Inventory
         private void returnpage(object sender, MouseButtonEventArgs e)
         {
             // Create the new window
-            MainWindow secondWindow = new();
+            LoginPage secondWindow = new();
 
             // Show the new window
             secondWindow.Show();
@@ -63,9 +63,10 @@ namespace Inventory
 
         private string? RecoverPassword(string username, string securityAnswer)
         {
-            string connectionString = "Data Source=C:\\Users\\marlo\\source\\repos\\Aszlit\\MarlonStore\\database\\maindatabase.db;Version=3;";
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
 
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 try
                 {
@@ -90,6 +91,16 @@ namespace Inventory
                     return null;
                 }
             }
+        }
+
+        private void MinimizeApp(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void CloseApp(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

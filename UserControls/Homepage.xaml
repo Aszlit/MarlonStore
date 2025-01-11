@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1096">
     <Grid>
-        <Rectangle HorizontalAlignment="Left" Height="244" Stroke="Black" VerticalAlignment="Top" Width="628" Fill="Red" Margin="272,214,0,0"/>
+        <Rectangle HorizontalAlignment="Left" Height="244" Stroke="Black" VerticalAlignment="Top" Width="414" Margin="96,446,0,0" Fill="WhiteSmoke"/>
+        <Rectangle HorizontalAlignment="Left" Height="244" Stroke="Black" VerticalAlignment="Top" Width="414" Margin="590,446,0,0" Fill="WhiteSmoke"/>
+        <Label Content="Recent Purchases" HorizontalAlignment="Left" Margin="126,474,0,0" VerticalAlignment="Top" Width="187" Background="#00000000" FontSize="20"/>
+        <Label Content="Recent Sales" HorizontalAlignment="Left" Margin="620,474,0,0" VerticalAlignment="Top" Width="187" Background="#00000000" FontSize="20"/>
     </Grid>
 </UserControl>

@@ -1,43 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using System.Data.SQLite;
+using System.Windows.Input;
+using System.IO;
+
+
+
 
 namespace Inventory.UserControls
 {
     /// <summary>
-    /// Interaction logic for Inventory.xaml
+    /// Interaction logic for PointSale.xaml
     /// </summary>
-    public partial class Inventory : UserControl
+    public partial class PointSale : UserControl
     {
-        // ObservableCollection that binds to the DataGrid
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Item> Products { get; set; }
 
-        public Inventory()
+        public PointSale()
         {
             InitializeComponent();
-            Items = new ObservableCollection<Item>();
+            Products = new ObservableCollection<Item>();
             this.DataContext = this; // Set DataContext for binding
-            LoadInventory(); // Load inventory items from database
+            LoadProducts(); // Load products from database
         }
 
         // Method to load data from SQLite database
-        public void LoadInventory()
+        public void LoadProducts()
         {
-            Items.Clear();
+            Products.Clear();
 
+            // Get the relative path to the database
             string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
             string connectionString = $"Data Source={databasePath};Version=3;";
 
@@ -54,7 +53,7 @@ namespace Inventory.UserControls
 
                         if (imageBytes != null)
                         {
-                            using (var stream = new System.IO.MemoryStream(imageBytes))
+                            using (var stream = new MemoryStream(imageBytes))
                             {
                                 image = new BitmapImage();
                                 image.BeginInit();
@@ -64,48 +63,39 @@ namespace Inventory.UserControls
                             }
                         }
 
-                        Items.Add(new Item
+                        Products.Add(new Item
                         {
                             ItemName = reader["ItemName"].ToString(),
                             Quantity = Convert.ToInt32(reader["Quantity"]),
                             Price = Convert.ToDouble(reader["Price"]),
-                            Value = Convert.ToDouble(reader["Value"]),
                             ProductImage = image // Assign the image to the property
                         });
                     }
                 }
             }
+
+            ProductsPanel.ItemsSource = Products; // Bind the products to the ItemsControl
         }
 
-
-
-
-        // Event handler for the "Add New Item" button click
-        private void addbutton(object sender, RoutedEventArgs e)
+        private void Card_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            try
+            var clickedItem = (sender as FrameworkElement)?.DataContext as Item;
+            if (clickedItem != null)
             {
-                // Create the new window
-                AddNewItemWindow addgoodswindow = new AddNewItemWindow();
+                var orderDetails = new OrderDetails();
+                orderDetails.SetProductDetails(clickedItem.ProductImage, clickedItem.ItemName, clickedItem.Quantity, clickedItem.Price);
 
-                // Set the owner of the new window to the current Inventory window
-                addgoodswindow.Owner = Window.GetWindow(this);  // This sets the owner to the Inventory window
-
-                // Show the new window and wait until it's closed
-                addgoodswindow.ShowDialog();
-
-                // Refresh the inventory after the new item is added
-                LoadInventory(); // Refresh inventory after adding a new item
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                var window = new Window
+                {
+                    Content = orderDetails,
+                    Width = 400,
+                    Height = 300,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    Title = "Order Details"
+                };
+                window.ShowDialog();
             }
         }
-
-
-
-
 
         // Item model class
         public class Item
@@ -113,23 +103,7 @@ namespace Inventory.UserControls
             public string ItemName { get; set; }
             public int Quantity { get; set; }
             public double Price { get; set; }
-            public double Value { get; set; }
             public BitmapImage ProductImage { get; set; } // For displaying the image
         }
-
-
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            try
-            {
-                // Your closing logic here
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error during closing: {ex.Message}");
-            }
-        }
-
     }
 }
