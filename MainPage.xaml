@@ -26,12 +26,12 @@
         <!-- Logo -->
         <Image Source="Images/logo.png" HorizontalAlignment="Left" Height="264" Margin="18,38,0,0" VerticalAlignment="Top" Width="232"/>
 
-        <Label x:Name="homeLabel" Content="         HOME" HorizontalAlignment="Left" Height="51" Margin="0,323,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="home" FontFamily="Bahnschrift"/>
-        <Label x:Name="inventoryLabel" Content="    INVENTORY" HorizontalAlignment="Left" Height="51" Margin="0,374,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="inventory" FontFamily="Bahnschrift"/>
-        <Label x:Name="recordsLabel" Content="     RECORDS" HorizontalAlignment="Left" Height="51" Margin="0,425,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="Records" FontFamily="Bahnschrift"/>
-        <Label x:Name="salesLabel" Content="      SALES" HorizontalAlignment="Left" Height="51" Margin="0,476,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="sales" FontFamily="Bahnschrift"/>
-        <Label x:Name="suppliersLabel" Content="    SUPPLIERS" HorizontalAlignment="Left" Height="51" Margin="0,527,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="suppliers" FontFamily="Bahnschrift"/>
-        <Label x:Name="aboutLabel" Content="       ABOUT" HorizontalAlignment="Left" Height="51" Margin="0,578,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="about" FontFamily="Bahnschrift"/>
+        <Label x:Name="homeLabel" Content="         HOME" HorizontalAlignment="Left" Height="51" Margin="0,271,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="home" FontFamily="Bahnschrift"/>
+        <Label x:Name="inventoryLabel" Content="    INVENTORY" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="inventory" FontFamily="Bahnschrift" Margin="0,324,0,0"/>
+        <Label x:Name="recordsLabel" Content="     RECORDS" HorizontalAlignment="Left" Height="51" Margin="0,373,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="Records" FontFamily="Bahnschrift"/>
+        <Label x:Name="salesLabel" Content="      SALES" HorizontalAlignment="Left" Height="51" Margin="0,424,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="sales" FontFamily="Bahnschrift"/>
+        <Label x:Name="suppliersLabel" Content="    SUPPLIERS" HorizontalAlignment="Left" Height="51" Margin="0,475,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="suppliers" FontFamily="Bahnschrift"/>
+        <Label x:Name="aboutLabel" Content="       ABOUT" HorizontalAlignment="Left" Height="51" Margin="0,526,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="about" FontFamily="Bahnschrift"/>
         <Label x:Name="logoutLabel" Content="     LOG OUT" HorizontalAlignment="Left" Height="51" Margin="1,663,0,0" VerticalAlignment="Top" Width="269" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="logoutbutt" FontFamily="Bahnschrift"/>
 
         <!-- Bottom Rectangles (for UI styling) -->
@@ -63,6 +63,10 @@
         <Grid x:Name="AboutGrid" Visibility="Collapsed" Margin="269,0,0,-16">
             <UserControls:About Width="1096" Height="768"/>
         </Grid>
+        <Grid x:Name="PointSaleGrid" Visibility="Collapsed" Margin="269,0,0,-16">
+            <UserControls:PointSale Width="1096" Height="768"/>
+        </Grid>
+        <Label x:Name="aboutLabel_Copy" Content="POS" HorizontalAlignment="Left" Height="51" Margin="0,574,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="pos" FontFamily="Bahnschrift"/>
 
     </Grid>
 </Window>

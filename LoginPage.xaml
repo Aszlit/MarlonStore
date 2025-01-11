@@ -21,14 +21,56 @@
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
                     <!-- Minimize Button -->
                     <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
-                            Click="MinimizeApp" ToolTip="Minimize">
-                        <Path Data="M0,1 L10,1" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        Click="MinimizeApp" ToolTip="Minimize">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <!-- Background Layer -->
+                                    <Rectangle x:Name="BackgroundRectangle" Fill="Transparent" RadiusX="5" RadiusY="5"/>
+                                    <!-- Minimize Icon -->
+                                    <Path Data="M0,1 L10,1" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <!-- MouseOver Trigger -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FFF1C40F"/>
+                                        <!-- Yellow Hover Background -->
+                                    </Trigger>
+                                    <!-- Pressed Trigger -->
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FFD4AC0D"/>
+                                        <!-- Darker Yellow Click Background -->
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
 
                     <!-- Close Button -->
                     <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
-                            Click="CloseApp" ToolTip="Close">
-                        <Path Data="M0,0 L10,10 M10,0 L0,10" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        Click="CloseApp" ToolTip="Close">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <!-- Background Layer -->
+                                    <Rectangle x:Name="BackgroundRectangle" Fill="Transparent" RadiusX="5" RadiusY="5"/>
+                                    <!-- X Icon -->
+                                    <Path Data="M0,0 L10,10 M10,0 L0,10" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <!-- MouseOver Trigger -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FFCC0000"/>
+                                        <!-- Red Hover Background -->
+                                    </Trigger>
+                                    <!-- Pressed Trigger -->
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF990000"/>
+                                        <!-- Darker Red Click Background -->
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
                 </StackPanel>
             </DockPanel>

@@ -52,6 +52,7 @@ namespace Inventory
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
+            PointSaleGrid.Visibility = Visibility.Collapsed;
         }
 
         // Navigate to Home
@@ -74,6 +75,7 @@ namespace Inventory
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
+            PointSaleGrid.Visibility = Visibility.Collapsed;
         }
 
         // Navigate to Sales
@@ -95,6 +97,7 @@ namespace Inventory
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Visible;
             AboutGrid.Visibility = Visibility.Collapsed;
+            PointSaleGrid.Visibility = Visibility.Collapsed;
         }
 
 
@@ -107,9 +110,19 @@ namespace Inventory
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Visible;
+            PointSaleGrid.Visibility = Visibility.Collapsed;
         }
 
-
+        private void pos(object sender, MouseButtonEventArgs e)
+        {
+            HomepageGrid.Visibility = Visibility.Collapsed;
+            InventoryGrid.Visibility = Visibility.Collapsed;
+            RecordsGrid.Visibility = Visibility.Collapsed;
+            SalesGrid.Visibility = Visibility.Collapsed;
+            SuppliersGrid.Visibility = Visibility.Collapsed;
+            AboutGrid.Visibility = Visibility.Collapsed;
+            PointSaleGrid.Visibility = Visibility.Visible;
+        }
 
 
         // MouseEnter Event Handler
