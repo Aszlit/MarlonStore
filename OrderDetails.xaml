@@ -11,6 +11,9 @@
             <TextBlock x:Name="ProductName" FontSize="16" FontWeight="Bold" Margin="5" />
             <TextBlock x:Name="ProductQuantity" FontSize="14" Margin="5" />
             <TextBlock x:Name="ProductPrice" FontSize="14" Margin="5" />
+            <TextBox x:Name="OrderQuantity" Width="100" Height="30" Margin="5" TextChanged="OrderQuantity_TextChanged" />
+            <TextBlock x:Name="TotalPrice" FontSize="14" Margin="5" />
+            <Button x:Name="AddOrderButton" Content="Add Order" Width="100" Height="30" Margin="5" Click="AddOrderButton_Click" />
         </StackPanel>
     </Grid>
 </UserControl>

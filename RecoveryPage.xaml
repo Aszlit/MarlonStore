@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-
         Title="Recovery" Height="400" Width="400"
         WindowStyle="None" 
         AllowsTransparency="True"
@@ -14,8 +13,7 @@
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-
-    <Border Background="#FF460079" CornerRadius="10">
+    <Border Background="#FF3C3C3C" CornerRadius="10">
         <Grid>
             <!-- Custom Title Bar -->
             <DockPanel Background="Transparent" Height="40" VerticalAlignment="Top">
@@ -23,27 +21,115 @@
                     <!-- Minimize Button -->
                     <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
                         Click="MinimizeApp" ToolTip="Minimize">
-                        <Path Data="M0,1 L10,1" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <!-- Background Layer -->
+                                    <Rectangle x:Name="BackgroundRectangle" Fill="Transparent" RadiusX="5" RadiusY="5"/>
+                                    <!-- Minimize Icon -->
+                                    <Path Data="M0,1 L10,1" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <!-- MouseOver Trigger -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FFF1C40F"/>
+                                        <!-- Yellow Hover Background -->
+                                    </Trigger>
+                                    <!-- Pressed Trigger -->
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FFD4AC0D"/>
+                                        <!-- Darker Yellow Click Background -->
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
 
                     <!-- Close Button -->
                     <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
                         Click="CloseApp" ToolTip="Close">
-                        <Path Data="M0,0 L10,10 M10,0 L0,10" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <!-- Background Layer -->
+                                    <Rectangle x:Name="BackgroundRectangle" Fill="Transparent" RadiusX="5" RadiusY="5"/>
+                                    <!-- X Icon -->
+                                    <Path Data="M0,0 L10,10 M10,0 L0,10" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <!-- MouseOver Trigger -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FFCC0000"/>
+                                        <!-- Red Hover Background -->
+                                    </Trigger>
+                                    <!-- Pressed Trigger -->
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF990000"/>
+                                        <!-- Darker Red Click Background -->
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
                 </StackPanel>
             </DockPanel>
 
-            <!-- Original Content -->
-            <Grid Margin="0,40,0,0" Background="#FF460079">
+            <!-- Main Content -->
+            <Grid Background="#FF3C3C3C" Margin="0,40,0,0">
                 <Label Content="Security Question" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" Width="148" FontSize="16" Foreground="White"/>
-                <Label Content="What is the name of the Store?" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Width="178" Foreground="White"/>
-                <Label x:Name="passrecoverlabel" Content="Recovered Password Here......" HorizontalAlignment="Center" Margin="0,309,0,0" VerticalAlignment="Top" Width="216" Foreground="White"/>
-                <Label x:Name="returnlabel" Content="Return" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="18" MouseLeftButtonDown="returnpage" Foreground="White"/>
-                <TextBox x:Name="securitybox" HorizontalAlignment="Left" Margin="96,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="25"/>
-                <Button Content="Recover" HorizontalAlignment="Left" Margin="146,259,0,0" VerticalAlignment="Top" Height="22" Width="78" Click="recover" BorderBrush="#FFFFFEFE" Background="#FFD2D2D2" Foreground="Black"/>
-                <Label Content="Username" HorizontalAlignment="Left" Margin="96,108,0,0" VerticalAlignment="Top" Width="178" Foreground="White"/>
-                <TextBox x:Name="usernamebox" HorizontalAlignment="Left" Margin="96,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="25"/>
+                <Label Content="What is the name of the Store?" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Width="250" Foreground="White"/>
+                <TextBox x:Name="securitybox" HorizontalAlignment="Center" Margin="0,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="25"/>
+                <Label Content="Username" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top" Width="178" Foreground="White"/>
+                <TextBox x:Name="usernamebox" HorizontalAlignment="Center" Margin="0,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="25"/>
+                <Button Content="Recover" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Top" Height="32" Width="124" Click="recover" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <!-- Background Layer -->
+                                <Rectangle x:Name="BackgroundRectangle" Fill="#FF1E90FF" RadiusX="5" RadiusY="5"/>
+                                <!-- Button Content -->
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <!-- MouseOver Trigger -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4682B4"/>
+                                    <!-- Lighter Blue Hover Background -->
+                                </Trigger>
+                                <!-- Pressed Trigger -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4169E1"/>
+                                    <!-- Darker Blue Click Background -->
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label x:Name="passrecoverlabel" Content="Recovered Password Here......" HorizontalAlignment="Center" Margin="0,290,0,0" VerticalAlignment="Top" Width="216" Foreground="White"/>
+                <Button HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="returnpage" Background="Transparent" BorderThickness="0" ToolTip="Return">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <!-- Background Layer -->
+                                <Rectangle x:Name="BackgroundRectangle" Fill="Transparent" RadiusX="5" RadiusY="5"/>
+                                <!-- Return Icon -->
+                                <Path Data="M10,0 L0,10 L10,20" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <!-- MouseOver Trigger -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4682B4"/>
+                                    <!-- Lighter Blue Hover Background -->
+                                </Trigger>
+                                <!-- Pressed Trigger -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4169E1"/>
+                                    <!-- Darker Blue Click Background -->
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </Grid>
         </Grid>
     </Border>

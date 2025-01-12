@@ -23,84 +23,29 @@ namespace Inventory
         public RecoveryPage()
         {
             InitializeComponent();
-            WindowStartupLocation = WindowStartupLocation.CenterScreen; // Center the window
         }
 
-
-        private void returnpage(object sender, MouseButtonEventArgs e)
+        private void returnpage(object sender, RoutedEventArgs e)
         {
-            // Create the new window
-            LoginPage secondWindow = new();
-
-            // Show the new window
-            secondWindow.Show();
-
-            // Close the current window
+            // Logic to return to the login page
+            LoginPage loginPage = new LoginPage();
+            loginPage.Show();
             this.Close();
-        }
-
-
-           
-
-        private void recover(object sender, RoutedEventArgs e)
-        {
-            string username = usernamebox.Text;
-            string securityAnswer = securitybox.Text;
-
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            string recoveredPassword = RecoverPassword(username, securityAnswer);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-
-            if (recoveredPassword != null)
-            {
-                passrecoverlabel.Content = $"Password: {recoveredPassword}";
-            }
-            else
-            {
-                passrecoverlabel.Content = "Invalid username or security answer!";
-            }
-        }
-
-        private string? RecoverPassword(string username, string securityAnswer)
-        {
-            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
-            string connectionString = $"Data Source={databasePath};Version=3;";
-
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    string query = @"
-                        SELECT Password 
-                        FROM Users 
-                        WHERE Username = @username AND SecurityQuestion = @securityAnswer";
-
-                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@securityAnswer", securityAnswer);
-
-                        object result = command.ExecuteScalar();
-                        return result?.ToString(); // Return the password if found, null otherwise
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("Error connecting to the database.");
-                    return null;
-                }
-            }
         }
 
         private void MinimizeApp(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            this.WindowState = WindowState.Minimized;
         }
 
         private void CloseApp(object sender, RoutedEventArgs e)
         {
-            Close();
+            this.Close();
+        }
+
+        private void recover(object sender, RoutedEventArgs e)
+        {
+            // Logic to recover the password
         }
     }
 }

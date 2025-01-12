@@ -22,11 +22,14 @@ namespace Inventory.UserControls
     public partial class PointSale : UserControl
     {
         public ObservableCollection<Item> Products { get; set; }
+        public ObservableCollection<Order> Orders { get; set; }
+        private double _totalSubAmount;
 
         public PointSale()
         {
             InitializeComponent();
             Products = new ObservableCollection<Item>();
+            Orders = new ObservableCollection<Order>();
             this.DataContext = this; // Set DataContext for binding
             LoadProducts(); // Load products from database
         }
@@ -84,6 +87,7 @@ namespace Inventory.UserControls
             {
                 var orderDetails = new OrderDetails();
                 orderDetails.SetProductDetails(clickedItem.ProductImage, clickedItem.ItemName, clickedItem.Quantity, clickedItem.Price);
+                orderDetails.OrderAdded += OnOrderAdded;
 
                 var window = new Window
                 {
@@ -97,6 +101,55 @@ namespace Inventory.UserControls
             }
         }
 
+        private void OnOrderAdded(string name, int quantity, double price, BitmapImage productImage)
+        {
+            Orders.Add(new Order { Name = name, Quantity = quantity, Price = price, ProductImage = productImage });
+            _totalSubAmount += quantity * price;
+            TotalSubAmount.Text = $"Total Sub Amount: {_totalSubAmount:C}";
+            OrdersPanel.ItemsSource = Orders;
+        }
+
+        private void ConfirmOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var order in Orders)
+            {
+                var product = Products.FirstOrDefault(p => p.ItemName == order.Name);
+                if (product != null)
+                {
+                    product.Quantity -= order.Quantity;
+                }
+            }
+
+            // Update the database with the new quantities
+            UpdateInventory();
+
+            MessageBox.Show("Order confirmed and inventory updated!");
+
+            // Clear orders and reset total sub amount
+            Orders.Clear();
+            _totalSubAmount = 0;
+            TotalSubAmount.Text = $"Total Sub Amount: {_totalSubAmount:C}";
+        }
+
+        private void UpdateInventory()
+        {
+            // Get the relative path to the database
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                foreach (var product in Products)
+                {
+                    var command = new SQLiteCommand("UPDATE Inventory SET Quantity = @Quantity WHERE ItemName = @ItemName", connection);
+                    command.Parameters.AddWithValue("@Quantity", product.Quantity);
+                    command.Parameters.AddWithValue("@ItemName", product.ItemName);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         // Item model class
         public class Item
         {
@@ -104,6 +157,16 @@ namespace Inventory.UserControls
             public int Quantity { get; set; }
             public double Price { get; set; }
             public BitmapImage ProductImage { get; set; } // For displaying the image
+        }
+
+        // Order model class
+        public class Order
+        {
+            public string Name { get; set; }
+            public int Quantity { get; set; }
+            public double Price { get; set; }
+            public BitmapImage ProductImage { get; set; } // For displaying the image
+            public double Total => Quantity * Price;
         }
     }
 }

@@ -10,7 +10,11 @@
         <DropShadowEffect x:Key="DropShadowEffect" Color="Black" Direction="320" ShadowDepth="5" Opacity="0.5" BlurRadius="10"/>
     </UserControl.Resources>
     <Grid>
-        <ScrollViewer>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Column="0">
             <ItemsControl x:Name="ProductsPanel" Height="550">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -29,5 +33,26 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+        <Border Grid.Column="1" Margin="10,114,10,10" Background="#333" Padding="10" CornerRadius="10">
+            <StackPanel>
+                <TextBlock Text="Orders" FontSize="16" FontWeight="Bold" Margin="5" Foreground="White" />
+                <ItemsControl x:Name="OrdersPanel">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <Image Source="{Binding ProductImage}" Height="50" Width="50" Stretch="UniformToFill" Margin="5" />
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" Foreground="White" />
+                                    <TextBlock Text="Quantity: {Binding Quantity}" FontSize="12" Foreground="White" />
+                                    <TextBlock Text="Total: {Binding Total, StringFormat=C}" FontSize="12" Foreground="White" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <TextBlock x:Name="TotalSubAmount" FontSize="14" Margin="5" Foreground="White" />
+                <Button x:Name="ConfirmOrderButton" Content="Confirm Order" Width="150" Height="40" Margin="5" Background="#007ACC" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" />
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>
