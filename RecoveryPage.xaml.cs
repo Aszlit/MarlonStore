@@ -45,7 +45,48 @@ namespace Inventory
 
         private void recover(object sender, RoutedEventArgs e)
         {
-            // Logic to recover the password
+            string username = usernamebox.Text;
+            string securityAnswer = securitybox.Text;
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(securityAnswer))
+            {
+                MessageBox.Show("Please enter both username and security answer.");
+                return;
+            }
+
+            try
+            {
+                // Get the relative path to the database
+                string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+                string connectionString = $"Data Source={databasePath};Version=3;";
+
+                using (var connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT Password FROM Users WHERE Username = @Username AND SecurityQuestion = @SecurityQuestion";
+                    using (SQLiteCommand cmd = new SQLiteCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@SecurityQuestion", securityAnswer);
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string recoveredPassword = reader["Password"].ToString();
+                                passrecoverlabel.Content = $"Recovered Password: {recoveredPassword}";
+                            }
+                            else
+                            {
+                                MessageBox.Show("Invalid username or security answer.");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
         }
     }
 }
