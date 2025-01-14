@@ -43,15 +43,15 @@
                                 <Image Source="{Binding ProductImage}" Height="50" Width="50" Stretch="UniformToFill" Margin="5" />
                                 <StackPanel>
                                     <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" Foreground="White" />
-                                    <TextBlock Text="Quantity: {Binding Quantity}" FontSize="12" Foreground="White" />
-                                    <TextBlock Text="Total: {Binding Total, StringFormat=C}" FontSize="12" Foreground="White" />
+                                    <TextBlock Text="{Binding Quantity}" FontSize="12" Foreground="White" />
+                                    <TextBlock Text="{Binding Total, StringFormat=C}" FontSize="12" Foreground="White" />
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <TextBlock x:Name="TotalSubAmount" FontSize="14" Margin="5" Foreground="White" />
-                <Button x:Name="ConfirmOrderButton" Content="Confirm Order" Width="150" Height="40" Margin="5" Background="#007ACC" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" />
+                <Button x:Name="ConfirmOrderButton" Content="Confirm Order" Width="150" Height="40" Margin="5" Background="#007ACC" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" Click="ConfirmOrderButton_Click" />
             </StackPanel>
         </Border>
     </Grid>

@@ -32,6 +32,7 @@ namespace Inventory.UserControls
             Orders = new ObservableCollection<Order>();
             this.DataContext = this; // Set DataContext for binding
             LoadProducts(); // Load products from database
+            OrdersPanel.ItemsSource = Orders; // Bind the orders to the ItemsControl
         }
 
         // Method to load data from SQLite database
@@ -105,7 +106,7 @@ namespace Inventory.UserControls
         {
             Orders.Add(new Order { Name = name, Quantity = quantity, Price = price, ProductImage = productImage });
             _totalSubAmount += quantity * price;
-            TotalSubAmount.Text = $"Total Sub Amount: {_totalSubAmount:C}";
+            TotalSubAmount.Text = $"Subtotal Amount: {_totalSubAmount:C}";
             OrdersPanel.ItemsSource = Orders;
         }
 
@@ -166,7 +167,7 @@ namespace Inventory.UserControls
             public int Quantity { get; set; }
             public double Price { get; set; }
             public BitmapImage ProductImage { get; set; } // For displaying the image
-            public double Total => Quantity * Price;
+            public double Total => Quantity * Price; // Calculated property for total
         }
     }
 }

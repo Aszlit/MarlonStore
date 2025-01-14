@@ -66,7 +66,7 @@
         <Grid x:Name="PointSaleGrid" Visibility="Collapsed" Margin="269,0,0,-16">
             <UserControls:PointSale Width="1096" Height="768"/>
         </Grid>
-        <Label x:Name="aboutLabel_Copy" Content="POS" HorizontalAlignment="Left" Height="51" Margin="0,574,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="pos" FontFamily="Bahnschrift"/>
+        <Label x:Name="aboutLabel_Copy" Content="          POS" HorizontalAlignment="Left" Height="51" Margin="0,574,0,0" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="pos" FontFamily="Bahnschrift"/>
 
     </Grid>
 </Window>

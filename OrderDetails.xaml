@@ -4,16 +4,41 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400">
-    <Grid>
-        <StackPanel Margin="10">
-            <Image x:Name="ProductImage" Height="100" Width="100" Stretch="UniformToFill" />
-            <TextBlock x:Name="ProductName" FontSize="16" FontWeight="Bold" Margin="5" />
-            <TextBlock x:Name="ProductQuantity" FontSize="14" Margin="5" />
-            <TextBlock x:Name="ProductPrice" FontSize="14" Margin="5" />
-            <TextBox x:Name="OrderQuantity" Width="100" Height="30" Margin="5" TextChanged="OrderQuantity_TextChanged" />
-            <TextBlock x:Name="TotalPrice" FontSize="14" Margin="5" />
-            <Button x:Name="AddOrderButton" Content="Add Order" Width="100" Height="30" Margin="5" Click="AddOrderButton_Click" />
-        </StackPanel>
-    </Grid>
+             d:DesignWidth="400" d:DesignHeight="1000">
+    <Viewbox Stretch="Uniform">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/> <!-- Image Row -->
+                <RowDefinition Height="40"/>  <!-- Product Name Row -->
+                <RowDefinition Height="40"/>  <!-- Available Quantity Row -->
+                <RowDefinition Height="40"/>  <!-- Price per Unit Row -->
+                <RowDefinition Height="40"/>  <!-- Order Quantity Row -->
+                <RowDefinition Height="40"/>  <!-- Total Price Row -->
+                <RowDefinition Height="50"/>  <!-- Button Row -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image x:Name="ProductImage" Height="100" Width="100" Stretch="UniformToFill" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Product Name:" FontSize="14" FontWeight="Bold" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="ProductName" FontSize="14" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+            <TextBlock Text="Available Quantity:" FontSize="14" FontWeight="Bold" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="ProductQuantity" FontSize="14" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+            <TextBlock Text="Price per Unit:" FontSize="14" FontWeight="Bold" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="ProductPrice" FontSize="14" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+            <TextBlock Text="Order Quantity:" FontSize="14" FontWeight="Bold" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="OrderQuantity" Width="100" Height="30" Grid.Row="4" Grid.Column="1" Margin="5,0,0,0" TextChanged="OrderQuantity_TextChanged"/>
+
+            <TextBlock Text="Total Price:" FontSize="14" FontWeight="Bold" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="TotalPrice" FontSize="14" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+            <Button x:Name="AddOrderButton" Content="Add Order" Width="100" Height="30" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,10,0,0" Click="AddOrderButton_Click"/>
+        </Grid>
+    </Viewbox>
 </UserControl>
