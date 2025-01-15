@@ -129,34 +129,72 @@ namespace Inventory.UserControls
             RecordsDataGrid.ItemsSource = items;
         }
 
-
         private void LoadPurchases()
         {
             var purchases = new List<Purchase>();
 
-            using (var connection = new SQLiteConnection(@"Data Source=C:\Users\marlo\source\repos\Aszlit\MarlonStore\database\maindatabase.db"))
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                var command = new SQLiteCommand("SELECT * FROM Purchases", connection);
+                var command = new SQLiteCommand(@"
+                        SELECT p.ProductName, p.Amount, p.Quantity, p.TotalAmount, p.Date, p.Time, i.Image
+                        FROM Purchases p
+                        JOIN Inventory i ON p.ProductName = i.ItemName", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
+                        byte[]? imageBytes = reader["Image"] as byte[];
+                        BitmapImage? image = null;
+
+                        if (imageBytes != null)
+                        {
+                            using (var stream = new System.IO.MemoryStream(imageBytes))
+                            {
+                                image = new BitmapImage();
+                                image.BeginInit();
+                                image.StreamSource = stream;
+                                image.CacheOption = BitmapCacheOption.OnLoad;
+                                image.EndInit();
+                            }
+                        }
+
                         purchases.Add(new Purchase
                         {
-                            PurchaseID = reader.GetInt32(0),
-                            ProductName = reader.GetString(1),
-                            SKU = reader.GetString(2),
-                            InboundStock = reader.GetInt32(3),
-                            DateOrdered = DateTime.Parse(reader.GetString(4)),
-                            DateExpected = string.IsNullOrEmpty(reader.GetString(5)) ? (DateTime?)null : DateTime.Parse(reader.GetString(5)),
-                            PurchaseOrder = reader.GetString(6)
+                            ProductName = reader.GetString(0),
+                            Amount = reader.GetDouble(1),
+                            Quantity = reader.GetInt32(2),
+                            TotalAmount = reader.GetDouble(3),
+                            Date = reader.GetString(4),
+                            Time = DateTime.Parse(reader.GetString(5)).ToString("hh:mm tt"),
+                            ProductImage = image ?? new BitmapImage()
                         });
                     }
                 }
             }
 
             RecordsDataGrid.Columns.Clear();
+            var imageColumn = new DataGridTemplateColumn
+            {
+                Header = "Image",
+                Width = 60,
+                CellTemplate = new DataTemplate
+                {
+                    VisualTree = new FrameworkElementFactory(typeof(Image))
+                }
+            };
+
+            var imageFactory = (FrameworkElementFactory)imageColumn.CellTemplate.VisualTree;
+            imageFactory.SetBinding(Image.SourceProperty, new Binding("ProductImage"));
+            imageFactory.SetValue(Image.WidthProperty, 50.0);
+            imageFactory.SetValue(Image.HeightProperty, 50.0);
+            imageFactory.SetValue(Image.StretchProperty, Stretch.UniformToFill);
+            imageFactory.SetValue(Image.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+
+            RecordsDataGrid.Columns.Add(imageColumn);
             RecordsDataGrid.Columns.Add(new DataGridTextColumn
             {
                 Header = "Product Name",
@@ -166,37 +204,37 @@ namespace Inventory.UserControls
             });
             RecordsDataGrid.Columns.Add(new DataGridTextColumn
             {
-                Header = "SKU",
-                Binding = new Binding("SKU"),
+                Header = "Amount",
+                Binding = new Binding("Amount"),
                 Width = 100,
                 ElementStyle = (Style)FindResource("CenteredTextStyle")
             });
             RecordsDataGrid.Columns.Add(new DataGridTextColumn
             {
-                Header = "Inbound Stock",
-                Binding = new Binding("InboundStock"),
+                Header = "Quantity",
+                Binding = new Binding("Quantity"),
                 Width = 100,
                 ElementStyle = (Style)FindResource("CenteredTextStyle")
             });
             RecordsDataGrid.Columns.Add(new DataGridTextColumn
             {
-                Header = "Date Ordered",
-                Binding = new Binding("DateOrdered"),
+                Header = "Total Amount",
+                Binding = new Binding("TotalAmount"),
+                Width = 100,
+                ElementStyle = (Style)FindResource("CenteredTextStyle")
+            });
+            RecordsDataGrid.Columns.Add(new DataGridTextColumn
+            {
+                Header = "Date",
+                Binding = new Binding("Date"),
                 Width = 150,
                 ElementStyle = (Style)FindResource("CenteredTextStyle")
             });
             RecordsDataGrid.Columns.Add(new DataGridTextColumn
             {
-                Header = "Date Expected",
-                Binding = new Binding("DateExpected"),
+                Header = "Time",
+                Binding = new Binding("Time"),
                 Width = 150,
-                ElementStyle = (Style)FindResource("CenteredTextStyle")
-            });
-            RecordsDataGrid.Columns.Add(new DataGridTextColumn
-            {
-                Header = "P.O.",
-                Binding = new Binding("PurchaseOrder"),
-                Width = 100,
                 ElementStyle = (Style)FindResource("CenteredTextStyle")
             });
 
@@ -205,13 +243,13 @@ namespace Inventory.UserControls
 
         public class Purchase
         {
-            public int PurchaseID { get; set; }
-            public string ProductName { get; set; } = string.Empty; // Initialize with a default value
-            public string SKU { get; set; } = string.Empty; // Initialize with a default value
-            public int InboundStock { get; set; }
-            public DateTime DateOrdered { get; set; }
-            public DateTime? DateExpected { get; set; }
-            public string PurchaseOrder { get; set; } = string.Empty; // Initialize with a default value
+            public string ProductName { get; set; }
+            public double Amount { get; set; }
+            public int Quantity { get; set; }
+            public double TotalAmount { get; set; }
+            public string Date { get; set; }
+            public string Time { get; set; }
+            public BitmapImage ProductImage { get; set; }
         }
     }
 }

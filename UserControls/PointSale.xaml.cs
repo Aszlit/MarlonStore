@@ -124,6 +124,9 @@ namespace Inventory.UserControls
             // Update the database with the new quantities
             UpdateInventory();
 
+            // Insert order details into Purchases table
+            InsertOrderDetailsIntoPurchases();
+
             MessageBox.Show("Order confirmed and inventory updated!");
 
             // Clear orders and reset total sub amount
@@ -146,6 +149,29 @@ namespace Inventory.UserControls
                     var command = new SQLiteCommand("UPDATE Inventory SET Quantity = @Quantity WHERE ItemName = @ItemName", connection);
                     command.Parameters.AddWithValue("@Quantity", product.Quantity);
                     command.Parameters.AddWithValue("@ItemName", product.ItemName);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void InsertOrderDetailsIntoPurchases()
+        {
+            // Get the relative path to the database
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                foreach (var order in Orders)
+                {
+                    var command = new SQLiteCommand("INSERT INTO Purchases (ProductName, Amount, Quantity, TotalAmount, Date, Time) VALUES (@ProductName, @Amount, @Quantity, @TotalAmount, @Date, @Time)", connection);
+                    command.Parameters.AddWithValue("@ProductName", order.Name);
+                    command.Parameters.AddWithValue("@Amount", order.Price);
+                    command.Parameters.AddWithValue("@Quantity", order.Quantity);
+                    command.Parameters.AddWithValue("@TotalAmount", order.Total);
+                    command.Parameters.AddWithValue("@Date", DateTime.Now.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@Time", DateTime.Now.ToString("HH:mm:ss"));
                     command.ExecuteNonQuery();
                 }
             }
