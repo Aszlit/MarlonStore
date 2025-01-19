@@ -127,6 +127,40 @@
                 <!-- Value Column -->
                 <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="100" 
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>
+
+                <!-- Stock Level Indicator Column -->
+                <DataGridTemplateColumn Header="Stock Level" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Rectangle.Style>
+                                    <Style TargetType="Rectangle">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Quantity}" Value="0">
+                                                <Setter Property="Fill" Value="Red"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Quantity}" Value="1">
+                                                <Setter Property="Fill" Value="Yellow"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Quantity}" Value="2">
+                                                <Setter Property="Fill" Value="Green"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Quantity}" Value="3">
+                                                <Setter Property="Fill" Value="Green"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Quantity}" Value="4">
+                                                <Setter Property="Fill" Value="Green"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Quantity}" Value="5">
+                                                <Setter Property="Fill" Value="Green"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
 
             <!-- Apply the SortableColumnHeaderStyle -->
