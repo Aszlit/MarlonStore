@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace Inventory
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for RecoveryPage.xaml
     /// </summary>
     public partial class RecoveryPage : Window
     {

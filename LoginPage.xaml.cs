@@ -52,7 +52,7 @@ namespace Inventory
         {
             if (_loginAttempts >= MaxLoginAttempts)
             {
-                MessageBox.Show($"Too many failed attempts. Please wait {CooldownPeriod} seconds before trying again.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ShowCooldownMessage();
                 return;
             }
 
@@ -64,14 +64,14 @@ namespace Inventory
 
             if (string.IsNullOrEmpty(username))
             {
-                HighlightField(input1, userinputlabel1);
+                HighlightField(input1, userinputlabel1, "Enter Username");
                 input1.Focus();
                 hasError = true;
             }
 
             if (string.IsNullOrEmpty(password))
             {
-                HighlightField(input2, userinputlabel2);
+                HighlightField(input2, userinputlabel2, "Enter Password");
                 if (!hasError) input2.Focus();
                 hasError = true;
             }
@@ -87,16 +87,14 @@ namespace Inventory
             else
             {
                 _loginAttempts++;
-                MessageBox.Show("Incorrect username or password. Please try again.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-
                 if (_loginAttempts >= MaxLoginAttempts)
                 {
                     StartCooldown();
                 }
                 else
                 {
-                    HighlightField(input1, userinputlabel1);
-                    HighlightField(input2, userinputlabel2);
+                    HighlightField(input1, userinputlabel1, "Incorrect Username");
+                    HighlightField(input2, userinputlabel2, "Incorrect Password");
                 }
             }
         }
@@ -142,10 +140,11 @@ namespace Inventory
             }
         }
 
-        private void HighlightField(Control field, Label label)
+        private void HighlightField(Control field, Label label, string message)
         {
             field.BorderBrush = Brushes.Red;
             field.BorderThickness = new Thickness(2);
+            label.Content = message;
             label.Visibility = Visibility.Visible;
         }
 
@@ -165,7 +164,15 @@ namespace Inventory
             _cooldownTimer.Elapsed += OnCooldownTimerElapsed;
             _cooldownTimer.AutoReset = false;
             _cooldownTimer.Start();
-            MessageBox.Show($"Too many failed attempts. Please wait {CooldownPeriod} seconds before trying again.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+            ShowCooldownMessage();
+        }
+
+        private void ShowCooldownMessage()
+        {
+            userinputlabel2.Content = $"Too many failed attempts. Please wait {CooldownPeriod} seconds.";
+            userinputlabel2.HorizontalAlignment = HorizontalAlignment.Center;
+            userinputlabel2.Visibility = Visibility.Visible;
+            userinputlabel1.Visibility = Visibility.Hidden;
         }
 
         private void OnCooldownTimerElapsed(object sender, ElapsedEventArgs e)
@@ -175,6 +182,7 @@ namespace Inventory
             _loginAttempts = 0;
             Dispatcher.Invoke(() =>
             {
+                ResetFieldStyles();
                 MessageBox.Show("You can now try logging in again.", "Cooldown Ended", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }

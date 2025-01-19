@@ -11,6 +11,31 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+
+        <!-- Button style -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2A2E37"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderBrush" Value="#2A2E37"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -21,8 +46,8 @@
 
         <!-- Buttons to select data view -->
         <StackPanel Orientation="Horizontal" Margin="10,40,10,698" Grid.Row="0" Grid.RowSpan="2">
-            <Button Content="Inventory" Click="InventoryButton_Click" Margin="5"/>
-            <Button Content="Purchases" Click="PurchasesButton_Click" Margin="5"/>
+            <Button Content="Inventory" Click="InventoryButton_Click" Style="{StaticResource ButtonStyle}" Width="121"/>
+            <Button Content="Purchases" Click="PurchasesButton_Click" Style="{StaticResource ButtonStyle}" Width="117"/>
         </StackPanel>
 
         <!-- DataGrid to display records -->

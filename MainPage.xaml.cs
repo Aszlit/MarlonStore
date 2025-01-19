@@ -87,6 +87,7 @@ namespace Inventory
             SalesGrid.Visibility = Visibility.Visible;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
+            PointSaleGrid.Visibility = Visibility.Collapsed;
         }
 
         private void suppliers(object sender, MouseButtonEventArgs e)
