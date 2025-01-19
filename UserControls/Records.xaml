@@ -12,8 +12,8 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <!-- Button style -->
-        <Style x:Key="ButtonStyle" TargetType="Button">
+        <!-- ToggleButton style -->
+        <Style x:Key="ButtonStyle" TargetType="ToggleButton">
             <Setter Property="Background" Value="#2A2E37"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -25,13 +25,23 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
+                    <ControlTemplate TargetType="ToggleButton">
                         <Border Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="5">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="#1A1E27"/>
+                                <Setter Property="BorderBrush" Value="#1A1E27"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1A1E27"/>
+                                <Setter Property="BorderBrush" Value="#1A1E27"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -44,10 +54,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Buttons to select data view -->
+        <!-- ToggleButtons to select data view -->
         <StackPanel Orientation="Horizontal" Margin="10,40,10,698" Grid.Row="0" Grid.RowSpan="2">
-            <Button Content="Inventory" Click="InventoryButton_Click" Style="{StaticResource ButtonStyle}" Width="121"/>
-            <Button Content="Purchases" Click="PurchasesButton_Click" Style="{StaticResource ButtonStyle}" Width="117"/>
+            <ToggleButton x:Name="InventoryButton" Content="Inventory" Click="InventoryButton_Click" Style="{StaticResource ButtonStyle}" Width="121" Height="30" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
+            <ToggleButton x:Name="PurchasesButton" Content="Purchases" Click="PurchasesButton_Click" Style="{StaticResource ButtonStyle}" Width="117" Height="31" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
         </StackPanel>
 
         <!-- DataGrid to display records -->

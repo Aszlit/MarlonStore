@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
 
 namespace Inventory.UserControls
 {
@@ -140,9 +141,9 @@ namespace Inventory.UserControls
             {
                 connection.Open();
                 var command = new SQLiteCommand(@"
-                        SELECT p.ProductName, p.Amount, p.Quantity, p.TotalAmount, p.Date, p.Time, i.Image
-                        FROM Purchases p
-                        JOIN Inventory i ON p.ProductName = i.ItemName", connection);
+                                SELECT p.ProductName, p.Amount, p.Quantity, p.TotalAmount, p.Date, p.Time, i.Image
+                                FROM Purchases p
+                                JOIN Inventory i ON p.ProductName = i.ItemName", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -239,6 +240,29 @@ namespace Inventory.UserControls
             });
 
             RecordsDataGrid.ItemsSource = purchases;
+        }
+
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender == InventoryButton)
+            {
+                PurchasesButton.IsChecked = false;
+                InventoryButton.Background = new SolidColorBrush(Color.FromRgb(26, 30, 39)); // Highlight color
+            }
+            else if (sender == PurchasesButton)
+            {
+                InventoryButton.IsChecked = false;
+                PurchasesButton.Background = new SolidColorBrush(Color.FromRgb(26, 30, 39)); // Highlight color
+            }
+        }
+
+        private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as ToggleButton;
+            if (button != null)
+            {
+                button.Background = new SolidColorBrush(Color.FromRgb(42, 46, 55)); // Original color
+            }
         }
 
         public class Purchase

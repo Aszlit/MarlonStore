@@ -13,7 +13,7 @@
         Title="MainPage" Height="768" Width="1366">
 
     <Viewbox>
-        <Grid>
+        <Grid Background="#FF2C2C2D">
             <!-- Navigation Panel -->
             <DockPanel HorizontalAlignment="Left" Height="768" LastChildFill="False" VerticalAlignment="Center" Width="270" Background="#FF464646">
                 <DockPanel.OpacityMask>
@@ -40,12 +40,12 @@
             <Rectangle HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1096" Fill="#40E0D0" Panel.ZIndex="1" Margin="270,0,0,0"/>
 
             <!-- Homepage User Control -->
-            <Grid x:Name="HomepageGrid" Visibility="Visible" Margin="269,0,0,0" Height="768" VerticalAlignment="Top">
+            <Grid x:Name="HomepageGrid" Visibility="Visible" Margin="275,-37,-6,0" Height="768" VerticalAlignment="Top" Background="#FF2C2C2D">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="79*"/>
                     <RowDefinition Height="113*"/>
                 </Grid.RowDefinitions>
-                <UserControls:Homepage Width="1096" Margin="0,0,1,0" Background="#FF5B5B5B" Height="752" VerticalAlignment="Top" Grid.RowSpan="2" />
+                <UserControls:Homepage Width="1096" Margin="-9,16,10,0" Height="752" VerticalAlignment="Top" Grid.RowSpan="2" />
             </Grid>
 
             <!-- Other UserControls (Inventory, Records, etc.) -->

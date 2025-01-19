@@ -12,6 +12,8 @@ namespace Inventory
     /// </summary>
     public partial class MainPage : Window
     {
+        private Label _selectedLabel;
+
         public MainPage()
         {
             InitializeComponent();
@@ -46,6 +48,10 @@ namespace Inventory
         // Navigate to Inventory
         private void inventory(object sender, MouseButtonEventArgs e)
         {
+            ResetLabelBackgrounds();
+            inventoryLabel.Background = new SolidColorBrush(Color.FromRgb(45, 45, 44)); // Highlight color
+            _selectedLabel = inventoryLabel;
+
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Visible;
             RecordsGrid.Visibility = Visibility.Collapsed;
@@ -58,6 +64,10 @@ namespace Inventory
         // Navigate to Home
         private void home(object sender, MouseButtonEventArgs e)
         {
+            ResetLabelBackgrounds();
+            homeLabel.Background = new SolidColorBrush(Color.FromRgb(45, 45, 44)); // Highlight color
+            _selectedLabel = homeLabel;
+
             HomepageGrid.Visibility = Visibility.Visible;
             InventoryGrid.Visibility = Visibility.Collapsed;
             RecordsGrid.Visibility = Visibility.Collapsed;
@@ -69,6 +79,10 @@ namespace Inventory
         // Navigate to Purchases
         private void Records(object sender, MouseButtonEventArgs e)
         {
+            ResetLabelBackgrounds();
+            recordsLabel.Background = new SolidColorBrush(Color.FromRgb(45, 45, 44)); // Highlight color
+            _selectedLabel = recordsLabel;
+
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
             RecordsGrid.Visibility = Visibility.Visible;
@@ -81,6 +95,10 @@ namespace Inventory
         // Navigate to Sales
         private void sales(object sender, MouseButtonEventArgs e)
         {
+            ResetLabelBackgrounds();
+            salesLabel.Background = new SolidColorBrush(Color.FromRgb(45, 45, 44)); // Highlight color
+            _selectedLabel = salesLabel;
+
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
             RecordsGrid.Visibility = Visibility.Collapsed;
@@ -92,6 +110,10 @@ namespace Inventory
 
         private void suppliers(object sender, MouseButtonEventArgs e)
         {
+            ResetLabelBackgrounds();
+            suppliersLabel.Background = new SolidColorBrush(Color.FromRgb(45, 45, 44)); ; // Highlight color
+            _selectedLabel = suppliersLabel;
+
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
             RecordsGrid.Visibility = Visibility.Collapsed;
@@ -101,9 +123,11 @@ namespace Inventory
             PointSaleGrid.Visibility = Visibility.Collapsed;
         }
 
-
         private void about(object sender, MouseButtonEventArgs e)
         {
+            ResetLabelBackgrounds();
+            aboutLabel.Background = new SolidColorBrush(Color.FromRgb(45, 45, 44)); // Highlight color
+            _selectedLabel = aboutLabel;
 
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
@@ -116,6 +140,10 @@ namespace Inventory
 
         private void pos(object sender, MouseButtonEventArgs e)
         {
+            ResetLabelBackgrounds();
+            aboutLabel_Copy.Background = new SolidColorBrush(Color.FromRgb(45, 45, 44)); // Highlight color
+            _selectedLabel = aboutLabel_Copy;
+
             HomepageGrid.Visibility = Visibility.Collapsed;
             InventoryGrid.Visibility = Visibility.Collapsed;
             RecordsGrid.Visibility = Visibility.Collapsed;
@@ -125,13 +153,12 @@ namespace Inventory
             PointSaleGrid.Visibility = Visibility.Visible;
         }
 
-
         // MouseEnter Event Handler
         private void Label_MouseEnter(object sender, MouseEventArgs e)
         {
             Label label = sender as Label;
 
-            if (label != null)
+            if (label != null && label != _selectedLabel)
             {
                 // Change background color to a lighter shade when hovered
                 label.Background = new SolidColorBrush(Color.FromRgb(91, 91, 91)); // Lighter shade
@@ -143,16 +170,24 @@ namespace Inventory
         {
             Label label = sender as Label;
 
-            if (label != null)
+            if (label != null && label != _selectedLabel)
             {
                 // Revert back to the original background color
                 label.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
             }
         }
 
-    
-
-
+        // Method to reset all label backgrounds to the default color
+        private void ResetLabelBackgrounds()
+        {
+            homeLabel.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
+            inventoryLabel.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
+            recordsLabel.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
+            salesLabel.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
+            suppliersLabel.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
+            aboutLabel.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
+            aboutLabel_Copy.Background = new SolidColorBrush(Color.FromRgb(70, 70, 70)); // Original dark shade
+        }
 
         // Method to initialize the database connection (without creating the table)
         public static void InitializeDatabase()
