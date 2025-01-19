@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Data;
+using System.Security.Policy;
 using System.Windows;
 
 namespace Inventory
@@ -9,6 +10,14 @@ namespace Inventory
     /// </summary>
     public partial class App : Application
     {
+
+        public static class UserContext 
+        {
+            public static MainPage mainPage { get; set; }
+        }
+
     }
+
+    
 
 }

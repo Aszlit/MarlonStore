@@ -87,6 +87,10 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="153*"/>
+            <ColumnDefinition Width="395*"/>
+        </Grid.ColumnDefinitions>
         <DataGrid x:Name="InventoryDataGrid" 
                   CanUserAddRows="False" 
                   CanUserResizeColumns="False"
@@ -100,7 +104,7 @@
                   BorderBrush="#DDDDDD" 
                   Background="#F7F7F7"
                   AutoGenerateColumns="False" 
-                  ItemsSource="{Binding Items}">
+                  ItemsSource="{Binding Items}" Grid.ColumnSpan="2">
             <!-- Define Columns -->
             <DataGrid.Columns>
                 <!-- Image Column -->
@@ -182,6 +186,9 @@
         <!-- Button to add new items -->
         <Button Content="Add New Item" 
                 Click="addbutton"
-                Style="{StaticResource OvalButtonStyle}" />
+                Style="{StaticResource OvalButtonStyle}" Grid.Column="1" />
+        <Button x:Name="RefreshBtn" Content="Refresh" 
+            Click="refresh"
+            Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Margin="0,64,211,0" />
     </Grid>
 </UserControl>

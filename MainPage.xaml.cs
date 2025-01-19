@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using static Inventory.App;
 
 namespace Inventory
 {
@@ -16,6 +17,7 @@ namespace Inventory
 
         public MainPage()
         {
+            UserContext.mainPage = this;
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
             this.ResizeMode = ResizeMode.NoResize;

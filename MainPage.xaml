@@ -50,7 +50,7 @@
 
             <!-- Other UserControls (Inventory, Records, etc.) -->
             <Grid x:Name="InventoryGrid" Visibility="Collapsed" Margin="269,0,0,-16">
-                <UserControls:Inventory Width="1096" Height="768"/>
+                <UserControls:Inventory x:Name="InventoryControl" Width="1096" Height="768"/>
             </Grid>
             <Grid x:Name="RecordsGrid" Visibility="Collapsed" Margin="269,0,0,-16">
                 <UserControls:Records Width="1096" Height="768"/>

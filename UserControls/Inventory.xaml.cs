@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using static Inventory.App;
 
 namespace Inventory.UserControls
 {
@@ -131,5 +132,16 @@ namespace Inventory.UserControls
             }
         }
 
+        public void refresh(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoadInventory(); // Refresh inventory
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while refreshing: {ex.Message}");
+            }
+        }
     }
 }

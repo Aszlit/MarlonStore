@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using System.IO;
+using static Inventory.App;
 
 
 
@@ -133,6 +134,12 @@ namespace Inventory.UserControls
             Orders.Clear();
             _totalSubAmount = 0;
             TotalSubAmount.Text = $"Total Sub Amount: {_totalSubAmount:C}";
+
+            MainPage mainPage = UserContext.mainPage;
+            RoutedEventArgs args = new RoutedEventArgs();
+            Button button = mainPage.InventoryControl.RefreshBtn;
+            mainPage.InventoryControl.refresh(button, args);  
+
         }
 
         private void UpdateInventory()
