@@ -26,6 +26,27 @@ namespace Inventory
             userinputlabel2.Visibility = Visibility.Hidden;
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            input1.Focus();
+        }
+
+        private void Input1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                input2.Focus();
+            }
+        }
+
+        private void Input2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                login(null, null);
+            }
+        }
+
         // Close button event handler
         private void CloseApp(object sender, RoutedEventArgs e)
         {
