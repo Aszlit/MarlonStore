@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Icon="./images/logo.png"
         xmlns:local="clr-namespace:Inventory"
         xmlns:UserControls="clr-namespace:Inventory.UserControls"
         mc:Ignorable="d"
@@ -27,8 +28,8 @@
             <!-- Logo -->
             <Image Source="Images/logo.png" HorizontalAlignment="Left" Height="264" Margin="12,38,0,0" VerticalAlignment="Top" Width="232"/>
 
-            <Label x:Name="homeLabel" Content="        HOME" HorizontalAlignment="Left" Height="51" Margin="-10,271,0,0" VerticalAlignment="Top" Width="280" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="home" FontFamily="Bahnschrift"/>
-            <Label x:Name="inventoryLabel" Content="    INVENTORY" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="270" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="inventory" FontFamily="Bahnschrift" Margin="-10,324,0,0"/>
+            <Label x:Name="homeLabel" Content="        HOME" HorizontalAlignment="Left" Height="51" Margin="-16,271,0,0" VerticalAlignment="Top" Width="286" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="home" FontFamily="Bahnschrift"/>
+            <Label x:Name="inventoryLabel" Content="    INVENTORY" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="286" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="inventory" FontFamily="Bahnschrift" Margin="-16,324,0,0"/>
             <Label x:Name="recordsLabel" Content="      RECORDS" HorizontalAlignment="Left" Height="51" Margin="-16,373,0,0" VerticalAlignment="Top" Width="286" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="Records" FontFamily="Bahnschrift"/>
             <Label x:Name="salesLabel" Content="        SALES" HorizontalAlignment="Left" Height="51" Margin="-10,424,0,0" VerticalAlignment="Top" Width="280" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="sales" FontFamily="Bahnschrift"/>
             <Label x:Name="suppliersLabel" Content="    SUPPLIERS" HorizontalAlignment="Left" Height="51" Margin="-16,475,0,0" VerticalAlignment="Top" Width="286" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="suppliers" FontFamily="Bahnschrift"/>
@@ -67,7 +68,7 @@
             <Grid x:Name="PointSaleGrid" Visibility="Collapsed" Margin="269,0,0,-16">
                 <UserControls:PointSale Width="1096" Height="768"/>
             </Grid>
-            <Label x:Name="aboutLabel_Copy" Content="          POS" HorizontalAlignment="Left" Height="51" Margin="-10,574,0,0" VerticalAlignment="Top" Width="280" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="pos" FontFamily="Bahnschrift"/>
+            <Label x:Name="aboutLabel_Copy" Content="          POS" HorizontalAlignment="Left" Height="51" Margin="-16,574,0,0" VerticalAlignment="Top" Width="286" FontWeight="Bold" FontSize="36" Foreground="White" MouseEnter="Label_MouseEnter" MouseLeave="Label_MouseLeave" MouseLeftButtonDown="pos" FontFamily="Bahnschrift"/>
 
         </Grid>
     </Viewbox>
