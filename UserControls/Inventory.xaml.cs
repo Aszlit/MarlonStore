@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using static Inventory.App;
+using System.Globalization;
 
 namespace Inventory.UserControls
 {
@@ -33,6 +34,7 @@ namespace Inventory.UserControls
             this.DataContext = this; // Set DataContext for binding
             LoadInventory(); // Load inventory items from database
         }
+
 
         // Method to load data from SQLite database
         public void LoadInventory()
@@ -144,4 +146,27 @@ namespace Inventory.UserControls
             }
         }
     }
-}
+        
+
+        public class QuantityToColorConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                if (value is int quantity)
+                {
+                    if (quantity < 1)
+                        return Brushes.Red;
+                    else if (quantity < 2)
+                        return Brushes.Yellow;
+                    else
+                        return Brushes.Green;
+                }
+                return Brushes.Transparent;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+    }

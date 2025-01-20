@@ -76,6 +76,7 @@ namespace Inventory
             SalesGrid.Visibility = Visibility.Collapsed;
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
+            PointSaleGrid.Visibility = Visibility.Collapsed;
         }
 
         // Navigate to Purchases
