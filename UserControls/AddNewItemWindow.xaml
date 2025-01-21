@@ -61,9 +61,20 @@
             <!-- Form Content -->
             <StackPanel Grid.Row="1" Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="300">
                 <!-- Item Name -->
-                <TextBlock Text="Item Name:" VerticalAlignment="Center" Foreground="White" Margin="0,0,0,5"/>
-                <TextBox x:Name="ItemNameTextBox" Width="250" Margin="0,0,0,15"/>
+                <!-- Item Name -->
+                <!-- Item Name -->
+                <!-- Item Name -->
 
+                <!-- Item Name -->
+
+                <!-- Item Name -->
+
+                <!-- Item Name -->
+
+                <!-- Item Name -->
+                <TextBlock Text="Item Name:" Foreground="White"/>
+
+                <TextBox x:Name="ItemNameTextBox" Width="250" Margin="0,0,0,15"/>
                 <!-- Quantity -->
                 <TextBlock Text="Quantity:" VerticalAlignment="Center" Foreground="White" Margin="0,0,0,5"/>
                 <xctk:IntegerUpDown x:Name="QuantityTextBox" Width="250" Margin="0,0,0,15" Minimum="0" Maximum="1000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged"/>
@@ -86,10 +97,37 @@
                 </StackPanel>
 
                 <!-- Image Preview -->
-                <Image x:Name="PreviewImage" Width="100" Height="100" Margin="0,0,0,15" HorizontalAlignment="Center" Stretch="UniformToFill"/>
+                <Image x:Name="PreviewImage" Width="100" Height="100" Margin="0,0,0,15" HorizontalAlignment="Center" Stretch="Uniform"/>
 
                 <!-- Select Image Button -->
                 <Button Content="Select Image" Margin="0,0,0,15" Width="150" HorizontalAlignment="Center"
+                        Click="SelectImage_Click" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <!-- Background Layer -->
+                                <Rectangle x:Name="BackgroundRectangle" Fill="#FF1E90FF" RadiusX="5" RadiusY="5"/>
+                                <!-- Button Content -->
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <!-- MouseOver Trigger -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4682B4"/>
+                                    <!-- Lighter Blue Hover Background -->
+                                </Trigger>
+                                <!-- Pressed Trigger -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4169E1"/>
+                                    <!-- Darker Blue Click Background -->
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- Add Image Button -->
+                <Button Content="Add Image" Margin="0,0,0,15" Width="150" HorizontalAlignment="Center"
                         Click="SelectImage_Click" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -172,6 +210,8 @@
                     </Button.Template>
                 </Button>
             </StackPanel>
+            <Button x:Name="insertimage_button" Content="Insert Image" HorizontalAlignment="Center" Margin="0,235,0,0" Grid.Row="1" VerticalAlignment="Top" Height="30" Width="112" Click="InsertImageButton_Click"/>
+            <Image x:Name="image_box" HorizontalAlignment="Left" Height="100" Margin="254,235,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100"/>
         </Grid>
     </Border>
 </Window>

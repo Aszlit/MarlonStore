@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace Inventory.UserControls
 {
@@ -55,12 +56,14 @@ namespace Inventory.UserControls
             var quantityText = QuantityTextBox.Text;
             var priceText = PriceTextBox.Text;
             var valueText = ValueTextBox.Text;
+            var category = GetSelectedCategory();
 
             // Validate inputs
             if (string.IsNullOrWhiteSpace(itemName) ||
                 string.IsNullOrWhiteSpace(quantityText) ||
                 string.IsNullOrWhiteSpace(priceText) ||
-                string.IsNullOrWhiteSpace(valueText))
+                string.IsNullOrWhiteSpace(valueText) ||
+                string.IsNullOrWhiteSpace(category))
             {
                 MessageBox.Show("Please fill all fields before saving.");
                 return;
@@ -80,11 +83,12 @@ namespace Inventory.UserControls
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-                    var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Image) VALUES (@ItemName, @Quantity, @Price, @Value, @Image)", connection);
+                    var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Category, Image) VALUES (@ItemName, @Quantity, @Price, @Value, @Category, @Image)", connection);
                     command.Parameters.AddWithValue("@ItemName", itemName);
                     command.Parameters.AddWithValue("@Quantity", quantity);
                     command.Parameters.AddWithValue("@Price", price);
                     command.Parameters.AddWithValue("@Value", value);
+                    command.Parameters.AddWithValue("@Category", category);
                     command.Parameters.Add("@Image", System.Data.DbType.Binary).Value = imageBytes;
                     command.ExecuteNonQuery();
                 }
@@ -98,13 +102,26 @@ namespace Inventory.UserControls
             }
         }
 
+        // Get selected category
+        private string GetSelectedCategory()
+        {
+            foreach (var child in CategoryPanel.Children)
+            {
+                if (child is RadioButton radioButton && radioButton.IsChecked == true)
+                {
+                    return radioButton.Content.ToString();
+                }
+            }
+            return null;
+        }
+
         // Convert image to byte array
         private byte[] ConvertImageToByteArray(string imagePath)
         {
             if (string.IsNullOrEmpty(imagePath))
                 return null;
 
-            return System.IO.File.ReadAllBytes(imagePath);
+            return File.ReadAllBytes(imagePath); // Read the original image file as byte array
         }
 
         private void SelectImage_Click(object sender, RoutedEventArgs e)
@@ -165,5 +182,51 @@ namespace Inventory.UserControls
                 ValueTextBox.Text = string.Empty;
             }
         }
+
+        private void InsertImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SelectedImagePath = openFileDialog.FileName;
+                var resizedImage = ResizeImage(SelectedImagePath, 100, 100); // Resize to fit the preview box
+                image_box.Source = BitmapToImageSource(resizedImage);
+            }
+        }
+
+        private Bitmap ResizeImage(string imagePath, int width, int height)
+        {
+            using (var originalImage = new Bitmap(imagePath))
+            {
+                var resizedImage = new Bitmap(width, height);
+                using (var graphics = Graphics.FromImage(resizedImage))
+                {
+                    graphics.DrawImage(originalImage, 0, 0, width, height);
+                }
+                return resizedImage;
+            }
+        }
+
+        private BitmapImage BitmapToImageSource(Bitmap bitmap)
+        {
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                return bitmapImage;
+            }
+        }
     }
+
+
 }
+
