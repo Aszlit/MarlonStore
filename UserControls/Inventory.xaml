@@ -123,6 +123,10 @@
                 <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="*" 
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>
 
+                <!-- Category Column -->
+                <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="100" 
+                    ElementStyle="{StaticResource CenteredTextStyle}"/>
+
                 <!-- Quantity Column -->
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100" 
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>

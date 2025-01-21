@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Inventory.UserControls
 {
@@ -25,6 +26,13 @@ namespace Inventory.UserControls
         {
             InitializeComponent();
         }
+
+        // Close the window
+        private void CloseApp(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         // Calculate Value Button Click
         private void CalculateValue_Click(object sender, RoutedEventArgs e)
         {
@@ -39,21 +47,6 @@ namespace Inventory.UserControls
                 MessageBox.Show("Please enter valid numbers for Quantity and Price.");
             }
         }
-
-        
-
-
-
-        // Convert image to byte array
-        private byte[] ConvertImageToByteArray(string imagePath)
-        {
-            if (string.IsNullOrEmpty(imagePath))
-                return null;
-
-            return System.IO.File.ReadAllBytes(imagePath);
-        }
-
-
 
         // Save Button Click
         public void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -105,6 +98,14 @@ namespace Inventory.UserControls
             }
         }
 
+        // Convert image to byte array
+        private byte[] ConvertImageToByteArray(string imagePath)
+        {
+            if (string.IsNullOrEmpty(imagePath))
+                return null;
+
+            return System.IO.File.ReadAllBytes(imagePath);
+        }
 
         private void SelectImage_Click(object sender, RoutedEventArgs e)
         {
@@ -118,22 +119,51 @@ namespace Inventory.UserControls
                 PreviewImage.Source = new BitmapImage(new Uri(openFileDialog.FileName));
                 SelectedImagePath = openFileDialog.FileName; // Save the selected image path
             }
-        }   
+        }
 
         private string SelectedImagePath { get; set; }
-
-
-
-
-
-
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        public Inventory InventoryControl { get; set; }
+        private void QuantityTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
 
+        private void QuantityTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Left || e.Key == Key.Right)
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = !IsTextAllowed(e.Key.ToString());
+            }
+        }
+
+        private static bool IsTextAllowed(string text)
+        {
+            Regex regex = new Regex("[^0-9]+"); // Regex that matches disallowed text
+            return !regex.IsMatch(text);
+        }
+
+        private void QuantityOrPrice_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (QuantityTextBox.Value.HasValue && PriceTextBox.Value.HasValue)
+            {
+                int quantity = QuantityTextBox.Value.Value;
+                int price = PriceTextBox.Value.Value;
+                int value = quantity * price;
+                ValueTextBox.Text = value.ToString();
+            }
+            else
+            {
+                ValueTextBox.Text = string.Empty;
+            }
+        }
     }
 }

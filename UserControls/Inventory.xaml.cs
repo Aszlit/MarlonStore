@@ -73,7 +73,8 @@ namespace Inventory.UserControls
                             Quantity = Convert.ToInt32(reader["Quantity"]),
                             Price = Convert.ToDouble(reader["Price"]),
                             Value = Convert.ToDouble(reader["Value"]),
-                            ProductImage = image // Assign the image to the property
+                            ProductImage = image, // Assign the image to the property
+                            Category = reader["Category"].ToString() // Retrieve and assign the Category
                         });
                     }
                 }
@@ -118,6 +119,7 @@ namespace Inventory.UserControls
             public double Price { get; set; }
             public double Value { get; set; }
             public BitmapImage ProductImage { get; set; } // For displaying the image
+            public string Category { get; set; } // New property for Category
         }
 
 
