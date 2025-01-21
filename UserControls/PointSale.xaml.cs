@@ -183,6 +183,17 @@ namespace Inventory.UserControls
                 }
             }
         }
+        private void RemoveOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var order = button?.Tag as Order;
+            if (order != null)
+            {
+                Orders.Remove(order);
+                _totalSubAmount -= order.Quantity * order.Price;
+                TotalSubAmount.Text = $"Subtotal Amount: {_totalSubAmount:C}";
+            }
+        }
 
         // Item model class
         public class Item
