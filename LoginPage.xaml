@@ -15,7 +15,7 @@
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="0" GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <Border Background="#FF3C3C3C" CornerRadius="10">
+    <Border Background="#FF3C3C3C" CornerRadius="10,10,10,10">
         <Grid>
             <!-- Custom Title Bar -->
             <DockPanel Background="Transparent" Height="40" VerticalAlignment="Top" Margin="0">
@@ -78,10 +78,10 @@
 
             <!-- Main Content -->
             <Grid Background="#FF3C3C3C" Margin="0,40,0,0">
-                <Label Content="Password" HorizontalAlignment="Left" Height="24" Margin="130,184,0,0" VerticalAlignment="Top" Width="108" Foreground="White"/>
-                <Label Content="Username" HorizontalAlignment="Left" Height="24" Margin="130,102,0,0" VerticalAlignment="Top" Width="108" Foreground="White"/>
-                <Label Content="LOGIN PAGE" HorizontalAlignment="Center" Height="37" Margin="0,34,0,0" VerticalAlignment="Top" Width="124" FontSize="20" Foreground="White" FontFamily="Bahnschrift SemiBold"/>
-                <Button Content="Login" HorizontalAlignment="Center" Margin="0,271,0,0" VerticalAlignment="Top" Height="32" Width="124" Click="login" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
+                <Label Content="Password" HorizontalAlignment="Left" Height="24" Margin="130,166,0,0" VerticalAlignment="Top" Width="108" Foreground="White"/>
+                <Label Content="Username" HorizontalAlignment="Left" Height="24" Margin="130,84,0,0" VerticalAlignment="Top" Width="108" Foreground="White"/>
+                <Label Content="LOGIN PAGE" HorizontalAlignment="Center" Height="37" Margin="0,24,0,0" VerticalAlignment="Top" Width="124" FontSize="20" Foreground="White" FontFamily="Bahnschrift SemiBold"/>
+                <Button Content="Login" HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" Height="32" Width="124" Click="login" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -105,11 +105,11 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Label Content="Forgot Password" HorizontalAlignment="Left" Margin="138,320,0,0" VerticalAlignment="Top" MouseLeftButtonDown="forgotpage" Foreground="White"/>
-                <TextBox x:Name="input1" HorizontalAlignment="Center" Height="24" Margin="0,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" KeyDown="Input1_KeyDown"/>
-                <PasswordBox x:Name="input2" HorizontalAlignment="Center" Height="23" Margin="0,213,0,0" VerticalAlignment="Top" Width="144" KeyDown="Input2_KeyDown"/>
-                <Label x:Name="userinputlabel1" Content="Enter Username" HorizontalAlignment="Left" Margin="128,154,0,0" VerticalAlignment="Top" Foreground="#FFFF2424"/>
-                <Label x:Name="userinputlabel2" Content="Enter Password" HorizontalAlignment="Left" Margin="128,236,0,0" VerticalAlignment="Top" Foreground="#FFFF2424"/>
+                <Label Content="Forgot Password" HorizontalAlignment="Left" Margin="148,298,0,0" VerticalAlignment="Top" MouseLeftButtonDown="forgotpage" Foreground="White"/>
+                <TextBox x:Name="input1" HorizontalAlignment="Center" Height="24" Margin="0,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="144" KeyDown="Input1_KeyDown"/>
+                <PasswordBox x:Name="input2" HorizontalAlignment="Center" Height="23" Margin="0,195,0,0" VerticalAlignment="Top" Width="144" KeyDown="Input2_KeyDown"/>
+                <Label x:Name="userinputlabel1" Content="Enter Username" HorizontalAlignment="Left" Margin="128,136,0,0" VerticalAlignment="Top" Foreground="#FFFF2424"/>
+                <Label x:Name="userinputlabel2" Content="Enter Password" HorizontalAlignment="Left" Margin="128,218,0,0" VerticalAlignment="Top" Foreground="#FFFF2424"/>
             </Grid>
         </Grid>
     </Border>
