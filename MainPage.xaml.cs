@@ -61,6 +61,10 @@ namespace Inventory
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
             PointSaleGrid.Visibility = Visibility.Collapsed;
+
+            // Show the rectangles
+            rectangle1.Visibility = Visibility.Visible;
+            rectangle2.Visibility = Visibility.Visible;
         }
 
         // Navigate to Home
@@ -77,6 +81,10 @@ namespace Inventory
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
             PointSaleGrid.Visibility = Visibility.Collapsed;
+
+            // Show the rectangles
+            rectangle1.Visibility = Visibility.Visible;
+            rectangle2.Visibility = Visibility.Visible;
         }
 
         // Navigate to Purchases
@@ -93,6 +101,10 @@ namespace Inventory
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
             PointSaleGrid.Visibility = Visibility.Collapsed;
+
+            // Show the rectangles
+            rectangle1.Visibility = Visibility.Visible;
+            rectangle2.Visibility = Visibility.Visible;
         }
 
         // Navigate to Sales
@@ -109,6 +121,10 @@ namespace Inventory
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
             PointSaleGrid.Visibility = Visibility.Collapsed;
+
+            // Show the rectangles
+            rectangle1.Visibility = Visibility.Visible;
+            rectangle2.Visibility = Visibility.Visible;
         }
 
         private void suppliers(object sender, MouseButtonEventArgs e)
@@ -124,6 +140,10 @@ namespace Inventory
             SuppliersGrid.Visibility = Visibility.Visible;
             AboutGrid.Visibility = Visibility.Collapsed;
             PointSaleGrid.Visibility = Visibility.Collapsed;
+
+            // Show the rectangles
+            rectangle1.Visibility = Visibility.Visible;
+            rectangle2.Visibility = Visibility.Visible;
         }
 
         private void about(object sender, MouseButtonEventArgs e)
@@ -139,6 +159,10 @@ namespace Inventory
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Visible;
             PointSaleGrid.Visibility = Visibility.Collapsed;
+
+            // Show the rectangles
+            rectangle1.Visibility = Visibility.Visible;
+            rectangle2.Visibility = Visibility.Visible;
         }
 
         private void pos(object sender, MouseButtonEventArgs e)
@@ -154,6 +178,10 @@ namespace Inventory
             SuppliersGrid.Visibility = Visibility.Collapsed;
             AboutGrid.Visibility = Visibility.Collapsed;
             PointSaleGrid.Visibility = Visibility.Visible;
+
+            // Hide the rectangles
+            rectangle1.Visibility = Visibility.Collapsed;
+            rectangle2.Visibility = Visibility.Collapsed;
         }
 
         // MouseEnter Event Handler

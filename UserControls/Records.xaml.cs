@@ -141,9 +141,9 @@ namespace Inventory.UserControls
             {
                 connection.Open();
                 var command = new SQLiteCommand(@"
-                                SELECT p.ProductName, p.Amount, p.Quantity, p.TotalAmount, p.Date, p.Time, i.Image
-                                FROM Purchases p
-                                JOIN Inventory i ON p.ProductName = i.ItemName", connection);
+                                    SELECT p.ProductName, p.Amount, p.Quantity, p.TotalAmount, p.Date, p.Time, i.Image
+                                    FROM Purchases p
+                                    JOIN Inventory i ON p.ProductName = i.ItemName", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -247,12 +247,12 @@ namespace Inventory.UserControls
             if (sender == InventoryButton)
             {
                 PurchasesButton.IsChecked = false;
-                InventoryButton.Background = new SolidColorBrush(Color.FromRgb(26, 30, 39)); // Highlight color
+                InventoryButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4E00A0")); // Highlight color
             }
             else if (sender == PurchasesButton)
             {
                 InventoryButton.IsChecked = false;
-                PurchasesButton.Background = new SolidColorBrush(Color.FromRgb(26, 30, 39)); // Highlight color
+                PurchasesButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF4E00A0")); // Highlight color
             }
         }
 
@@ -261,7 +261,7 @@ namespace Inventory.UserControls
             var button = sender as ToggleButton;
             if (button != null)
             {
-                button.Background = new SolidColorBrush(Color.FromRgb(42, 46, 55)); // Original color
+                button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6102C4")); // Original color
             }
         }
 

@@ -33,7 +33,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Border Grid.Column="1" Margin="10,114,10,10" Background="#333" Padding="10" CornerRadius="10">
+        <Border Grid.Column="1" Margin="10,28,10,34" Background="#333" Padding="10" CornerRadius="10">
             <StackPanel>
                 <TextBlock Text="Orders" FontSize="16" FontWeight="Bold" Margin="5" Foreground="White" />
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -57,5 +57,8 @@
                 <Button x:Name="ConfirmOrderButton" Content="Confirm Order" Width="150" Height="40" Margin="5" Background="#007ACC" Foreground="White" FontWeight="Bold" BorderBrush="Transparent" Click="ConfirmOrderButton_Click" />
             </StackPanel>
         </Border>
+        <Button x:Name="RefreshBtn" Content="Refresh" 
+                Click="refresh2"
+                Margin="75,0,75,727" Grid.Column="1" />
     </Grid>
 </UserControl>

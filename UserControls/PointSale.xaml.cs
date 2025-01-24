@@ -138,8 +138,7 @@ namespace Inventory.UserControls
             MainPage mainPage = UserContext.mainPage;
             RoutedEventArgs args = new RoutedEventArgs();
             Button button = mainPage.InventoryControl.RefreshBtn;
-            mainPage.InventoryControl.refresh(button, args);  
-
+            mainPage.InventoryControl.refresh(button, args);
         }
 
         private void UpdateInventory()
@@ -183,6 +182,7 @@ namespace Inventory.UserControls
                 }
             }
         }
+
         private void RemoveOrderButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -193,6 +193,11 @@ namespace Inventory.UserControls
                 _totalSubAmount -= order.Quantity * order.Price;
                 TotalSubAmount.Text = $"Subtotal Amount: {_totalSubAmount:C}";
             }
+        }
+
+        private void refresh2(object sender, RoutedEventArgs e)
+        {
+            LoadProducts();
         }
 
         // Item model class
