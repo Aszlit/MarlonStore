@@ -31,18 +31,18 @@ namespace Inventory.UserControls
             InitializeComponent();
             Products = new ObservableCollection<Item>();
             Orders = new ObservableCollection<Order>();
-            this.DataContext = this; // Set DataContext for binding
+            DataContext = this; // Set DataContext for binding
             LoadProducts(); // Load products from database
             OrdersPanel.ItemsSource = Orders; // Bind the orders to the ItemsControl
+            RefreshProducts(null, null); // Automatically refresh when the page is loaded
         }
 
         // Method to load data from SQLite database
-        public void LoadProducts()
+        private void LoadProducts()
         {
             Products.Clear();
 
-            // Get the relative path to the database
-            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
             string connectionString = $"Data Source={databasePath};Version=3;";
 
             using (var connection = new SQLiteConnection(connectionString))
@@ -53,7 +53,7 @@ namespace Inventory.UserControls
                 {
                     while (reader.Read())
                     {
-                        byte[] imageBytes = reader["Image"] as byte[]; // Retrieve image data as byte array
+                        var imageBytes = reader["Image"] as byte[];
                         BitmapImage image = null;
 
                         if (imageBytes != null)
@@ -73,7 +73,7 @@ namespace Inventory.UserControls
                             ItemName = reader["ItemName"].ToString(),
                             Quantity = Convert.ToInt32(reader["Quantity"]),
                             Price = Convert.ToDouble(reader["Price"]),
-                            ProductImage = image // Assign the image to the property
+                            ProductImage = image
                         });
                     }
                 }
@@ -84,8 +84,7 @@ namespace Inventory.UserControls
 
         private void Card_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var clickedItem = (sender as FrameworkElement)?.DataContext as Item;
-            if (clickedItem != null)
+            if (sender is FrameworkElement element && element.DataContext is Item clickedItem)
             {
                 var orderDetails = new OrderDetails();
                 orderDetails.SetProductDetails(clickedItem.ProductImage, clickedItem.ItemName, clickedItem.Quantity, clickedItem.Price);
@@ -108,7 +107,6 @@ namespace Inventory.UserControls
             Orders.Add(new Order { Name = name, Quantity = quantity, Price = price, ProductImage = productImage });
             _totalSubAmount += quantity * price;
             TotalSubAmount.Text = $"Subtotal Amount: {_totalSubAmount:C}";
-            OrdersPanel.ItemsSource = Orders;
         }
 
         private void ConfirmOrderButton_Click(object sender, RoutedEventArgs e)
@@ -122,29 +120,24 @@ namespace Inventory.UserControls
                 }
             }
 
-            // Update the database with the new quantities
             UpdateInventory();
-
-            // Insert order details into Purchases table
             InsertOrderDetailsIntoPurchases();
 
             MessageBox.Show("Order confirmed and inventory updated!");
 
-            // Clear orders and reset total sub amount
             Orders.Clear();
             _totalSubAmount = 0;
             TotalSubAmount.Text = $"Total Sub Amount: {_totalSubAmount:C}";
 
-            MainPage mainPage = UserContext.mainPage;
-            RoutedEventArgs args = new RoutedEventArgs();
-            Button button = mainPage.InventoryControl.RefreshBtn;
+            var mainPage = UserContext.mainPage;
+            var args = new RoutedEventArgs();
+            var button = mainPage.InventoryControl.RefreshBtn;
             mainPage.InventoryControl.refresh(button, args);
         }
 
         private void UpdateInventory()
         {
-            // Get the relative path to the database
-            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
             string connectionString = $"Data Source={databasePath};Version=3;";
 
             using (var connection = new SQLiteConnection(connectionString))
@@ -162,8 +155,7 @@ namespace Inventory.UserControls
 
         private void InsertOrderDetailsIntoPurchases()
         {
-            // Get the relative path to the database
-            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
             string connectionString = $"Data Source={databasePath};Version=3;";
 
             using (var connection = new SQLiteConnection(connectionString))
@@ -185,9 +177,7 @@ namespace Inventory.UserControls
 
         private void RemoveOrderButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var order = button?.Tag as Order;
-            if (order != null)
+            if (sender is Button button && button.Tag is Order order)
             {
                 Orders.Remove(order);
                 _totalSubAmount -= order.Quantity * order.Price;
@@ -195,7 +185,7 @@ namespace Inventory.UserControls
             }
         }
 
-        private void refresh2(object sender, RoutedEventArgs e)
+        private void RefreshProducts(object sender, RoutedEventArgs e)
         {
             LoadProducts();
         }

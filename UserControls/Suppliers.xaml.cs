@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Data.SQLite;
 
 namespace Inventory.UserControls
 {
@@ -22,18 +23,46 @@ namespace Inventory.UserControls
 
         public void LoadSuppliers()
         {
-            // Load suppliers from database or any data source
-            // For demonstration, adding dummy data
-            SuppliersList.Add(new Supplier { SupplierName = "Supplier 1", Contact = "1234567890", Email = "supplier1@example.com", Address = "Address 1" });
-            SuppliersList.Add(new Supplier { SupplierName = "Supplier 2", Contact = "0987654321", Email = "supplier2@example.com", Address = "Address 2" });
-            SuppliersList.Add(new Supplier { SupplierName = "Supplier 3", Contact = "1112223333", Email = "supplier3@example.com", Address = "Address 3" });
-            SuppliersList.Add(new Supplier { SupplierName = "Supplier 4", Contact = "4445556666", Email = "supplier4@example.com", Address = "Address 4" });
-            SuppliersList.Add(new Supplier { SupplierName = "Supplier 5", Contact = "7778889999", Email = "supplier5@example.com", Address = "Address 5" });
+            SuppliersList.Clear();
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand("SELECT supplier_name, contact, email, address FROM Suppliers", connection);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SuppliersList.Add(new Supplier
+                        {
+                            SupplierName = reader["supplier_name"].ToString(),
+                            Contact = reader["contact"].ToString(),
+                            Email = reader["email"].ToString(),
+                            Address = reader["address"].ToString()
+                        });
+                    }
+                }
+            }
         }
 
         public void AddSupplier(Supplier newSupplier)
         {
             SuppliersList.Add(newSupplier);
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand("INSERT INTO Suppliers (supplier_name, contact, email, address) VALUES (@SupplierName, @Contact, @Email, @Address)", connection);
+                command.Parameters.AddWithValue("@SupplierName", newSupplier.SupplierName);
+                command.Parameters.AddWithValue("@Contact", newSupplier.Contact);
+                command.Parameters.AddWithValue("@Email", newSupplier.Email);
+                command.Parameters.AddWithValue("@Address", newSupplier.Address);
+                command.ExecuteNonQuery();
+            }
         }
 
         public void EditSupplier(int index, Supplier editedSupplier)
@@ -54,8 +83,12 @@ namespace Inventory.UserControls
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            // Add new supplier logic
-            MessageBox.Show("Add button clicked");
+            var addSupplierWindow = new AddSupplierWindow();
+            if (addSupplierWindow.ShowDialog() == true)
+            {
+                AddSupplier(addSupplierWindow.NewSupplier);
+                LoadSuppliers(); // Refresh the DataGrid
+            }
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)

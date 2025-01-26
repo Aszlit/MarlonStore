@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Label HorizontalAlignment="Left" Margin="94,42,0,0" VerticalAlignment="Top" FontSize="48">
-            <Label Content="ABOUT SYSTEM" Height="113" Width="400" FontSize="48"/>
+            <Label Content="ABOUT SYSTEM" Height="113" Width="400" FontSize="48" Foreground="White"/>
         </Label>
 
     </Grid>

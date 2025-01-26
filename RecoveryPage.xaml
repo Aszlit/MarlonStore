@@ -105,7 +105,7 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Label x:Name="passrecoverlabel" Content="Recovered Password Here......" HorizontalAlignment="Center" Margin="0,290,0,0" VerticalAlignment="Top" Width="216" Foreground="White"/>
+                <Label x:Name="passrecoverlabel" Content="Recovered Password Here......" HorizontalAlignment="Center" Margin="0,280,0,0" VerticalAlignment="Top" Width="216" Foreground="White"/>
                 <Button HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="returnpage" Background="Transparent" BorderThickness="0" ToolTip="Return">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -130,6 +130,7 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
+                <Label Content="              Help?&#xD;&#xA;Contact: 09913313134" HorizontalAlignment="Left" Margin="126,305,0,0" VerticalAlignment="Top" Foreground="White"/>
             </Grid>
         </Grid>
     </Border>

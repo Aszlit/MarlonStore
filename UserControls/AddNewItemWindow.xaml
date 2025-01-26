@@ -90,10 +90,10 @@
                 <!-- Category -->
                 <TextBlock Text="Category:" VerticalAlignment="Center" Foreground="White" Margin="0,0,0,5"/>
                 <StackPanel x:Name="CategoryPanel" Orientation="Vertical" Margin="0,0,0,15">
-                    <RadioButton Content="Electronics" GroupName="Category" Margin="0,5"/>
-                    <RadioButton Content="Clothing" GroupName="Category" Margin="0,5"/>
-                    <RadioButton Content="Books" GroupName="Category" Margin="0,5"/>
-                    <RadioButton Content="Home &amp; Kitchen" GroupName="Category" Margin="0,5"/>
+                    <RadioButton Content="Frozen Foods" GroupName="Category" Margin="0,5"/>
+                    <RadioButton Content="General Products" GroupName="Category" Margin="0,5"/>
+                    <RadioButton Content="Liquior" GroupName="Category" Margin="0,5"/>
+                    <RadioButton Content="Liquior" GroupName="Category" Margin="0,5"/>
                 </StackPanel>
 
                 <!-- Image Preview -->
