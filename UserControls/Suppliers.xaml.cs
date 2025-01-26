@@ -30,17 +30,27 @@ namespace Inventory.UserControls
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                var command = new SQLiteCommand("SELECT supplier_name, contact, email, address FROM Suppliers", connection);
+                var command = new SQLiteCommand("SELECT supplier_name, contact, email, address, phone_number, website, status, date_added FROM Suppliers", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
+                        DateTime dateAdded;
+                        if (!DateTime.TryParse(reader["date_added"].ToString(), out dateAdded))
+                        {
+                            dateAdded = DateTime.MinValue; // Assign a default value if parsing fails
+                        }
+
                         SuppliersList.Add(new Supplier
                         {
                             SupplierName = reader["supplier_name"].ToString(),
                             Contact = reader["contact"].ToString(),
                             Email = reader["email"].ToString(),
-                            Address = reader["address"].ToString()
+                            Address = reader["address"].ToString(),
+                            PhoneNumber = reader["phone_number"].ToString(),
+                            Website = reader["website"].ToString(),
+                            Status = reader["status"].ToString(),
+                            DateAdded = dateAdded
                         });
                     }
                 }
@@ -56,11 +66,15 @@ namespace Inventory.UserControls
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                var command = new SQLiteCommand("INSERT INTO Suppliers (supplier_name, contact, email, address) VALUES (@SupplierName, @Contact, @Email, @Address)", connection);
+                var command = new SQLiteCommand("INSERT INTO Suppliers (supplier_name, contact, email, address, phone_number, website, status, date_added) VALUES (@SupplierName, @Contact, @Email, @Address, @PhoneNumber, @Website, @Status, @DateAdded)", connection);
                 command.Parameters.AddWithValue("@SupplierName", newSupplier.SupplierName);
                 command.Parameters.AddWithValue("@Contact", newSupplier.Contact);
                 command.Parameters.AddWithValue("@Email", newSupplier.Email);
                 command.Parameters.AddWithValue("@Address", newSupplier.Address);
+                command.Parameters.AddWithValue("@PhoneNumber", newSupplier.PhoneNumber);
+                command.Parameters.AddWithValue("@Website", newSupplier.Website);
+                command.Parameters.AddWithValue("@Status", newSupplier.Status);
+                command.Parameters.AddWithValue("@DateAdded", newSupplier.DateAdded);
                 command.ExecuteNonQuery();
             }
         }
@@ -110,5 +124,9 @@ namespace Inventory.UserControls
         public string Contact { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Website { get; set; }
+        public string Status { get; set; }
+        public DateTime DateAdded { get; set; }
     }
 }

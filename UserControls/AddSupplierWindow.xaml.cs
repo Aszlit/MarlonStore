@@ -33,7 +33,11 @@ namespace Inventory.UserControls
                 SupplierName = SupplierNameTextBox.Text,
                 Contact = ContactTextBox.Text,
                 Email = EmailTextBox.Text,
-                Address = AddressTextBox.Text
+                Address = AddressTextBox.Text,
+                PhoneNumber = PhoneNumberTextBox.Text,
+                Website = WebsiteTextBox.Text,
+                Status = StatusTextBox.Text,
+                DateAdded = DateAddedDatePicker.SelectedDate ?? DateTime.Now
             };
 
             DialogResult = true;

@@ -8,13 +8,73 @@
              d:DesignHeight="768" d:DesignWidth="1096">
     <UserControl.Resources>
         <DropShadowEffect x:Key="DropShadowEffect" Color="Black" Direction="320" ShadowDepth="5" Opacity="0.5" BlurRadius="10"/>
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF6200EE"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF3700B3"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FF03DAC5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RemoveButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FF0000"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#CC0000"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#990000"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Padding="0,0,0,20">
             <ItemsControl x:Name="ProductsPanel">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -40,15 +100,20 @@
                     <ItemsControl x:Name="OrdersPanel">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="5">
-                                    <Image Source="{Binding ProductImage}" Height="50" Width="50" Stretch="UniformToFill" Margin="5" />
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" Foreground="White" />
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding ProductImage}" Height="50" Width="50" Stretch="UniformToFill" Margin="5" Grid.Column="0"/>
+                                    <StackPanel Grid.Column="1" Margin="5">
+                                        <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" Foreground="White" TextTrimming="CharacterEllipsis" />
                                         <TextBlock Text="{Binding Quantity}" FontSize="12" Foreground="White" />
                                         <TextBlock Text="{Binding Total, StringFormat=C}" FontSize="12" Foreground="White" />
                                     </StackPanel>
-                                    <Button Content="Remove" Click="RemoveOrderButton_Click" Tag="{Binding}" Margin="5"/>
-                                </StackPanel>
+                                    <Button Content="X" Click="RemoveOrderButton_Click" Tag="{Binding}" Style="{StaticResource RemoveButtonStyle}" Grid.Column="2"/>
+                                </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

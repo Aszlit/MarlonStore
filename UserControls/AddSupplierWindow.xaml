@@ -1,12 +1,16 @@
 ﻿<Window x:Class="Inventory.UserControls.AddSupplierWindow"
-         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         mc:Ignorable="d"
-        Title="Add Supplier" Height="300" Width="400">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Add Supplier" Height="500" Width="400">
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -30,7 +34,19 @@
         <TextBlock Text="Address:" Grid.Row="3" Grid.Column="0" Margin="5"/>
         <TextBox x:Name="AddressTextBox" Grid.Row="3" Grid.Column="1" Margin="5"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="5">
+        <TextBlock Text="Phone Number:" Grid.Row="4" Grid.Column="0" Margin="5"/>
+        <TextBox x:Name="PhoneNumberTextBox" Grid.Row="4" Grid.Column="1" Margin="5"/>
+
+        <TextBlock Text="Website:" Grid.Row="5" Grid.Column="0" Margin="5"/>
+        <TextBox x:Name="WebsiteTextBox" Grid.Row="5" Grid.Column="1" Margin="5"/>
+
+        <TextBlock Text="Status:" Grid.Row="6" Grid.Column="0" Margin="5"/>
+        <TextBox x:Name="StatusTextBox" Grid.Row="6" Grid.Column="1" Margin="5"/>
+
+        <TextBlock Text="Date Added:" Grid.Row="7" Grid.Column="0" Margin="5"/>
+        <DatePicker x:Name="DateAddedDatePicker" Grid.Row="7" Grid.Column="1" Margin="5"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="5">
             <Button Content="Add" Width="75" Margin="5" Click="AddButton_Click"/>
             <Button Content="Cancel" Width="75" Margin="5" Click="CancelButton_Click"/>
         </StackPanel>

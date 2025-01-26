@@ -115,6 +115,14 @@
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>
                 <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*" 
                                     ElementStyle="{StaticResource CenteredTextStyle}"/>
+                <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*" 
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
+                <DataGridTextColumn Header="Website" Binding="{Binding Website}" Width="*" 
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*" 
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
+                <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded, StringFormat=d}" Width="*" 
+                                    ElementStyle="{StaticResource CenteredTextStyle}"/>
             </DataGrid.Columns>
 
             <!-- Apply the SortableColumnHeaderStyle -->
