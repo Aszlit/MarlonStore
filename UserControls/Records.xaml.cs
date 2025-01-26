@@ -29,55 +29,17 @@ namespace Inventory.UserControls
 
         private void InventoryButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadInventory();
+            LoadInventoryData();
         }
 
         private void PurchasesButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadPurchases();
+            LoadPurchasesData();
         }
 
-        private void LoadInventory()
+        private void LoadInventoryData()
         {
-            var items = new List<Inventory.Item>();
-
-            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
-            string connectionString = $"Data Source={databasePath};Version=3;";
-
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                var command = new SQLiteCommand("SELECT * FROM Inventory", connection);
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        byte[]? imageBytes = reader["Image"] as byte[];
-                        BitmapImage? image = null;
-
-                        if (imageBytes != null)
-                        {
-                            using (var stream = new System.IO.MemoryStream(imageBytes))
-                            {
-                                image = new BitmapImage();
-                                image.BeginInit();
-                                image.StreamSource = stream;
-                                image.CacheOption = BitmapCacheOption.OnLoad;
-                                image.EndInit();
-                            }
-                        }
-
-                        items.Add(new Inventory.Item
-                        {
-                            ItemName = reader["ItemName"]?.ToString() ?? string.Empty,
-                            Quantity = Convert.ToInt32(reader["Quantity"]),
-                            Price = Convert.ToDouble(reader["Price"]),
-                            Value = Convert.ToDouble(reader["Value"]),
-                            ProductImage = image ?? new BitmapImage()
-                        });
-                    }
-                }
-            }
+            var items = LoadInventory();
 
             RecordsDataGrid.Columns.Clear();
             var imageColumn = new DataGridTemplateColumn
@@ -130,52 +92,9 @@ namespace Inventory.UserControls
             RecordsDataGrid.ItemsSource = items;
         }
 
-        private void LoadPurchases()
+        private void LoadPurchasesData()
         {
-            var purchases = new List<Purchase>();
-
-            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
-            string connectionString = $"Data Source={databasePath};Version=3;";
-
-            using (var connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                var command = new SQLiteCommand(@"
-                                    SELECT p.ProductName, p.Amount, p.Quantity, p.TotalAmount, p.Date, p.Time, i.Image
-                                    FROM Purchases p
-                                    JOIN Inventory i ON p.ProductName = i.ItemName", connection);
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        byte[]? imageBytes = reader["Image"] as byte[];
-                        BitmapImage? image = null;
-
-                        if (imageBytes != null)
-                        {
-                            using (var stream = new System.IO.MemoryStream(imageBytes))
-                            {
-                                image = new BitmapImage();
-                                image.BeginInit();
-                                image.StreamSource = stream;
-                                image.CacheOption = BitmapCacheOption.OnLoad;
-                                image.EndInit();
-                            }
-                        }
-
-                        purchases.Add(new Purchase
-                        {
-                            ProductName = reader.GetString(0),
-                            Amount = reader.GetDouble(1),
-                            Quantity = reader.GetInt32(2),
-                            TotalAmount = reader.GetDouble(3),
-                            Date = reader.GetString(4),
-                            Time = DateTime.Parse(reader.GetString(5)).ToString("hh:mm tt"),
-                            ProductImage = image ?? new BitmapImage()
-                        });
-                    }
-                }
-            }
+            var purchases = LoadPurchases();
 
             RecordsDataGrid.Columns.Clear();
             var imageColumn = new DataGridTemplateColumn
@@ -263,6 +182,127 @@ namespace Inventory.UserControls
             {
                 button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6102C4")); // Original color
             }
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            PerformSearch();
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PerformSearch();
+        }
+
+        private void PerformSearch()
+        {
+            string searchText = SearchTextBox.Text.Trim().ToLower();
+
+            if (InventoryButton.IsChecked == true)
+            {
+                var filteredItems = LoadInventory().Where(item => item.ItemName.ToLower().Contains(searchText)).ToList();
+                RecordsDataGrid.ItemsSource = filteredItems;
+            }
+            else if (PurchasesButton.IsChecked == true)
+            {
+                var filteredPurchases = LoadPurchases().Where(purchase => purchase.ProductName.ToLower().Contains(searchText)).ToList();
+                RecordsDataGrid.ItemsSource = filteredPurchases;
+            }
+        }
+
+        private List<Inventory.Item> LoadInventory()
+        {
+            var items = new List<Inventory.Item>();
+
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand("SELECT * FROM Inventory", connection);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        byte[]? imageBytes = reader["Image"] as byte[];
+                        BitmapImage? image = null;
+
+                        if (imageBytes != null)
+                        {
+                            using (var stream = new System.IO.MemoryStream(imageBytes))
+                            {
+                                image = new BitmapImage();
+                                image.BeginInit();
+                                image.StreamSource = stream;
+                                image.CacheOption = BitmapCacheOption.OnLoad;
+                                image.EndInit();
+                            }
+                        }
+
+                        items.Add(new Inventory.Item
+                        {
+                            ItemName = reader["ItemName"]?.ToString() ?? string.Empty,
+                            Quantity = Convert.ToInt32(reader["Quantity"]),
+                            Price = Convert.ToDouble(reader["Price"]),
+                            Value = Convert.ToDouble(reader["Value"]),
+                            ProductImage = image ?? new BitmapImage()
+                        });
+                    }
+                }
+            }
+
+            return items;
+        }
+
+        private List<Purchase> LoadPurchases()
+        {
+            var purchases = new List<Purchase>();
+
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand(@"
+                                        SELECT p.ProductName, p.Amount, p.Quantity, p.TotalAmount, p.Date, p.Time, i.Image
+                                        FROM Purchases p
+                                        JOIN Inventory i ON p.ProductName = i.ItemName", connection);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        byte[]? imageBytes = reader["Image"] as byte[];
+                        BitmapImage? image = null;
+
+                        if (imageBytes != null)
+                        {
+                            using (var stream = new System.IO.MemoryStream(imageBytes))
+                            {
+                                image = new BitmapImage();
+                                image.BeginInit();
+                                image.StreamSource = stream;
+                                image.CacheOption = BitmapCacheOption.OnLoad;
+                                image.EndInit();
+                            }
+                        }
+
+                        purchases.Add(new Purchase
+                        {
+                            ProductName = reader.GetString(0),
+                            Amount = reader.GetDouble(1),
+                            Quantity = reader.GetInt32(2),
+                            TotalAmount = reader.GetDouble(3),
+                            Date = reader.GetString(4),
+                            Time = DateTime.Parse(reader.GetString(5)).ToString("hh:mm tt"),
+                            ProductImage = image ?? new BitmapImage()
+                        });
+                    }
+                }
+            }
+
+            return purchases;
         }
 
         public class Purchase

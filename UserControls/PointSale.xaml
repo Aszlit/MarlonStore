@@ -68,13 +68,37 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="CustomScrollBar" TargetType="ScrollBar">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="Transparent">
+                            <Track Name="PART_Track" IsDirectionReversed="true">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.LineUpCommand" Background="Transparent" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Background="#888" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.LineDownCommand" Background="Transparent" />
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Padding="0,0,0,20">
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Padding="0,30,0,50">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
+            </ScrollViewer.Resources>
             <ItemsControl x:Name="ProductsPanel">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -97,6 +121,9 @@
             <StackPanel>
                 <TextBlock Text="Orders" FontSize="16" FontWeight="Bold" Margin="5" Foreground="White" />
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer.Resources>
+                        <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBar}" />
+                    </ScrollViewer.Resources>
                     <ItemsControl x:Name="OrdersPanel">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
