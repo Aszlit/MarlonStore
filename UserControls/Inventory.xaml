@@ -167,6 +167,20 @@
             </DataGrid.CellStyle>
         </DataGrid>
 
+        <!-- ToggleButton for sorting order -->
+        <ToggleButton x:Name="SortOrderToggleButton" Content="Ascending" Checked="SortOrderToggleButton_Checked" Unchecked="SortOrderToggleButton_Unchecked" Grid.Column="1" Margin="0,64,711,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="32" Width="146"/>
+
+        <!-- ComboBox for sort criteria -->
+        <ComboBox x:Name="SortCriteriaComboBox" Grid.Column="1" Margin="0,64,876,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="34" Width="160" SelectedIndex="0">
+            <TextBlock Text="Sort by" IsHitTestVisible="False" Foreground="Gray"/>
+            <ComboBoxItem Content="ItemName" />
+            <ComboBoxItem Content="Quantity" />
+            <ComboBoxItem Content="Price" />
+            <ComboBoxItem Content="Value" />
+            <ComboBoxItem Content="Category" />
+            <ComboBoxItem Content="Stock Level Indicator" />
+        </ComboBox>
+
         <!-- Button to add new items -->
         <Button Content="Add New Item" 
                 Click="addbutton"
@@ -174,25 +188,5 @@
         <Button x:Name="RefreshBtn" Content="Refresh" 
             Click="refresh"
             Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Margin="0,64,191,0" Height="41" Width="150" />
-
-
-        <!-- Sorting Controls -->
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,64,352,0" VerticalAlignment="Top">
-            <ComboBox x:Name="SortCriteriaComboBox" Width="150" Height="41" Margin="0,0,10,0" 
-               VerticalAlignment="Center" HorizontalAlignment="Right" 
-               SelectedIndex="0">
-                <ComboBoxItem Content="Item Name" />
-                <ComboBoxItem Content="Category" />
-                <ComboBoxItem Content="Quantity" />
-                <ComboBoxItem Content="Price" />
-                <ComboBoxItem Content="Value" />
-                <ComboBoxItem Content="Stock Level" />
-            </ComboBox>
-            <ToggleButton x:Name="SortOrderToggleButton" Width="150" Height="41" 
-                   VerticalAlignment="Center" HorizontalAlignment="Right" 
-                   Content="Ascending" 
-                   Checked="SortOrderToggleButton_Checked" 
-                   Unchecked="SortOrderToggleButton_Unchecked" />
-        </StackPanel>
     </Grid>
 </UserControl>

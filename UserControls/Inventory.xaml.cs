@@ -25,16 +25,18 @@ namespace Inventory.UserControls
     /// </summary>
     public partial class Inventory : UserControl
     {
+        // ObservableCollection that binds to the DataGrid
         public ObservableCollection<Item> Items { get; set; }
 
         public Inventory()
         {
             InitializeComponent();
             Items = new ObservableCollection<Item>();
-            this.DataContext = this;
-            LoadInventory();
+            this.DataContext = this; // Set DataContext for binding
+            LoadInventory(); // Load inventory items from database
         }
 
+        // Method to load data from SQLite database
         public void LoadInventory()
         {
             Items.Clear();
@@ -50,7 +52,7 @@ namespace Inventory.UserControls
                 {
                     while (reader.Read())
                     {
-                        byte[] imageBytes = reader["Image"] as byte[];
+                        byte[] imageBytes = reader["Image"] as byte[]; // Retrieve image data as byte array
                         BitmapImage image = null;
 
                         if (imageBytes != null)
@@ -71,22 +73,30 @@ namespace Inventory.UserControls
                             Quantity = Convert.ToInt32(reader["Quantity"]),
                             Price = Convert.ToDouble(reader["Price"]),
                             Value = Convert.ToDouble(reader["Value"]),
-                            ProductImage = image,
-                            Category = reader["Category"].ToString()
+                            ProductImage = image, // Assign the image to the property
+                            Category = reader["Category"].ToString() // Retrieve and assign the Category
                         });
                     }
                 }
             }
         }
 
+        // Event handler for the "Add New Item" button click
         private void addbutton(object sender, RoutedEventArgs e)
         {
             try
             {
+                // Create the new window
                 AddNewItemWindow addgoodswindow = new AddNewItemWindow();
-                addgoodswindow.Owner = Window.GetWindow(this);
+
+                // Set the owner of the new window to the current Inventory window
+                addgoodswindow.Owner = Window.GetWindow(this);  // This sets the owner to the Inventory window
+
+                // Show the new window and wait until it's closed
                 addgoodswindow.ShowDialog();
-                LoadInventory();
+
+                // Refresh the inventory after the new item is added
+                LoadInventory(); // Refresh inventory after adding a new item
             }
             catch (Exception ex)
             {
@@ -94,17 +104,69 @@ namespace Inventory.UserControls
             }
         }
 
+        // Event handler for the "Refresh" button click
+        public void refresh(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoadInventory(); // Refresh inventory
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while refreshing: {ex.Message}");
+            }
+        }
+
+        // Event handler for the SortOrderToggleButton Checked event
+        private void SortOrderToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            SortOrderToggleButton.Content = "Descending";
+            ApplySorting();
+        }
+
+        // Event handler for the SortOrderToggleButton Unchecked event
+        private void SortOrderToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SortOrderToggleButton.Content = "Ascending";
+            ApplySorting();
+        }
+
+        // Method to apply sorting to the DataGrid
+        private void ApplySorting()
+        {
+            var selectedItem = SortCriteriaComboBox.SelectedItem;
+            if (selectedItem is TextBlock)
+            {
+                // Do not apply sorting if the placeholder is selected
+                return;
+            }
+
+            var sortDirection = SortOrderToggleButton.IsChecked == true ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            var sortCriteria = ((ComboBoxItem)selectedItem).Content.ToString();
+
+            InventoryDataGrid.Items.SortDescriptions.Clear();
+
+            // Handle sorting for Stock Level Indicator
+            if (sortCriteria == "Stock Level Indicator")
+            {
+                sortCriteria = "Quantity";
+            }
+
+            InventoryDataGrid.Items.SortDescriptions.Add(new SortDescription(sortCriteria, sortDirection));
+        }
+
+        // Item model class
         public class Item
         {
             public string ItemName { get; set; }
             public int Quantity { get; set; }
             public double Price { get; set; }
             public double Value { get; set; }
-            public BitmapImage ProductImage { get; set; }
-            public string Category { get; set; }
+            public BitmapImage ProductImage { get; set; } // For displaying the image
+            public string Category { get; set; } // New property for Category
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
             {
@@ -114,39 +176,6 @@ namespace Inventory.UserControls
             {
                 MessageBox.Show($"Error during closing: {ex.Message}");
             }
-        }
-
-        public void refresh(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                LoadInventory();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred while refreshing: {ex.Message}");
-            }
-        }
-
-        private void SortOrderToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            SortOrderToggleButton.Content = "Descending";
-            ApplySorting();
-        }
-
-        private void SortOrderToggleButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            SortOrderToggleButton.Content = "Ascending";
-            ApplySorting();
-        }
-
-        private void ApplySorting()
-        {
-            var sortDirection = SortOrderToggleButton.IsChecked == true ? ListSortDirection.Descending : ListSortDirection.Ascending;
-            var sortCriteria = ((ComboBoxItem)SortCriteriaComboBox.SelectedItem).Content.ToString();
-
-            InventoryDataGrid.Items.SortDescriptions.Clear();
-            InventoryDataGrid.Items.SortDescriptions.Add(new SortDescription(sortCriteria, sortDirection));
         }
     }
 
@@ -174,4 +203,4 @@ namespace Inventory.UserControls
     }
 
     }
-  
+   
