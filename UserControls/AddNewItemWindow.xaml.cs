@@ -26,6 +26,7 @@ namespace Inventory.UserControls
         public AddNewItemWindow()
         {
             InitializeComponent();
+            LoadSuppliers();
         }
 
         // Close the window
@@ -57,13 +58,18 @@ namespace Inventory.UserControls
             var priceText = PriceTextBox.Text;
             var valueText = ValueTextBox.Text;
             var category = GetSelectedCategory();
+            var dateAdded = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var status = GetSelectedStatus();
+            var supplier = SupplierComboBox.Text; // Ensure the supplier is correctly retrieved
+            var expirationDate = NoExpirationCheckBox.IsChecked == true ? (DateTime?)null : ExpirationDatePicker.SelectedDate;
 
             // Validate inputs
             if (string.IsNullOrWhiteSpace(itemName) ||
                 string.IsNullOrWhiteSpace(quantityText) ||
                 string.IsNullOrWhiteSpace(priceText) ||
                 string.IsNullOrWhiteSpace(valueText) ||
-                string.IsNullOrWhiteSpace(category))
+                string.IsNullOrWhiteSpace(category) ||
+                string.IsNullOrWhiteSpace(supplier)) // Add supplier validation
             {
                 MessageBox.Show("Please fill all fields before saving.");
                 return;
@@ -83,13 +89,17 @@ namespace Inventory.UserControls
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-                    var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Category, Image) VALUES (@ItemName, @Quantity, @Price, @Value, @Category, @Image)", connection);
+                    var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Category, Image, DateAdded, Status, Supplier, ExpirationDate) VALUES (@ItemName, @Quantity, @Price, @Value, @Category, @Image, @DateAdded, @Status, @Supplier, @ExpirationDate)", connection);
                     command.Parameters.AddWithValue("@ItemName", itemName);
                     command.Parameters.AddWithValue("@Quantity", quantity);
                     command.Parameters.AddWithValue("@Price", price);
                     command.Parameters.AddWithValue("@Value", value);
                     command.Parameters.AddWithValue("@Category", category);
                     command.Parameters.Add("@Image", System.Data.DbType.Binary).Value = imageBytes;
+                    command.Parameters.AddWithValue("@DateAdded", dateAdded);
+                    command.Parameters.AddWithValue("@Status", status);
+                    command.Parameters.AddWithValue("@Supplier", supplier); // Ensure the supplier parameter is added
+                    command.Parameters.AddWithValue("@ExpirationDate", (object)expirationDate ?? DBNull.Value); // Add expiration date parameter
                     command.ExecuteNonQuery();
                 }
 
@@ -101,6 +111,22 @@ namespace Inventory.UserControls
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+
+
+
+        private void NoExpirationCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            ExpirationDatePicker.IsEnabled = false;
+            ExpirationDatePicker.SelectedDate = null;
+        }
+
+        private void NoExpirationCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ExpirationDatePicker.IsEnabled = true;
+        }
+
+
+
 
         // Get selected category
         private string GetSelectedCategory()
@@ -114,6 +140,23 @@ namespace Inventory.UserControls
             }
             return null;
         }
+
+
+        // Get selected status
+        private string GetSelectedStatus()
+        {
+            if (ActiveRadioButton.IsChecked == true)
+            {
+                return "Active";
+            }
+            else if (InactiveRadioButton.IsChecked == true)
+            {
+                return "Inactive";
+            }
+            return null;
+        }
+
+
 
         // Convert image to byte array
         private byte[] ConvertImageToByteArray(string imagePath)
@@ -225,8 +268,34 @@ namespace Inventory.UserControls
                 return bitmapImage;
             }
         }
+    
+
+    private void LoadSuppliers()
+        {
+            try
+            {
+                string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+                string connectionString = $"Data Source={databasePath};Version=3;";
+
+                using (var connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+                    var command = new SQLiteCommand("SELECT supplier_name FROM Suppliers", connection);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            SupplierComboBox.Items.Add(reader["supplier_name"].ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while loading suppliers: {ex.Message}");
+            }
+        }
+
+        }
     }
-
-
-}
 

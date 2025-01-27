@@ -9,6 +9,7 @@
     <UserControl.Resources>
 
         <local:QuantityToColorConverter x:Key="QuantityToColorConverter"/>
+        <local:PlaceholderToBoolConverter x:Key="PlaceholderToBoolConverter"/>
 
         <!-- Centered text style -->
         <Style x:Key="CenteredTextStyle" TargetType="TextBlock">
@@ -168,7 +169,8 @@
         </DataGrid>
 
         <!-- ToggleButton for sorting order -->
-        <ToggleButton x:Name="SortOrderToggleButton" Content="Ascending" Checked="SortOrderToggleButton_Checked" Unchecked="SortOrderToggleButton_Unchecked" Grid.Column="1" Margin="0,64,711,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="32" Width="146"/>
+        <Button x:Name="SortOrderButton" Content="Sort" Click="SortOrderButton_Click" Grid.Column="1" Margin="0,64,711,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="32" Width="146"
+                IsEnabled="{Binding SelectedItem, ElementName=SortCriteriaComboBox, Converter={StaticResource PlaceholderToBoolConverter}}"/>
 
         <!-- ComboBox for sort criteria -->
         <ComboBox x:Name="SortCriteriaComboBox" Grid.Column="1" Margin="0,64,876,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="34" Width="160" SelectedIndex="0">

@@ -22,11 +22,12 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="83*"/>
+                <ColumnDefinition Width="277*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Custom Title Bar -->
-            <DockPanel Background="Transparent" Height="40" VerticalAlignment="Top" Margin="0">
+            <DockPanel Background="Transparent" Height="40" VerticalAlignment="Center" Grid.ColumnSpan="2">
                 <TextBlock Text="Add New Item" VerticalAlignment="Center" Foreground="White" FontSize="16" FontWeight="Bold" Margin="10,0,0,0"/>
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
                     <!-- Close Button -->
@@ -59,94 +60,13 @@
             </DockPanel>
 
             <!-- Form Content -->
-            <StackPanel Grid.Row="1" Margin="0,230,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="340" Height="101">
-                <!-- Item Name -->
-                <!-- Item Name -->
-                <!-- Item Name -->
-                <!-- Item Name -->
 
-                <!-- Item Name -->
-
-                <!-- Item Name -->
-
-                <!-- Item Name -->
-
-                <!-- Item Name -->
-                <!-- Quantity -->
-
-                <!-- Price -->
-
-                <!-- Value -->
-
-                <!-- Category -->
-                <TextBlock Text="Category:" VerticalAlignment="Center" Foreground="White" Margin="0,0,0,5"/>
-                <StackPanel x:Name="CategoryPanel" Orientation="Vertical" Margin="0,0,0,15" Width="341" Height="81">
-                    <RadioButton Content="Frozen Foods" GroupName="Category" Margin="0,5"/>
-                    <RadioButton Content="General Products" GroupName="Category" Margin="0,5"/>
-                    <RadioButton Content="Liquior" GroupName="Category" Margin="0,5"/>
-                    <RadioButton Content="Liquior" GroupName="Category" Margin="0,5"/>
-                </StackPanel>
-
-                <!-- Image Preview -->
-                <Image x:Name="PreviewImage" Width="100" Height="100" Margin="0,0,0,15" HorizontalAlignment="Center" Stretch="Uniform"/>
-
-                <!-- Select Image Button -->
-                <Button Content="Select Image" Margin="0,0,0,15" Width="150" HorizontalAlignment="Center"
-                        Click="SelectImage_Click" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid>
-                                <!-- Background Layer -->
-                                <Rectangle x:Name="BackgroundRectangle" Fill="#FF1E90FF" RadiusX="5" RadiusY="5"/>
-                                <!-- Button Content -->
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <!-- MouseOver Trigger -->
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4682B4"/>
-                                    <!-- Lighter Blue Hover Background -->
-                                </Trigger>
-                                <!-- Pressed Trigger -->
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4169E1"/>
-                                    <!-- Darker Blue Click Background -->
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- Add Image Button -->
-                <Button Content="Add Image" Margin="0,0,0,15" Width="150" HorizontalAlignment="Center"
-                        Click="SelectImage_Click" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid>
-                                <!-- Background Layer -->
-                                <Rectangle x:Name="BackgroundRectangle" Fill="#FF1E90FF" RadiusX="5" RadiusY="5"/>
-                                <!-- Button Content -->
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <!-- MouseOver Trigger -->
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4682B4"/>
-                                    <!-- Lighter Blue Hover Background -->
-                                </Trigger>
-                                <!-- Pressed Trigger -->
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="BackgroundRectangle" Property="Fill" Value="#FF4169E1"/>
-                                    <!-- Darker Blue Click Background -->
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
+            <!-- Supplier Selection -->
+            <TextBlock Text="Supplier:" Foreground="White" Margin="99,170,116,150" Grid.Row="1" Grid.Column="1"/>
+            <ComboBox x:Name="SupplierComboBox" Margin="106,191,10,120" Grid.Row="1" Grid.Column="1" />
 
             <!-- Action Buttons -->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="70,20,0,0" Grid.ColumnSpan="2">
                 <!-- Save Button -->
                 <Button Content="Save" Width="100" Margin="10,0,0,0"
                         Click="SaveButton_Click" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
@@ -201,15 +121,21 @@
                     </Button.Template>
                 </Button>
             </StackPanel>
-            <Button x:Name="insertimage_button" Content="Insert Image" HorizontalAlignment="Left" Margin="230,145,0,0" Grid.Row="1" VerticalAlignment="Top" Height="30" Width="112" Click="InsertImageButton_Click"/>
-            <Image x:Name="image_box" HorizontalAlignment="Left" Height="100" Margin="236,33,0,0" VerticalAlignment="Top" Width="100" Grid.Row="1"/>
-            <TextBlock Text="Item Name:" Foreground="White" Margin="15,17,159,303" Grid.Row="1"/>
-            <TextBox x:Name="ItemNameTextBox" Margin="40,33,159,285" Grid.Row="1"/>
-            <TextBlock Text="Quantity:" Foreground="White" Margin="15,66,159,254" Grid.Row="1"/>
-            <xctk:IntegerUpDown x:Name="QuantityTextBox" Minimum="0" Maximum="1000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged" Margin="40,87,159,229" Grid.Row="1"/>
-            <TextBlock Text="Price:" Foreground="White" Margin="15,122,230,198" Grid.Row="1"/>
-            <xctk:IntegerUpDown x:Name="PriceTextBox" Minimum="0" Maximum="1000000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged" Margin="40,143,205,173" Grid.Row="1"/>
-            <TextBlock Text="Value:" Foreground="White" Margin="15,177,230,144" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+            <Button x:Name="insertimage_button" Content="Insert Image" HorizontalAlignment="Left" Margin="139,130,0,0" Grid.Row="1" VerticalAlignment="Top" Height="30" Width="112" Click="InsertImageButton_Click" Grid.Column="1"/>
+            <Image x:Name="image_box" HorizontalAlignment="Left" Height="100" Margin="153,33,0,0" VerticalAlignment="Top" Width="100" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock Text="Item Name:" Foreground="White" Margin="15,17,159,303" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="ItemNameTextBox" Margin="41,38,159,277" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Quantity:" Foreground="White" Margin="15,66,159,254" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <xctk:IntegerUpDown x:Name="QuantityTextBox" Minimum="0" Maximum="1000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged" Margin="40,87,159,229" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Price:" Foreground="White" Margin="15,122,230,198" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <xctk:IntegerUpDown x:Name="PriceTextBox" Minimum="0" Maximum="1000000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged" Margin="40,143,205,173" Grid.Row="1" Grid.ColumnSpan="2"/>
+
+            <!-- Expiration Date -->
+            <TextBlock Text="Expiration Date:" Foreground="White" Margin="15,177,230,144" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <DatePicker x:Name="ExpirationDatePicker" Margin="40,198,205,113" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <CheckBox x:Name="NoExpirationCheckBox" Content="N/A" Foreground="White" Margin="40,228,205,89" Grid.Row="1" Grid.ColumnSpan="2" Checked="NoExpirationCheckBox_Checked" Unchecked="NoExpirationCheckBox_Unchecked"/>
+
+            <TextBlock Text="Value:" Foreground="White" Margin="15,263,230,144" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -219,7 +145,16 @@
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
-            <TextBox x:Name="ValueTextBox" IsReadOnly="True" Margin="40,199,205,119" Grid.Row="1"/>
+            <TextBox x:Name="ValueTextBox" IsReadOnly="True" Margin="40,285,205,119" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <StackPanel x:Name="CategoryPanel" Orientation="Vertical" Margin="73,228,80,6" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="1">
+                <RadioButton Content="Frozen Foods" GroupName="Category" Margin="0,5" Foreground="White"/>
+                <RadioButton Content="General Products" GroupName="Category" Margin="0,5" Foreground="White"/>
+                <RadioButton Content="Liquior" GroupName="Category" Margin="0,5" Foreground="White"/>
+                <RadioButton Content="Others" GroupName="Category" Margin="0,5" Foreground="White"/>
+            </StackPanel>
+            <RadioButton x:Name="ActiveRadioButton" Content="Active" GroupName="Status" IsChecked="True" Grid.Column="1" Margin="202,249,6,66" Grid.Row="1" Foreground="#FFFDFBFB" />
+            <RadioButton x:Name="InactiveRadioButton" Content="Inactive" GroupName="Status" Margin="202,276,6,42" Grid.Column="1" Grid.Row="1" Foreground="#FFF7F5F5" />
+            <Image x:Name="PreviewImage" Stretch="Uniform" Margin="144,1,29,236" Grid.Row="1" Grid.Column="1"/>
         </Grid>
     </Border>
 </Window>

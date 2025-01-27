@@ -117,17 +117,9 @@ namespace Inventory.UserControls
             }
         }
 
-        // Event handler for the SortOrderToggleButton Checked event
-        private void SortOrderToggleButton_Checked(object sender, RoutedEventArgs e)
+        // Event handler for the SortOrderButton click event
+        private void SortOrderButton_Click(object sender, RoutedEventArgs e)
         {
-            SortOrderToggleButton.Content = "Descending";
-            ApplySorting();
-        }
-
-        // Event handler for the SortOrderToggleButton Unchecked event
-        private void SortOrderToggleButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            SortOrderToggleButton.Content = "Ascending";
             ApplySorting();
         }
 
@@ -137,11 +129,23 @@ namespace Inventory.UserControls
             var selectedItem = SortCriteriaComboBox.SelectedItem;
             if (selectedItem is TextBlock)
             {
-                // Do not apply sorting if the placeholder is selected
+                // Clear the Items collection and reload inventory to reset sorting
+                InventoryDataGrid.Items.SortDescriptions.Clear();
+                LoadInventory();
                 return;
             }
 
-            var sortDirection = SortOrderToggleButton.IsChecked == true ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            var sortDirection = ListSortDirection.Ascending;
+            if (SortOrderButton.Content.ToString() == "Sort Descending")
+            {
+                sortDirection = ListSortDirection.Descending;
+                SortOrderButton.Content = "Sort Ascending";
+            }
+            else
+            {
+                SortOrderButton.Content = "Sort Descending";
+            }
+
             var sortCriteria = ((ComboBoxItem)selectedItem).Content.ToString();
 
             InventoryDataGrid.Items.SortDescriptions.Clear();
@@ -194,6 +198,22 @@ namespace Inventory.UserControls
                     return Brushes.Green;
             }
             return Brushes.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class PlaceholderToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is TextBlock textBlock && textBlock.Text == "Sort by")
+            {
+                return false;
+            }
+            return true;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
