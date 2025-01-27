@@ -82,7 +82,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid MouseDown="Grid_MouseDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="134*"/>
@@ -91,6 +91,7 @@
                   CanUserAddRows="False" 
                   CanUserResizeColumns="False"
                   CanUserReorderColumns="False"
+                  CanUserSortColumns="False"
                   HeadersVisibility="Column" 
                   GridLinesVisibility="None"
                   Margin="0,115,10,65"
@@ -173,8 +174,8 @@
                 IsEnabled="{Binding SelectedItem, ElementName=SortCriteriaComboBox, Converter={StaticResource PlaceholderToBoolConverter}}"/>
 
         <!-- ComboBox for sort criteria -->
-        <ComboBox x:Name="SortCriteriaComboBox" Grid.Column="1" Margin="0,64,876,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="34" Width="160" SelectedIndex="0">
-            <TextBlock Text="Sort by" IsHitTestVisible="False" Foreground="Gray"/>
+        <ComboBox x:Name="SortCriteriaComboBox" Grid.Column="1" Margin="0,64,876,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="34" Width="160" SelectedIndex="0" SelectionChanged="SortCriteriaComboBox_SelectionChanged">
+            <ComboBoxItem Content="Date Added" />
             <ComboBoxItem Content="ItemName" />
             <ComboBoxItem Content="Quantity" />
             <ComboBoxItem Content="Price" />
@@ -189,6 +190,11 @@
                 Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Height="41" Width="150" />
         <Button x:Name="RefreshBtn" Content="Refresh" 
             Click="refresh"
-            Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Margin="0,64,191,0" Height="41" Width="150" />
+            Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Margin="0,64,386,0" Height="41" Width="150" 
+            Visibility="Collapsed"/>
+        <Button x:Name="removebutton" Content="Remove" 
+                Click="removebutton_Click"
+                Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Height="41" Width="150" Margin="0,64,186,0" />
+
     </Grid>
 </UserControl>

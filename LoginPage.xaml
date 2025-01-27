@@ -110,6 +110,7 @@
                 <PasswordBox x:Name="input2" HorizontalAlignment="Center" Height="23" Margin="0,195,0,0" VerticalAlignment="Top" Width="144" KeyDown="Input2_KeyDown"/>
                 <Label x:Name="userinputlabel1" Content="Enter Username" HorizontalAlignment="Left" Margin="128,136,0,0" VerticalAlignment="Top" Foreground="#FFFF2424"/>
                 <Label x:Name="userinputlabel2" Content="Enter Password" HorizontalAlignment="Left" Margin="128,218,0,0" VerticalAlignment="Top" Foreground="#FFFF2424"/>
+                <Label x:Name="cooldownlabel" Content="" HorizontalAlignment="Center" Height="24" Margin="0,223,0,0" VerticalAlignment="Top" Width="288" Foreground="Red"/>
             </Grid>
         </Grid>
     </Border>

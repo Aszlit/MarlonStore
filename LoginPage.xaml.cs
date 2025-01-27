@@ -190,10 +190,13 @@ namespace Inventory
 
         private void ShowCooldownMessage()
         {
-            userinputlabel2.Content = $"Too many failed attempts. Please wait {CooldownPeriod} seconds.";
-            userinputlabel2.HorizontalAlignment = HorizontalAlignment.Center;
-            userinputlabel2.Visibility = Visibility.Visible;
-            userinputlabel1.Visibility = Visibility.Hidden;
+            Dispatcher.Invoke(() =>
+            {
+                cooldownlabel.Content = $"Too many failed attempts. Please wait {CooldownPeriod} seconds.";
+                cooldownlabel.Visibility = Visibility.Visible;
+                userinputlabel1.Visibility = Visibility.Hidden;
+                userinputlabel2.Visibility = Visibility.Hidden;
+            });
         }
 
         private void OnCooldownTimerElapsed(object sender, ElapsedEventArgs e)
@@ -204,6 +207,7 @@ namespace Inventory
             Dispatcher.Invoke(() =>
             {
                 ResetFieldStyles();
+                cooldownlabel.Visibility = Visibility.Hidden;
                 MessageBox.Show("You can now try logging in again.", "Cooldown Ended", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }

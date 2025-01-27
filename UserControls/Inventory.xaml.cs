@@ -25,18 +25,17 @@ namespace Inventory.UserControls
     /// </summary>
     public partial class Inventory : UserControl
     {
-        // ObservableCollection that binds to the DataGrid
         public ObservableCollection<Item> Items { get; set; }
 
         public Inventory()
         {
             InitializeComponent();
             Items = new ObservableCollection<Item>();
-            this.DataContext = this; // Set DataContext for binding
-            LoadInventory(); // Load inventory items from database
+            this.DataContext = this;
+            LoadInventory();
+            this.Loaded += Inventory_Loaded;
         }
 
-        // Method to load data from SQLite database
         public void LoadInventory()
         {
             Items.Clear();
@@ -47,12 +46,12 @@ namespace Inventory.UserControls
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                var command = new SQLiteCommand("SELECT * FROM Inventory", connection);
+                var command = new SQLiteCommand("SELECT * FROM Inventory WHERE Status != 'Inactive'", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        byte[] imageBytes = reader["Image"] as byte[]; // Retrieve image data as byte array
+                        byte[] imageBytes = reader["Image"] as byte[];
                         BitmapImage image = null;
 
                         if (imageBytes != null)
@@ -67,36 +66,32 @@ namespace Inventory.UserControls
                             }
                         }
 
+                        DateTime dateAdded = reader["DateAdded"] != DBNull.Value ? Convert.ToDateTime(reader["DateAdded"]) : DateTime.MinValue;
+
                         Items.Add(new Item
                         {
                             ItemName = reader["ItemName"].ToString(),
                             Quantity = Convert.ToInt32(reader["Quantity"]),
                             Price = Convert.ToDouble(reader["Price"]),
                             Value = Convert.ToDouble(reader["Value"]),
-                            ProductImage = image, // Assign the image to the property
-                            Category = reader["Category"].ToString() // Retrieve and assign the Category
+                            ProductImage = image,
+                            Category = reader["Category"].ToString(),
+                            DateAdded = dateAdded,
+                            Status = reader["Status"].ToString()
                         });
                     }
                 }
             }
         }
 
-        // Event handler for the "Add New Item" button click
         private void addbutton(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Create the new window
                 AddNewItemWindow addgoodswindow = new AddNewItemWindow();
-
-                // Set the owner of the new window to the current Inventory window
-                addgoodswindow.Owner = Window.GetWindow(this);  // This sets the owner to the Inventory window
-
-                // Show the new window and wait until it's closed
+                addgoodswindow.Owner = Window.GetWindow(this);
                 addgoodswindow.ShowDialog();
-
-                // Refresh the inventory after the new item is added
-                LoadInventory(); // Refresh inventory after adding a new item
+                LoadInventory();
             }
             catch (Exception ex)
             {
@@ -104,12 +99,11 @@ namespace Inventory.UserControls
             }
         }
 
-        // Event handler for the "Refresh" button click
         public void refresh(object sender, RoutedEventArgs e)
         {
             try
             {
-                LoadInventory(); // Refresh inventory
+                LoadInventory();
             }
             catch (Exception ex)
             {
@@ -117,21 +111,22 @@ namespace Inventory.UserControls
             }
         }
 
-        // Event handler for the SortOrderButton click event
         private void SortOrderButton_Click(object sender, RoutedEventArgs e)
         {
             ApplySorting();
         }
 
-        // Method to apply sorting to the DataGrid
+        private void SortCriteriaComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplySorting();
+        }
+
         private void ApplySorting()
         {
             var selectedItem = SortCriteriaComboBox.SelectedItem;
-            if (selectedItem is TextBlock)
+            if (selectedItem is ComboBoxItem comboBoxItem && comboBoxItem.Content.ToString() == "Date Added")
             {
-                // Clear the Items collection and reload inventory to reset sorting
-                InventoryDataGrid.Items.SortDescriptions.Clear();
-                LoadInventory();
+                SortByDateAdded();
                 return;
             }
 
@@ -150,7 +145,6 @@ namespace Inventory.UserControls
 
             InventoryDataGrid.Items.SortDescriptions.Clear();
 
-            // Handle sorting for Stock Level Indicator
             if (sortCriteria == "Stock Level Indicator")
             {
                 sortCriteria = "Quantity";
@@ -159,15 +153,79 @@ namespace Inventory.UserControls
             InventoryDataGrid.Items.SortDescriptions.Add(new SortDescription(sortCriteria, sortDirection));
         }
 
-        // Item model class
+        private void SortByDateAdded()
+        {
+            if (SortOrderButton == null)
+            {
+                MessageBox.Show("SortOrderButton is not initialized.");
+                return;
+            }
+
+            if (InventoryDataGrid == null)
+            {
+                MessageBox.Show("InventoryDataGrid is not initialized.");
+                return;
+            }
+
+            var sortDirection = ListSortDirection.Ascending;
+            if (SortOrderButton.Content?.ToString() == "Sort Descending")
+            {
+                sortDirection = ListSortDirection.Descending;
+                SortOrderButton.Content = "Sort Ascending";
+            }
+            else
+            {
+                SortOrderButton.Content = "Sort Descending";
+            }
+
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(InventoryDataGrid.ItemsSource);
+            if (dataView != null)
+            {
+                dataView.SortDescriptions.Clear();
+                dataView.SortDescriptions.Add(new SortDescription("DateAdded", sortDirection));
+                dataView.Refresh();
+            }
+        }
+
+        private void Inventory_Loaded(object sender, RoutedEventArgs e)
+        {
+            SortByDateAdded();
+        }
+
+        private void removebutton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InventoryDataGrid.SelectedItem is Item selectedItem)
+            {
+                selectedItem.Status = "Inactive";
+                UpdateItemStatus(selectedItem);
+                Items.Remove(selectedItem);
+            }
+        }
+
+        private void UpdateItemStatus(Item item)
+        {
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand("UPDATE Inventory SET Status = 'Inactive' WHERE ItemName = @ItemName", connection);
+                command.Parameters.AddWithValue("@ItemName", item.ItemName);
+                command.ExecuteNonQuery();
+            }
+        }
+
         public class Item
         {
             public string ItemName { get; set; }
             public int Quantity { get; set; }
             public double Price { get; set; }
             public double Value { get; set; }
-            public BitmapImage ProductImage { get; set; } // For displaying the image
-            public string Category { get; set; } // New property for Category
+            public BitmapImage ProductImage { get; set; }
+            public string Category { get; set; }
+            public DateTime DateAdded { get; set; }
+            public string Status { get; set; } = "Active";
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -179,6 +237,14 @@ namespace Inventory.UserControls
             catch (Exception ex)
             {
                 MessageBox.Show($"Error during closing: {ex.Message}");
+            }
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!InventoryDataGrid.IsMouseOver)
+            {
+                InventoryDataGrid.UnselectAll();
             }
         }
     }
