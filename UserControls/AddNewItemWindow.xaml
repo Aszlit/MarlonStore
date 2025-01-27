@@ -59,7 +59,7 @@
             </DockPanel>
 
             <!-- Form Content -->
-            <StackPanel Grid.Row="1" Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="300">
+            <StackPanel Grid.Row="1" Margin="0,230,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="340" Height="101">
                 <!-- Item Name -->
                 <!-- Item Name -->
                 <!-- Item Name -->
@@ -72,24 +72,15 @@
                 <!-- Item Name -->
 
                 <!-- Item Name -->
-                <TextBlock Text="Item Name:" Foreground="White"/>
-
-                <TextBox x:Name="ItemNameTextBox" Width="250" Margin="0,0,0,15"/>
                 <!-- Quantity -->
-                <TextBlock Text="Quantity:" VerticalAlignment="Center" Foreground="White" Margin="0,0,0,5"/>
-                <xctk:IntegerUpDown x:Name="QuantityTextBox" Width="250" Margin="0,0,0,15" Minimum="0" Maximum="1000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged"/>
 
                 <!-- Price -->
-                <TextBlock Text="Price:" VerticalAlignment="Center" Foreground="White" Margin="0,0,0,5"/>
-                <xctk:IntegerUpDown x:Name="PriceTextBox" Width="250" Margin="0,0,0,15" Minimum="0" Maximum="1000000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged"/>
 
                 <!-- Value -->
-                <TextBlock Text="Value:" VerticalAlignment="Center" Foreground="White" Margin="0,0,0,5"/>
-                <TextBox x:Name="ValueTextBox" Width="250" Margin="0,0,0,15" IsReadOnly="True"/>
 
                 <!-- Category -->
                 <TextBlock Text="Category:" VerticalAlignment="Center" Foreground="White" Margin="0,0,0,5"/>
-                <StackPanel x:Name="CategoryPanel" Orientation="Vertical" Margin="0,0,0,15">
+                <StackPanel x:Name="CategoryPanel" Orientation="Vertical" Margin="0,0,0,15" Width="341" Height="81">
                     <RadioButton Content="Frozen Foods" GroupName="Category" Margin="0,5"/>
                     <RadioButton Content="General Products" GroupName="Category" Margin="0,5"/>
                     <RadioButton Content="Liquior" GroupName="Category" Margin="0,5"/>
@@ -210,8 +201,25 @@
                     </Button.Template>
                 </Button>
             </StackPanel>
-            <Button x:Name="insertimage_button" Content="Insert Image" HorizontalAlignment="Center" Margin="0,235,0,0" Grid.Row="1" VerticalAlignment="Top" Height="30" Width="112" Click="InsertImageButton_Click"/>
-            <Image x:Name="image_box" HorizontalAlignment="Left" Height="100" Margin="254,235,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100"/>
+            <Button x:Name="insertimage_button" Content="Insert Image" HorizontalAlignment="Left" Margin="230,145,0,0" Grid.Row="1" VerticalAlignment="Top" Height="30" Width="112" Click="InsertImageButton_Click"/>
+            <Image x:Name="image_box" HorizontalAlignment="Left" Height="100" Margin="236,33,0,0" VerticalAlignment="Top" Width="100" Grid.Row="1"/>
+            <TextBlock Text="Item Name:" Foreground="White" Margin="15,17,159,303" Grid.Row="1"/>
+            <TextBox x:Name="ItemNameTextBox" Margin="40,33,159,285" Grid.Row="1"/>
+            <TextBlock Text="Quantity:" Foreground="White" Margin="15,66,159,254" Grid.Row="1"/>
+            <xctk:IntegerUpDown x:Name="QuantityTextBox" Minimum="0" Maximum="1000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged" Margin="40,87,159,229" Grid.Row="1"/>
+            <TextBlock Text="Price:" Foreground="White" Margin="15,122,230,198" Grid.Row="1"/>
+            <xctk:IntegerUpDown x:Name="PriceTextBox" Minimum="0" Maximum="1000000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged" Margin="40,143,205,173" Grid.Row="1"/>
+            <TextBlock Text="Value:" Foreground="White" Margin="15,177,230,144" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.746"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <TextBox x:Name="ValueTextBox" IsReadOnly="True" Margin="40,199,205,119" Grid.Row="1"/>
         </Grid>
     </Border>
 </Window>

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-              xmlns:local="clr-namespace:Inventory.UserControls"
+             xmlns:local="clr-namespace:Inventory.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1096">
     <UserControl.Resources>
@@ -73,12 +73,18 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- ScrollBar Style -->
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#2A2E37"/>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="153*"/>
-            <ColumnDefinition Width="395*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="134*"/>
         </Grid.ColumnDefinitions>
         <DataGrid x:Name="InventoryDataGrid" 
                   CanUserAddRows="False" 
@@ -86,14 +92,14 @@
                   CanUserReorderColumns="False"
                   HeadersVisibility="Column" 
                   GridLinesVisibility="None"
-                  Margin="10,115,10,65"
+                  Margin="0,115,10,65"
                   RowHeight="50"
                   ColumnHeaderHeight="50"
                   BorderThickness="1"
                   BorderBrush="#DDDDDD" 
                   Background="#F7F7F7"
                   AutoGenerateColumns="False" 
-                  ItemsSource="{Binding Items}" Grid.ColumnSpan="2">
+                  ItemsSource="{Binding Items}" Grid.Column="1">
             <!-- Define Columns -->
             <DataGrid.Columns>
                 <!-- Image Column -->
@@ -164,9 +170,29 @@
         <!-- Button to add new items -->
         <Button Content="Add New Item" 
                 Click="addbutton"
-                Style="{StaticResource OvalButtonStyle}" Grid.Column="1" />
+                Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Height="41" Width="150" />
         <Button x:Name="RefreshBtn" Content="Refresh" 
             Click="refresh"
-            Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Margin="0,64,211,0" />
+            Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Margin="0,64,191,0" Height="41" Width="150" />
+
+
+        <!-- Sorting Controls -->
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,64,352,0" VerticalAlignment="Top">
+            <ComboBox x:Name="SortCriteriaComboBox" Width="150" Height="41" Margin="0,0,10,0" 
+               VerticalAlignment="Center" HorizontalAlignment="Right" 
+               SelectedIndex="0">
+                <ComboBoxItem Content="Item Name" />
+                <ComboBoxItem Content="Category" />
+                <ComboBoxItem Content="Quantity" />
+                <ComboBoxItem Content="Price" />
+                <ComboBoxItem Content="Value" />
+                <ComboBoxItem Content="Stock Level" />
+            </ComboBox>
+            <ToggleButton x:Name="SortOrderToggleButton" Width="150" Height="41" 
+                   VerticalAlignment="Center" HorizontalAlignment="Right" 
+                   Content="Ascending" 
+                   Checked="SortOrderToggleButton_Checked" 
+                   Unchecked="SortOrderToggleButton_Unchecked" />
+        </StackPanel>
     </Grid>
 </UserControl>
