@@ -28,7 +28,7 @@
 
             <!-- Custom Title Bar -->
             <DockPanel Background="Transparent" Height="40" VerticalAlignment="Center" Grid.ColumnSpan="2">
-                <TextBlock Text="Add New Item" VerticalAlignment="Center" Foreground="White" FontSize="16" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBlock x:Name="addnewitemlabel" Text="Add New Item" VerticalAlignment="Center" Foreground="White" FontSize="16" FontWeight="Bold" Margin="10,0,0,0"/>
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
                     <!-- Close Button -->
                     <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
@@ -68,7 +68,7 @@
             <!-- Action Buttons -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="70,20,0,0" Grid.ColumnSpan="2">
                 <!-- Save Button -->
-                <Button Content="Save" Width="100" Margin="10,0,0,0"
+                <Button x:Name="SaveButton" Content="Save" Width="100" Margin="10,0,0,0"
                         Click="SaveButton_Click" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">

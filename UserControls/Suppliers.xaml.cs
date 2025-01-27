@@ -30,7 +30,7 @@ namespace Inventory.UserControls
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                var command = new SQLiteCommand("SELECT supplier_name, contact, email, address, phone_number, website, status, date_added FROM Suppliers", connection);
+                var command = new SQLiteCommand("SELECT supplier_name, contact, email, address, phone_number, website, status, date_added FROM Suppliers WHERE status != 'Inactive'", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())

@@ -77,7 +77,9 @@ namespace Inventory.UserControls
                             ProductImage = image,
                             Category = reader["Category"].ToString(),
                             DateAdded = dateAdded,
-                            Status = reader["Status"].ToString()
+                            Status = reader["Status"].ToString(),
+                            Supplier = reader["Supplier"].ToString(), // Add Supplier
+                            ExpirationDate = reader["ExpirationDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["ExpirationDate"]) : null // Add ExpirationDate
                         });
                     }
                 }
@@ -96,6 +98,63 @@ namespace Inventory.UserControls
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (InventoryDataGrid.SelectedItem is Item selectedItem)
+            {
+                var editWindow = new AddNewItemWindow
+                {
+                    Owner = Window.GetWindow(this),
+                    EditingItem = selectedItem // Pass the selected item to the edit window
+                };
+
+                // Populate the edit window with the selected item's data
+                editWindow.ItemNameTextBox.Text = selectedItem.ItemName;
+                editWindow.QuantityTextBox.Value = selectedItem.Quantity;
+                editWindow.PriceTextBox.Value = (int)selectedItem.Price;
+                editWindow.SupplierComboBox.SelectedItem = selectedItem.Supplier;
+                editWindow.ExpirationDatePicker.SelectedDate = selectedItem.ExpirationDate;
+                editWindow.NoExpirationCheckBox.IsChecked = selectedItem.ExpirationDate == null;
+                editWindow.ValueTextBox.Text = selectedItem.Value.ToString();
+                editWindow.PreviewImage.Source = selectedItem.ProductImage;
+
+                foreach (RadioButton radioButton in editWindow.CategoryPanel.Children)
+                {
+                    if (radioButton.Content.ToString() == selectedItem.Category)
+                    {
+                        radioButton.IsChecked = true;
+                        break;
+                    }
+                }
+                editWindow.ActiveRadioButton.IsChecked = selectedItem.Status == "Active";
+                editWindow.InactiveRadioButton.IsChecked = selectedItem.Status == "Inactive";
+
+                editWindow.SaveButton.Content = "Confirm";
+                editWindow.addnewitemlabel.Text = "Edit Item";
+
+                if (editWindow.ShowDialog() == true)
+                {
+                    // Update the selected item with the new data
+                    selectedItem.ItemName = editWindow.ItemNameTextBox.Text;
+                    selectedItem.Quantity = editWindow.QuantityTextBox.Value ?? 0;
+                    selectedItem.Price = editWindow.PriceTextBox.Value ?? 0;
+                    selectedItem.Supplier = editWindow.SupplierComboBox.SelectedItem.ToString();
+                    selectedItem.ExpirationDate = editWindow.NoExpirationCheckBox.IsChecked == true ? null : editWindow.ExpirationDatePicker.SelectedDate;
+                    selectedItem.Value = double.Parse(editWindow.ValueTextBox.Text);
+                    selectedItem.Category = ((RadioButton)editWindow.CategoryPanel.Children.Cast<RadioButton>().FirstOrDefault(rb => rb.IsChecked == true)).Content.ToString();
+                    selectedItem.Status = editWindow.ActiveRadioButton.IsChecked == true ? "Active" : "Inactive";
+                    selectedItem.ProductImage = editWindow.PreviewImage.Source as BitmapImage;
+
+                    UpdateItemInDatabase(selectedItem);
+                    LoadInventory();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to edit.", "No Item Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -216,35 +275,31 @@ namespace Inventory.UserControls
             }
         }
 
-        public class Item
-        {
-            public string ItemName { get; set; }
-            public int Quantity { get; set; }
-            public double Price { get; set; }
-            public double Value { get; set; }
-            public BitmapImage ProductImage { get; set; }
-            public string Category { get; set; }
-            public DateTime DateAdded { get; set; }
-            public string Status { get; set; } = "Active";
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            try
-            {
-                // Your closing logic here
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error during closing: {ex.Message}");
-            }
-        }
-
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (!InventoryDataGrid.IsMouseOver)
             {
                 InventoryDataGrid.UnselectAll();
+            }
+        }
+        private void UpdateItemInDatabase(Item item)
+        {
+            string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand("UPDATE Inventory SET Quantity = @Quantity, Price = @Price, Value = @Value, Category = @Category, Status = @Status, Supplier = @Supplier, ExpirationDate = @ExpirationDate WHERE ItemName = @ItemName", connection);
+                command.Parameters.AddWithValue("@ItemName", item.ItemName);
+                command.Parameters.AddWithValue("@Quantity", item.Quantity);
+                command.Parameters.AddWithValue("@Price", item.Price);
+                command.Parameters.AddWithValue("@Value", item.Value);
+                command.Parameters.AddWithValue("@Category", item.Category);
+                command.Parameters.AddWithValue("@Status", item.Status);
+                command.Parameters.AddWithValue("@Supplier", item.Supplier);
+                command.Parameters.AddWithValue("@ExpirationDate", item.ExpirationDate.HasValue ? (object)item.ExpirationDate.Value : DBNull.Value);
+                command.ExecuteNonQuery();
             }
         }
     }
@@ -286,6 +341,19 @@ namespace Inventory.UserControls
         {
             throw new NotImplementedException();
         }
+    }
+    public class Item
+    {
+        public string ItemName { get; set; }
+        public int Quantity { get; set; }
+        public double Price { get; set; }
+        public double Value { get; set; }
+        public BitmapImage ProductImage { get; set; }
+        public string Category { get; set; }
+        public DateTime DateAdded { get; set; }
+        public string Status { get; set; } = "Active";
+        public string Supplier { get; set; } // Add Supplier property
+        public DateTime? ExpirationDate { get; set; } // Add ExpirationDate property
     }
 
     }

@@ -60,7 +60,7 @@ namespace Inventory.UserControls
             var category = GetSelectedCategory();
             var dateAdded = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var status = GetSelectedStatus();
-            var supplier = SupplierComboBox.Text; // Ensure the supplier is correctly retrieved
+            var supplier = SupplierComboBox.Text;
             var expirationDate = NoExpirationCheckBox.IsChecked == true ? (DateTime?)null : ExpirationDatePicker.SelectedDate;
 
             // Validate inputs
@@ -69,7 +69,7 @@ namespace Inventory.UserControls
                 string.IsNullOrWhiteSpace(priceText) ||
                 string.IsNullOrWhiteSpace(valueText) ||
                 string.IsNullOrWhiteSpace(category) ||
-                string.IsNullOrWhiteSpace(supplier)) // Add supplier validation
+                string.IsNullOrWhiteSpace(supplier))
             {
                 MessageBox.Show("Please fill all fields before saving.");
                 return;
@@ -81,7 +81,7 @@ namespace Inventory.UserControls
                 double price = double.Parse(priceText);
                 double value = double.Parse(valueText);
 
-                byte[] imageBytes = ConvertImageToByteArray(SelectedImagePath); // Convert selected image to byte array
+                byte[] imageBytes = ConvertImageToByteArray(SelectedImagePath);
 
                 string databasePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database", "maindatabase.db");
                 string connectionString = $"Data Source={databasePath};Version=3;";
@@ -89,7 +89,20 @@ namespace Inventory.UserControls
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-                    var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Category, Image, DateAdded, Status, Supplier, ExpirationDate) VALUES (@ItemName, @Quantity, @Price, @Value, @Category, @Image, @DateAdded, @Status, @Supplier, @ExpirationDate)", connection);
+                    SQLiteCommand command;
+
+                    if (EditingItem != null)
+                    {
+                        // Update existing item
+                        command = new SQLiteCommand("UPDATE Inventory SET ItemName = @ItemName, Quantity = @Quantity, Price = @Price, Value = @Value, Category = @Category, Image = @Image, DateAdded = @DateAdded, Status = @Status, Supplier = @Supplier, ExpirationDate = @ExpirationDate WHERE ItemName = @OriginalItemName", connection);
+                        command.Parameters.AddWithValue("@OriginalItemName", EditingItem.ItemName);
+                    }
+                    else
+                    {
+                        // Insert new item
+                        command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Category, Image, DateAdded, Status, Supplier, ExpirationDate) VALUES (@ItemName, @Quantity, @Price, @Value, @Category, @Image, @DateAdded, @Status, @Supplier, @ExpirationDate)", connection);
+                    }
+
                     command.Parameters.AddWithValue("@ItemName", itemName);
                     command.Parameters.AddWithValue("@Quantity", quantity);
                     command.Parameters.AddWithValue("@Price", price);
@@ -98,12 +111,13 @@ namespace Inventory.UserControls
                     command.Parameters.Add("@Image", System.Data.DbType.Binary).Value = imageBytes;
                     command.Parameters.AddWithValue("@DateAdded", dateAdded);
                     command.Parameters.AddWithValue("@Status", status);
-                    command.Parameters.AddWithValue("@Supplier", supplier); // Ensure the supplier parameter is added
-                    command.Parameters.AddWithValue("@ExpirationDate", (object)expirationDate ?? DBNull.Value); // Add expiration date parameter
+                    command.Parameters.AddWithValue("@Supplier", supplier);
+                    command.Parameters.AddWithValue("@ExpirationDate", (object)expirationDate ?? DBNull.Value);
                     command.ExecuteNonQuery();
                 }
 
-                MessageBox.Show("Item added successfully!");
+                MessageBox.Show("Item saved successfully!");
+                this.DialogResult = true;
                 this.Close();
             }
             catch (Exception ex)
@@ -164,7 +178,12 @@ namespace Inventory.UserControls
             if (string.IsNullOrEmpty(imagePath))
                 return null;
 
-            return File.ReadAllBytes(imagePath); // Read the original image file as byte array
+            var resizedImage = ResizeImage(imagePath, 100, 100); // Resize the image to 100x100
+            using (var memoryStream = new MemoryStream())
+            {
+                resizedImage.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+                return memoryStream.ToArray();
+            }
         }
 
         private void SelectImage_Click(object sender, RoutedEventArgs e)
@@ -176,12 +195,14 @@ namespace Inventory.UserControls
 
             if (openFileDialog.ShowDialog() == true)
             {
-                PreviewImage.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+                var resizedImage = ResizeImage(openFileDialog.FileName, 100, 100); // Resize the image to 100x100
+                PreviewImage.Source = BitmapToImageSource(resizedImage);
                 SelectedImagePath = openFileDialog.FileName; // Save the selected image path
             }
         }
 
         private string SelectedImagePath { get; set; }
+        public Item EditingItem { get; set; }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -230,14 +251,14 @@ namespace Inventory.UserControls
         {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
-                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
+                Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg"
             };
 
             if (openFileDialog.ShowDialog() == true)
             {
-                SelectedImagePath = openFileDialog.FileName;
-                var resizedImage = ResizeImage(SelectedImagePath, 100, 100); // Resize to fit the preview box
-                image_box.Source = BitmapToImageSource(resizedImage);
+                var resizedImage = ResizeImage(openFileDialog.FileName, 100, 100); // Resize the image to 100x100
+                PreviewImage.Source = BitmapToImageSource(resizedImage);
+                SelectedImagePath = openFileDialog.FileName; // Save the selected image path
             }
         }
 
@@ -270,7 +291,7 @@ namespace Inventory.UserControls
         }
     
 
-    private void LoadSuppliers()
+private void LoadSuppliers()
         {
             try
             {
@@ -280,7 +301,7 @@ namespace Inventory.UserControls
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-                    var command = new SQLiteCommand("SELECT supplier_name FROM Suppliers", connection);
+                    var command = new SQLiteCommand("SELECT supplier_name FROM Suppliers WHERE status = 'Active'", connection);
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())

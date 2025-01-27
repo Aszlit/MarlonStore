@@ -192,6 +192,10 @@
             Click="refresh"
             Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Margin="0,64,386,0" Height="41" Width="150" 
             Visibility="Collapsed"/>
+        <Button x:Name="EditButton" Content="Edit" 
+        Click="EditButton_Click"
+        Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Height="41" Width="150" Margin="0,64,364,0" />
+
         <Button x:Name="removebutton" Content="Remove" 
                 Click="removebutton_Click"
                 Style="{StaticResource OvalButtonStyle}" Grid.Column="1" Height="41" Width="150" Margin="0,64,186,0" />
