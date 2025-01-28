@@ -66,7 +66,21 @@ namespace Inventory.UserControls
                             }
                         }
 
-                        DateTime dateAdded = reader["DateAdded"] != DBNull.Value ? Convert.ToDateTime(reader["DateAdded"]) : DateTime.MinValue;
+                        DateTime dateAdded;
+                        if (!DateTime.TryParse(reader["DateAdded"]?.ToString(), out dateAdded))
+                        {
+                            dateAdded = DateTime.MinValue; // Assign a default value if parsing fails
+                        }
+
+                        DateTime? expirationDate = null;
+                        if (reader["ExpirationDate"] != DBNull.Value)
+                        {
+                            DateTime tempDate;
+                            if (DateTime.TryParse(reader["ExpirationDate"]?.ToString(), out tempDate))
+                            {
+                                expirationDate = tempDate;
+                            }
+                        }
 
                         Items.Add(new Item
                         {
@@ -79,7 +93,7 @@ namespace Inventory.UserControls
                             DateAdded = dateAdded,
                             Status = reader["Status"].ToString(),
                             Supplier = reader["Supplier"].ToString(), // Add Supplier
-                            ExpirationDate = reader["ExpirationDate"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["ExpirationDate"]) : null // Add ExpirationDate
+                            ExpirationDate = expirationDate // Add ExpirationDate
                         });
                     }
                 }
@@ -105,35 +119,10 @@ namespace Inventory.UserControls
         {
             if (InventoryDataGrid.SelectedItem is Item selectedItem)
             {
-                var editWindow = new AddNewItemWindow
+                var editWindow = new EditItemWindow(selectedItem)
                 {
-                    Owner = Window.GetWindow(this),
-                    EditingItem = selectedItem // Pass the selected item to the edit window
+                    Owner = Window.GetWindow(this)
                 };
-
-                // Populate the edit window with the selected item's data
-                editWindow.ItemNameTextBox.Text = selectedItem.ItemName;
-                editWindow.QuantityTextBox.Value = selectedItem.Quantity;
-                editWindow.PriceTextBox.Value = (int)selectedItem.Price;
-                editWindow.SupplierComboBox.SelectedItem = selectedItem.Supplier;
-                editWindow.ExpirationDatePicker.SelectedDate = selectedItem.ExpirationDate;
-                editWindow.NoExpirationCheckBox.IsChecked = selectedItem.ExpirationDate == null;
-                editWindow.ValueTextBox.Text = selectedItem.Value.ToString();
-                editWindow.PreviewImage.Source = selectedItem.ProductImage;
-
-                foreach (RadioButton radioButton in editWindow.CategoryPanel.Children)
-                {
-                    if (radioButton.Content.ToString() == selectedItem.Category)
-                    {
-                        radioButton.IsChecked = true;
-                        break;
-                    }
-                }
-                editWindow.ActiveRadioButton.IsChecked = selectedItem.Status == "Active";
-                editWindow.InactiveRadioButton.IsChecked = selectedItem.Status == "Inactive";
-
-                editWindow.SaveButton.Content = "Confirm";
-                editWindow.addnewitemlabel.Text = "Edit Item";
 
                 if (editWindow.ShowDialog() == true)
                 {

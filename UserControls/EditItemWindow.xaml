@@ -1,7 +1,8 @@
-﻿<Window x:Class="Inventory.UserControls.AddSupplierWindow"
+﻿<Window x:Class="Inventory.UserControls.EditItemWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Add Supplier" 
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Edit Item" 
         Height="450" 
         Width="400" 
         WindowStartupLocation="CenterOwner" 
@@ -27,7 +28,7 @@
 
             <!-- Custom Title Bar -->
             <DockPanel Background="Transparent" Height="40" VerticalAlignment="Center" Grid.ColumnSpan="2">
-                <TextBlock x:Name="addSupplierLabel" Text="Add Supplier" VerticalAlignment="Center" Foreground="White" FontSize="16" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBlock x:Name="edititemlabel" Text="Edit Item" VerticalAlignment="Center" Foreground="White" FontSize="16" FontWeight="Bold" Margin="10,0,0,0"/>
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
                     <!-- Close Button -->
                     <Button Width="30" Height="30" Background="Transparent" BorderThickness="0" 
@@ -59,35 +60,16 @@
             </DockPanel>
 
             <!-- Form Content -->
-            <TextBlock Text="Supplier Name:" Foreground="White" Margin="0,10,0,0" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="SupplierNameTextBox" Margin="10,10,0,301" Grid.Row="1" Grid.Column="1" Text="{Binding SupplierName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Text="Contact:" Foreground="White" Margin="0,40,0,0" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="ContactTextBox" Margin="10,40,0,271" Grid.Row="1" Grid.Column="1" Text="{Binding Contact, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <TextBlock Text="Email:" Foreground="White" Margin="0,70,0,0" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="EmailTextBox" Margin="10,70,0,241" Grid.Row="1" Grid.Column="1" Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <TextBlock Text="Address:" Foreground="White" Margin="0,100,0,0" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="AddressTextBox" Margin="10,100,0,211" Grid.Row="1" Grid.Column="1" Text="{Binding Address, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <TextBlock Text="Phone Number:" Foreground="White" Margin="0,130,0,0" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="PhoneNumberTextBox" Margin="10,130,0,181" Grid.Row="1" Grid.Column="1" Text="{Binding PhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <TextBlock Text="Website:" Foreground="White" Margin="0,160,0,0" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="WebsiteTextBox" Margin="10,160,0,151" Grid.Row="1" Grid.Column="1" Text="{Binding Website, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <TextBlock Text="Status:" Foreground="White" Margin="0,190,0,0" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="StatusTextBox" Margin="10,190,0,121" Grid.Row="1" Grid.Column="1" Text="{Binding Status, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <TextBlock Text="Date Added:" Foreground="White" Margin="0,220,0,0" Grid.Row="1" Grid.Column="0"/>
-            <DatePicker x:Name="DateAddedDatePicker" Margin="10,220,0,88" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding DateAdded, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+            <!-- Supplier Selection -->
+            <TextBlock Text="Supplier:" Foreground="White" Margin="99,170,116,150" Grid.Row="1" Grid.Column="1"/>
+            <ComboBox x:Name="SupplierComboBox" Margin="106,191,10,120" Grid.Row="1" Grid.Column="1" />
 
             <!-- Action Buttons -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="70,20,0,0" Grid.ColumnSpan="2">
-                <!-- Add Button -->
-                <Button x:Name="AddButton" Content="Add" Width="100" Margin="10,0,0,0"
-                        Click="AddButton_Click" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
+                <!-- Save Button -->
+                <Button x:Name="SaveButton" Content="Save" Width="100" Margin="10,0,0,0"
+                        Click="SaveButton_Click" Background="#FF1E90FF" Foreground="White" BorderThickness="0" FontFamily="Bahnschrift SemiBold">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -139,6 +121,40 @@
                     </Button.Template>
                 </Button>
             </StackPanel>
+            <Button x:Name="insertimage_button" Content="Insert Image" HorizontalAlignment="Left" Margin="139,130,0,0" Grid.Row="1" VerticalAlignment="Top" Height="30" Width="112" Click="InsertImageButton_Click" Grid.Column="1"/>
+            <Image x:Name="image_box" HorizontalAlignment="Left" Height="100" Margin="153,33,0,0" VerticalAlignment="Top" Width="100" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock Text="Item Name:" Foreground="White" Margin="15,17,159,303" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="ItemNameTextBox" Margin="41,38,159,277" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Quantity:" Foreground="White" Margin="15,66,159,254" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <xctk:IntegerUpDown x:Name="QuantityTextBox" Minimum="0" Maximum="1000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged" Margin="40,87,159,229" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Price:" Foreground="White" Margin="15,122,230,198" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <xctk:IntegerUpDown x:Name="PriceTextBox" Minimum="0" Maximum="1000000" Increment="1" ValueChanged="QuantityOrPrice_ValueChanged" Margin="40,143,205,173" Grid.Row="1" Grid.ColumnSpan="2"/>
+
+            <!-- Expiration Date -->
+            <TextBlock Text="Expiration Date:" Foreground="White" Margin="15,177,230,144" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <DatePicker x:Name="ExpirationDatePicker" Margin="40,198,205,113" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <CheckBox x:Name="NoExpirationCheckBox" Content="N/A" Foreground="White" Margin="40,228,205,89" Grid.Row="1" Grid.ColumnSpan="2" Checked="NoExpirationCheckBox_Checked" Unchecked="NoExpirationCheckBox_Unchecked"/>
+
+            <TextBlock Text="Value:" Foreground="White" Margin="15,263,230,144" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.746"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <TextBox x:Name="ValueTextBox" IsReadOnly="True" Margin="40,285,205,119" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <StackPanel x:Name="CategoryPanel" Orientation="Vertical" Margin="73,228,80,6" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Column="1">
+                <RadioButton Content="Frozen Foods" GroupName="Category" Margin="0,5" Foreground="White"/>
+                <RadioButton Content="General Products" GroupName="Category" Margin="0,5" Foreground="White"/>
+                <RadioButton Content="Liquior" GroupName="Category" Margin="0,5" Foreground="White"/>
+                <RadioButton Content="Others" GroupName="Category" Margin="0,5" Foreground="White"/>
+            </StackPanel>
+            <RadioButton x:Name="ActiveRadioButton" Content="Active" GroupName="Status" IsChecked="True" Grid.Column="1" Margin="202,249,6,66" Grid.Row="1" Foreground="#FFFDFBFB" />
+            <RadioButton x:Name="InactiveRadioButton" Content="Inactive" GroupName="Status" Margin="202,276,6,42" Grid.Column="1" Grid.Row="1" Foreground="#FFF7F5F5" />
+            <Image x:Name="PreviewImage" Stretch="Uniform" Margin="144,1,29,236" Grid.Row="1" Grid.Column="1"/>
         </Grid>
     </Border>
 </Window>

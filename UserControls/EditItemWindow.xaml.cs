@@ -1,32 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using System.Drawing;
 
 namespace Inventory.UserControls
 {
     /// <summary>
-    /// Interaction logic for AddNewItemWindow.xaml
+    /// Interaction logic for EditItemWindow.xaml
     /// </summary>
-    public partial class AddNewItemWindow : Window
+    public partial class EditItemWindow : Window
     {
-        public AddNewItemWindow()
+        public Item EditingItem { get; set; }
+
+        public EditItemWindow(Item item)
         {
             InitializeComponent();
             LoadSuppliers();
+            EditingItem = item;
+            PopulateFields();
+        }
+
+        private void PopulateFields()
+        {
+            ItemNameTextBox.Text = EditingItem.ItemName;
+            QuantityTextBox.Value = EditingItem.Quantity;
+            PriceTextBox.Value = (int)EditingItem.Price;
+            SupplierComboBox.SelectedItem = EditingItem.Supplier;
+            ExpirationDatePicker.SelectedDate = EditingItem.ExpirationDate;
+            NoExpirationCheckBox.IsChecked = EditingItem.ExpirationDate == null;
+            ValueTextBox.Text = EditingItem.Value.ToString();
+            PreviewImage.Source = EditingItem.ProductImage;
+
+            foreach (RadioButton radioButton in CategoryPanel.Children)
+            {
+                if (radioButton.Content.ToString() == EditingItem.Category)
+                {
+                    radioButton.IsChecked = true;
+                    break;
+                }
+            }
+            ActiveRadioButton.IsChecked = EditingItem.Status == "Active";
+            InactiveRadioButton.IsChecked = EditingItem.Status == "Inactive";
         }
 
         // Close the window
@@ -58,7 +77,6 @@ namespace Inventory.UserControls
             var priceText = PriceTextBox.Text;
             var valueText = ValueTextBox.Text;
             var category = GetSelectedCategory();
-            var dateAdded = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             var status = GetSelectedStatus();
             var supplier = SupplierComboBox.Text;
             var expirationDate = NoExpirationCheckBox.IsChecked == true ? (DateTime?)null : ExpirationDatePicker.SelectedDate;
@@ -89,22 +107,21 @@ namespace Inventory.UserControls
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-                    var command = new SQLiteCommand("INSERT INTO Inventory (ItemName, Quantity, Price, Value, Category, Image, DateAdded, Status, Supplier, ExpirationDate) VALUES (@ItemName, @Quantity, @Price, @Value, @Category, @Image, @DateAdded, @Status, @Supplier, @ExpirationDate)", connection);
-
+                    var command = new SQLiteCommand("UPDATE Inventory SET ItemName = @ItemName, Quantity = @Quantity, Price = @Price, Value = @Value, Category = @Category, Image = @Image, Status = @Status, Supplier = @Supplier, ExpirationDate = @ExpirationDate WHERE ItemName = @OriginalItemName", connection);
+                    command.Parameters.AddWithValue("@OriginalItemName", EditingItem.ItemName);
                     command.Parameters.AddWithValue("@ItemName", itemName);
                     command.Parameters.AddWithValue("@Quantity", quantity);
                     command.Parameters.AddWithValue("@Price", price);
                     command.Parameters.AddWithValue("@Value", value);
                     command.Parameters.AddWithValue("@Category", category);
                     command.Parameters.Add("@Image", System.Data.DbType.Binary).Value = imageBytes;
-                    command.Parameters.AddWithValue("@DateAdded", dateAdded);
                     command.Parameters.AddWithValue("@Status", status);
                     command.Parameters.AddWithValue("@Supplier", supplier);
                     command.Parameters.AddWithValue("@ExpirationDate", (object)expirationDate ?? DBNull.Value);
                     command.ExecuteNonQuery();
                 }
 
-                MessageBox.Show("Item saved successfully!");
+                MessageBox.Show("Item updated successfully!");
                 this.DialogResult = true;
                 this.Close();
             }
@@ -295,5 +312,4 @@ namespace Inventory.UserControls
             }
         }
     }
-    }
-
+}

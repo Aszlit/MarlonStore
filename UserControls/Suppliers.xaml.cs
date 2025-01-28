@@ -36,20 +36,20 @@ namespace Inventory.UserControls
                     while (reader.Read())
                     {
                         DateTime dateAdded;
-                        if (!DateTime.TryParse(reader["date_added"].ToString(), out dateAdded))
+                        if (!DateTime.TryParse(reader["date_added"]?.ToString(), out dateAdded))
                         {
                             dateAdded = DateTime.MinValue; // Assign a default value if parsing fails
                         }
 
                         SuppliersList.Add(new Supplier
                         {
-                            SupplierName = reader["supplier_name"].ToString(),
-                            Contact = reader["contact"].ToString(),
-                            Email = reader["email"].ToString(),
-                            Address = reader["address"].ToString(),
-                            PhoneNumber = reader["phone_number"].ToString(),
-                            Website = reader["website"].ToString(),
-                            Status = reader["status"].ToString(),
+                            SupplierName = reader["supplier_name"]?.ToString() ?? string.Empty,
+                            Contact = reader["contact"]?.ToString() ?? string.Empty,
+                            Email = reader["email"]?.ToString() ?? string.Empty,
+                            Address = reader["address"]?.ToString() ?? string.Empty,
+                            PhoneNumber = reader["phone_number"]?.ToString() ?? string.Empty,
+                            Website = reader["website"]?.ToString() ?? string.Empty,
+                            Status = reader["status"]?.ToString() ?? string.Empty,
                             DateAdded = dateAdded
                         });
                     }
@@ -120,13 +120,55 @@ namespace Inventory.UserControls
 
     public class Supplier
     {
-        public string SupplierName { get; set; }
-        public string Contact { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Website { get; set; }
-        public string Status { get; set; }
+        public string SupplierName { get; set; } = string.Empty;
+        public string Contact { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
+        public string Website { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
         public DateTime DateAdded { get; set; }
+
+        public string Error => string.Empty;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = string.Empty;
+                switch (columnName)
+                {
+                    case nameof(SupplierName):
+                        if (string.IsNullOrWhiteSpace(SupplierName))
+                            result = "Supplier Name is required.";
+                        break;
+                    case nameof(Email):
+                        if (string.IsNullOrWhiteSpace(Email))
+                            result = "Email is required.";
+                        else if (!IsValidEmail(Email))
+                            result = "Invalid email format.";
+                        break;
+                    case nameof(PhoneNumber):
+                        if (string.IsNullOrWhiteSpace(PhoneNumber))
+                            result = "Phone Number is required.";
+                        break;
+                        // Add more validation as needed
+                }
+                return result;
+            }
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

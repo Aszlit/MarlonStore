@@ -24,30 +24,46 @@ namespace Inventory.UserControls
         public AddSupplierWindow()
         {
             InitializeComponent();
+            NewSupplier = new Supplier();
+            this.DataContext = NewSupplier;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            NewSupplier = new Supplier
+            if (IsValid(NewSupplier))
             {
-                SupplierName = SupplierNameTextBox.Text,
-                Contact = ContactTextBox.Text,
-                Email = EmailTextBox.Text,
-                Address = AddressTextBox.Text,
-                PhoneNumber = PhoneNumberTextBox.Text,
-                Website = WebsiteTextBox.Text,
-                Status = StatusTextBox.Text,
-                DateAdded = DateAddedDatePicker.SelectedDate ?? DateTime.Now
-            };
-
-            DialogResult = true;
-            Close();
+                NewSupplier.DateAdded = DateAddedDatePicker.SelectedDate ?? DateTime.Now;
+                DialogResult = true;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Please correct the errors before adding the supplier.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
+        }
+
+        private bool IsValid(Supplier supplier)
+        {
+            var properties = typeof(Supplier).GetProperties();
+            foreach (var property in properties)
+            {
+                if (supplier[property.Name] != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void CloseApp(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
